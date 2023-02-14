@@ -12,6 +12,15 @@ class Pmtiles < Formula
   end
 
   test do
-    shell_output("#{bin}/pmtiles --help")
+    port = free_port
+
+    pid = fork do
+      exec "#{bin}/pmtiles", "serve", ".", "--port", "#{port}"
+    end
+    sleep 3
+    output = shell_output("curl -sI http://localhost:#{port}")
+    assert_match "404 Not Found", output
+  ensure
+    Process.kill("HUP", pid)
   end
 end
