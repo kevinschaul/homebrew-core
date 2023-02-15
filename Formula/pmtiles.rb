@@ -8,7 +8,7 @@ class Pmtiles < Formula
   depends_on "go" => :build
 
   def install
-    system "go", "build", "-o", "#{bin}/pmtiles"
+    system "go", "build", *std_go_args
   end
 
   test do
