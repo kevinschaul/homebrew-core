@@ -4,6 +4,7 @@ class Postgis < Formula
   url "https://download.osgeo.org/postgis/source/postgis-3.4.2.tar.gz"
   sha256 "c8c874c00ba4a984a87030af6bf9544821502060ad473d5c96f1d4d0835c5892"
   license "GPL-2.0-or-later"
+  revision 2
 
   livecheck do
     url "https://download.osgeo.org/postgis/source/"
@@ -11,13 +12,13 @@ class Postgis < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "801392519623c3752d312c6c468f5768bb05fa301a6b08bae0e73ce2ac97b281"
-    sha256 cellar: :any,                 arm64_ventura:  "af61fb4778a11d4b28012aed15d4a2592a49f5cd51f75cc07a3d1d3953396745"
-    sha256 cellar: :any,                 arm64_monterey: "3be85d7e1db47b4182a4ae581f048394dfbab6b82a815aadedff627971e61dcc"
-    sha256 cellar: :any,                 sonoma:         "f64c676865047ce8e899457ef13fc4eadf3a9ab4bdd5e7b2719ada435801303b"
-    sha256 cellar: :any,                 ventura:        "707db5fc4503d9a6ae1883cf27be78a91e32022bf42ebf84784692dd110e8ac3"
-    sha256 cellar: :any,                 monterey:       "caa0b3b884a2ba9d196c0742396a86ce4c493e69344af51839beecdac62a1899"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ad1912dc05bced77a4f42355297ad0da97081edbbf4f5914d8cc6277e8abf587"
+    sha256 cellar: :any,                 arm64_sonoma:   "98640c6921b0151bc8e6be7bf1ca08b96f9a6f77ac3bf282974a99c2ef4ad09f"
+    sha256 cellar: :any,                 arm64_ventura:  "0098f8c74af24f1ad8238c2f4eb9f25a81681a0812ad3932da4f450e2970bf33"
+    sha256 cellar: :any,                 arm64_monterey: "5b3b69b4a2cb3e8a5bfdf32b2ab71890fbcdf3661bc241e1154f1b148d6cffbe"
+    sha256 cellar: :any,                 sonoma:         "8f79f802730d1efa58df1c2e84a25a999ef9bf151ac15c093c144986c9a02d07"
+    sha256 cellar: :any,                 ventura:        "541f394419c6cb17e0bbd48e8be9f3ebd46a6ac7b9ff7c1543847c27ecd35c4f"
+    sha256 cellar: :any,                 monterey:       "bdc6e3f1f8ff0de7e3743ad2eaa8beac29d85e6b7b8a5f495ba659961b30f267"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b2c2a685c5b13f7dcc7bdaeda70a71af1b7b280380bd9a68369f7be31b39c8f9"
   end
 
   head do
@@ -30,15 +31,23 @@ class Postgis < Formula
 
   depends_on "gpp" => :build
   depends_on "pkg-config" => :build
+
   depends_on "gdal" # for GeoJSON and raster handling
   depends_on "geos"
   depends_on "icu4c"
   depends_on "json-c" # for GeoJSON and raster handling
+  depends_on "libxml2"
   depends_on "pcre2"
   depends_on "postgresql@14"
   depends_on "proj"
   depends_on "protobuf-c" # for MVT (map vector tiles) support
   depends_on "sfcgal" # for advanced 2D/3D functions
+
+  uses_from_macos "llvm"
+
+  on_linux do
+    depends_on "libpq"
+  end
 
   fails_with gcc: "5" # C++17
 
@@ -47,10 +56,37 @@ class Postgis < Formula
   end
 
   def install
+    # Work around an Xcode 15 linker issue which causes linkage against LLVM's
+    # libunwind due to it being present in a library search path.
+    if DevelopmentTools.clang_build_version >= 1500
+      recursive_dependencies
+        .select { |d| d.name.match?(/^llvm(@\d+)?$/) }
+        .map { |llvm_dep| llvm_dep.to_formula.opt_lib }
+        .each { |llvm_lib| ENV.remove "HOMEBREW_LIBRARY_PATHS", llvm_lib }
+    end
+
     ENV.deparallelize
 
     # C++17 is required.
     ENV.append "CXXFLAGS", "-std=c++17"
+
+    # Workaround for: Built-in generator --c_out specifies a maximum edition
+    # PROTO3 which is not the protoc maximum 2023.
+    # Remove when fixed in `protobuf-c`:
+    # https://github.com/protobuf-c/protobuf-c/pull/711
+    ENV["PROTOCC"] = Formula["protobuf"].opt_bin/"protoc"
+
+    # PostGIS' build system assumes it is being installed to the same place as
+    # PostgreSQL, and looks for the `postgres` binary relative to the
+    # installation `bindir`. We gently support this system using an illusion.
+    #
+    # PostGIS links against the `postgres` binary for symbols that aren't
+    # exported in the public libraries `libpgcommon.a` and similar, so the
+    # build will break with confusing errors if this is omitted.
+    #
+    # See: https://github.com/NixOS/nixpkgs/commit/330fff02a675f389f429d872a590ed65fc93aedb
+    bin.mkpath
+    ln_s "#{postgresql.opt_bin}/postgres", "#{bin}/postgres"
 
     args = [
       "--with-projdir=#{Formula["proj"].opt_prefix}",
@@ -65,8 +101,7 @@ class Postgis < Formula
     ]
 
     system "./autogen.sh" if build.head?
-    # Pretend to install into HOMEBREW_PREFIX to allow PGXS to find PostgreSQL binaries
-    system "./configure", *args, *std_configure_args(prefix: HOMEBREW_PREFIX)
+    system "./configure", *args, *std_configure_args
     system "make"
     # Override the hardcoded install paths set by the PGXS makefiles
     system "make", "install", "bindir=#{bin}",
@@ -75,6 +110,8 @@ class Postgis < Formula
                               "pkglibdir=#{lib/postgresql.name}",
                               "datadir=#{share/postgresql.name}",
                               "PG_SHAREDIR=#{share/postgresql.name}"
+
+    rm "#{bin}/postgres"
 
     # Extension scripts
     bin.install %w[

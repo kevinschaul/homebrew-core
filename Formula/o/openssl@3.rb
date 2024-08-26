@@ -1,26 +1,24 @@
 class OpensslAT3 < Formula
   desc "Cryptography and SSL/TLS Toolkit"
-  homepage "https://openssl.org/"
-  url "https://github.com/openssl/openssl/releases/download/openssl-3.2.1/openssl-3.2.1.tar.gz"
-  mirror "https://www.openssl.org/source/openssl-3.2.1.tar.gz"
-  mirror "http://fresh-center.net/linux/misc/openssl-3.2.1.tar.gz"
-  sha256 "83c7329fe52c850677d75e5d0b0ca245309b97e8ecbcfdc1dfdc4ab9fac35b39"
+  homepage "https://openssl-library.org"
+  url "https://github.com/openssl/openssl/releases/download/openssl-3.3.1/openssl-3.3.1.tar.gz"
+  mirror "http://fresh-center.net/linux/misc/openssl-3.3.1.tar.gz"
+  sha256 "777cd596284c883375a2a7a11bf5d2786fc5413255efab20c50d6ffe6d020b7e"
   license "Apache-2.0"
 
   livecheck do
-    url "https://www.openssl.org/source/"
-    regex(/href=.*?openssl[._-]v?(\d+(?:\.\d+)+)\.t/i)
+    url "https://openssl-library.org/source/"
+    regex(/href=.*?openssl[._-]v?(3(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    rebuild 2
-    sha256 arm64_sonoma:   "13b0371fb0e096c80d703fa573488cc595ccdb65979c5b82ef8aa23d862bfe39"
-    sha256 arm64_ventura:  "9308e425d3366b2a4deb22f02207aa52b409d541aa7983ec75ed752615b407d6"
-    sha256 arm64_monterey: "fe92474e7de65d08d47aa9c9e52ecf4fdca1858d8f1405be3834d1ea93cfc875"
-    sha256 sonoma:         "8c3882fa41d44368e88347b4d82f248dcb68c5c7c077f1ce19a6f76b01e20a1e"
-    sha256 ventura:        "6bf725d8234def1253e39412159a40ba9f140a0555615ae3644f3d010183a266"
-    sha256 monterey:       "52c1ad4b113b2649dd3e39a4f3555f4436432131806340fea691584ba73257d8"
-    sha256 x86_64_linux:   "b5d725bc7fb396e06740ba68d0c2cfa2baa1dc7332cb3c87ffe3d46ffa2914d5"
+    sha256 arm64_sonoma:   "d57cf59ebcfa7755895707f5eab2c07cbcc177b1c1803d160a8633db99b110ba"
+    sha256 arm64_ventura:  "09883397c900867cc82802c965b617ccb129619b4a63955e69b49727e32f8dfa"
+    sha256 arm64_monterey: "0d88c67b408ad9520a28d195418d14875f2237fbd808114763f980a7a9190831"
+    sha256 sonoma:         "ec3aa180c8c474ad3eece67ddcff9bd1f17992d89da91f71431354fd849adc1f"
+    sha256 ventura:        "dfedf75692505f5d750dd5af97d0a4ea0a9cf24112e1e9339dc802658711a3e6"
+    sha256 monterey:       "06e6ff16eb23a8fd4dc9222e6cf5bcf2b680d250ba0233e6e0c0dc6e9616cb34"
+    sha256 x86_64_linux:   "d84029bfaf8a5452329d7e2535ba32d720b361b398e46051ee6090ff989dfd55"
   end
 
   depends_on "ca-certificates"
@@ -58,7 +56,7 @@ class OpensslAT3 < Formula
     args = %W[
       --prefix=#{prefix}
       --openssldir=#{openssldir}
-      --libdir=#{lib}
+      --libdir=lib
       no-ssl3
       no-ssl3-method
       no-zlib
@@ -69,12 +67,6 @@ class OpensslAT3 < Formula
       args += (ENV.ldflags || "").split
     end
     args
-  end
-
-  # Fixes CVE-2024-2511. Remove in next release.
-  patch do
-    url "https://github.com/openssl/openssl/commit/e9d7083e241670332e0443da0f0d4ffb52829f08.patch?full_index=1"
-    sha256 "cbec9e8d2ff52783239317962a997755353cd13c2516f848596afd4d52232321"
   end
 
   def install
@@ -112,7 +104,9 @@ class OpensslAT3 < Formula
     system "perl", "./Configure", *(configure_args + arch_args)
     system "make"
     system "make", "install", "MANDIR=#{man}", "MANSUFFIX=ssl"
-    system "make", "test"
+    # AF_ALG support isn't always enabled (e.g. some containers), which breaks the tests.
+    # AF_ALG is a kernel feature and failures are unlikely to be issues with the formula.
+    system "make", "test", "TESTS=-test_afalg"
   end
 
   def openssldir
@@ -120,7 +114,7 @@ class OpensslAT3 < Formula
   end
 
   def post_install
-    rm_f openssldir/"cert.pem"
+    rm(openssldir/"cert.pem") if (openssldir/"cert.pem").exist?
     openssldir.install_symlink Formula["ca-certificates"].pkgetc/"cert.pem"
   end
 

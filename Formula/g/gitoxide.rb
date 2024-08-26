@@ -1,8 +1,8 @@
 class Gitoxide < Formula
   desc "Idiomatic, lean, fast & safe pure Rust implementation of Git"
   homepage "https://github.com/Byron/gitoxide"
-  url "https://github.com/Byron/gitoxide/archive/refs/tags/v0.34.0.tar.gz"
-  sha256 "5f0686213fa3ad3d6f3adedf3df463dfdb9bb60f9cad03a174ec6b5adba1567f"
+  url "https://github.com/Byron/gitoxide/archive/refs/tags/v0.37.0.tar.gz"
+  sha256 "1bdc30bafdd3605d6e278aa5562f772a9732bb07ced9321ea31893b28f950c0a"
   license "Apache-2.0"
   head "https://github.com/Byron/gitoxide.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Gitoxide < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "8f3e6feddcd6f7de0b15d85c01c03cf40be0a2e0f3d747b72256ee8f33419620"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "dbc24a06372d0a2bab0241352847970f5bcfc123084ba1a2e4d570e415144eac"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "54448eb50ade47c5645064843753686bc5039473073c25ef04b3eaa4631071d9"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4913d9d32eb09da5cc90384abddba6e737ae53da740125f28719d64f44ab7e9c"
-    sha256 cellar: :any_skip_relocation, ventura:        "80055454f29e4fe63d65b9dc81d2852c712692dab9c30f29c65ebb284f4c4f46"
-    sha256 cellar: :any_skip_relocation, monterey:       "19186db63c137fb7c350f6e2f24ffffe7ef4bbe647d790bdd444805cf4133c36"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "19baaa21e8100d3613bb5c4f6373d66aed8e1e7d8080342c095a6e2a852a0cb7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5d1a313698094658289fc0a08f74598024be8b561c5918061595870438b21e68"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "325b88fbd3e300b983c3241d28b6d2ea347f6c0f5a3f43e14af759ea0dad1060"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8e8c33358ea506137433a52bd344f25787410abfe509fe9baad1e3115641f82a"
+    sha256 cellar: :any_skip_relocation, sonoma:         "f1796a56008907c6ea97777e05c11206b5ec50b26c78fec5258113aa95443ddb"
+    sha256 cellar: :any_skip_relocation, ventura:        "f0891096bf35f06324b9d6123e70da27095f313c8601407e0273562566b24888"
+    sha256 cellar: :any_skip_relocation, monterey:       "5d1052f4f559191e6ebed1ec285540421bd01c724a057b9169ab0d7c5a9be4e4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "581675565e5c35638da08093e6f272ec300201f055875ac99a947b9fa18c0c33"
   end
 
   depends_on "pkg-config" => :build

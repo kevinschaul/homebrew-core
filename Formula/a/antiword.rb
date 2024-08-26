@@ -6,10 +6,6 @@ class Antiword < Formula
   sha256 "8e2c000fcbc6d641b0e6ff95e13c846da3ff31097801e86702124a206888f5ac"
   license "GPL-2.0-or-later"
 
-  livecheck do
-    skip "Not actively developed or maintained"
-  end
-
   bottle do
     sha256 arm64_sonoma:   "393500bd0690bd7fdb9ed258a1ce7882f518db42ec14d380421f771467080bf6"
     sha256 arm64_ventura:  "c4d6bfce24638c2f087af1f8bab031848f27584bbc4497d2b11913d9562a0047"
@@ -27,8 +23,7 @@ class Antiword < Formula
     sha256 x86_64_linux:   "12935daff8ed3ffc2a68b8be542ea190bff6d7d2a2d46c854080d4023346d526"
   end
 
-  # This cannot be deprecated while the `textract` formula depends on it.
-  # deprecate! date: "2023-09-24", because: :unmaintained
+  deprecate! date: "2024-06-19", because: :repo_removed
 
   resource "testdoc.doc" do
     url "https://github.com/rsdoiel/antiword/raw/fe4b579067122a2d9d62647efb1ee7cfe3ca92bb/Docs/testdoc.doc"

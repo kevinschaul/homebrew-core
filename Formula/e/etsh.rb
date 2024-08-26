@@ -1,12 +1,13 @@
 class Etsh < Formula
   desc "Two ports of /bin/sh from V6 UNIX (circa 1975)"
-  homepage "https://etsh.nl/"
-  url "https://etsh.nl/src/etsh_5.4.0/etsh-5.4.0.tar.xz"
+  homepage "https://etsh.dev/"
+  url "https://etsh.dev/src/etsh_5.4.0/etsh-5.4.0.tar.xz"
   sha256 "fd4351f50acbb34a22306996f33d391369d65a328e3650df75fb3e6ccacc8dce"
+  license all_of: ["BSD-2-Clause", "BSD-3-Clause", "BSD-4-Clause", :public_domain]
   version_scheme 1
 
   livecheck do
-    url "https://etsh.nl/src/"
+    url "https://etsh.dev/src/"
     regex(/href=.*?etsh[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
@@ -25,7 +26,7 @@ class Etsh < Formula
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "3b63d3ead94501c6b8a1f2fd2e6cf5465e7d0f36dc1d2e1303b0ed23254141d2"
   end
 
-  conflicts_with "omake", because: "both install `osh` binaries"
+  conflicts_with "oil", "oils-for-unix", "omake", because: "both install `osh` binaries"
   conflicts_with "teleport", because: "both install `tsh` binaries"
 
   def install

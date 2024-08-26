@@ -1,8 +1,8 @@
 class Wxmaxima < Formula
   desc "Cross platform GUI for Maxima"
   homepage "https://wxmaxima-developers.github.io/wxmaxima/"
-  url "https://github.com/wxMaxima-developers/wxmaxima/archive/refs/tags/Version-24.02.2.tar.gz"
-  sha256 "ad0b3b7dca4cc554cd29bdf8261f4dce75a01df5898f7efde2c03d539fd074a9"
+  url "https://github.com/wxMaxima-developers/wxmaxima/archive/refs/tags/Version-24.08.0.tar.gz"
+  sha256 "a0957c1852ca2d93e34f8f0329673f40af065e7648739d088da28bd33627b758"
   license "GPL-2.0-or-later"
   head "https://github.com/wxMaxima-developers/wxmaxima.git", branch: "main"
 
@@ -12,17 +12,18 @@ class Wxmaxima < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "c8958a1805c149ce1199be96d31796f4ddff6bc8f97c4e9cbd4cc16d31812f33"
-    sha256 arm64_ventura:  "195834d004b07659d9f5fc6d19a9189c0686b3f4ab12bb4245f940d9e90d6170"
-    sha256 arm64_monterey: "ecee67b2429273219f2ba09ee8db634c99121315f0c2857cd2728e5b068d7675"
-    sha256 sonoma:         "1ed5227e792d2ed0b81d946052ead9ad81b0cd0b2c41d8c3ceae3af71fc13cb7"
-    sha256 ventura:        "593b2ab9ab12a27373c2f78b73d07489923da74f4770f396cfbb07c0d020443a"
-    sha256 monterey:       "9139f431a945039e436ddc8ad4482ac3bf8797889fd8112cbe22ef10702aee44"
+    sha256 arm64_sonoma:   "f5f1e8d4ae104152f9f85bef2f9552647465984eaad5d38ac275103d745e9c19"
+    sha256 arm64_ventura:  "3abef2ef7771cbef1c2b3a9d2e9f5d2662a5d4c0b625c31f644086f30f73831f"
+    sha256 arm64_monterey: "e1e390f4dfc27d2bbf760aaae35ec14abff1d185cfd4ccef045c1a30ce88ce6b"
+    sha256 sonoma:         "47ad334e5899b328702ab71f991cdfe16bcac85b370014a2035dcada7ad7f97c"
+    sha256 ventura:        "bad0204f986887c72b03cbd7750cf96a11447f5d350b40fe24f6d086e1ba20e2"
+    sha256 monterey:       "0384aa9700ae2c7c698865f3c2982aade375a141d7d1ca9ead03bb4a9fc04739"
   end
 
   depends_on "cmake" => :build
   depends_on "gettext" => :build
   depends_on "ninja" => :build
+
   depends_on "maxima"
   depends_on "wxwidgets"
 
@@ -38,6 +39,12 @@ class Wxmaxima < Formula
         return tree;
                ^~~~
     EOS
+  end
+
+  # fix version output, upstream patch ref, https://github.com/wxMaxima-developers/wxmaxima/pull/1937
+  patch do
+    url "https://github.com/wxMaxima-developers/wxmaxima/commit/077ec646a11bfb5aa83a478e636a715a38a9b68b.patch?full_index=1"
+    sha256 "15fb4db52cb7e1237ee5d0934653db06809d172e2bf54709435ec24d1f7ab7a9"
   end
 
   def install

@@ -1,8 +1,8 @@
 class Kumactl < Formula
   desc "Kuma control plane command-line utility"
   homepage "https://kuma.io/"
-  url "https://github.com/kumahq/kuma/archive/refs/tags/2.6.5.tar.gz"
-  sha256 "52c5e9b54c4e6ee2e3f42d73eb1dec06a21ef92022f64dc86f9762cdb9d64e03"
+  url "https://github.com/kumahq/kuma/archive/refs/tags/2.8.2.tar.gz"
+  sha256 "362ea4403d8c7d0926f24ebe839d6981c50c408300c3623521fe9741945d721f"
   license "Apache-2.0"
 
   livecheck do
@@ -11,13 +11,13 @@ class Kumactl < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d06392c934c0d3ee3f75e368607b3924360093eb8e8bbd89bc4ae66569c22334"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9c2fa0ad80ed02523458d901e3e4a96e074cf73406e53236d4579b27755d806b"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fd171db209f99bb644fd0a3b09cedafe682afd9dcc373602453709dfc8da8c2b"
-    sha256 cellar: :any_skip_relocation, sonoma:         "3771f8e803ceaec9abc82317de309350f1f0fd37f2d6b87f1948df8008d0ad32"
-    sha256 cellar: :any_skip_relocation, ventura:        "052531b0afbbdbec1a59e0975ec0c232986d054c63244f7d96df44757114d1e4"
-    sha256 cellar: :any_skip_relocation, monterey:       "85c5c09c852700671fe534c20dcc1ca2a5b8a94d40855d972735b788b1ed92d8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "718b7f00ed87948445fd8cea57b6a2323ddbfc8e6ff269b4bd3afbf2b6b55ef7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b80a69e84055381af6ff9d5682efcb30350f383a05cdc8d0001fe616d9d96842"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2067a50e126b21944594c55802eb96bd4ccbe9f9f2c5bccd93f514c44ddf2f71"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "f18dce8c7d0c741f9d2c95cd8737f200f256eb74dfca6420561778985d54ecb7"
+    sha256 cellar: :any_skip_relocation, sonoma:         "246dee1f8aa1287625e51cd71091715b70dd8d807a4b2978d4ffcb793d01e278"
+    sha256 cellar: :any_skip_relocation, ventura:        "1c5bf920744a2e9dd2567ef6ccb121e2ae189cc772f7fd8b2a301c4772917691"
+    sha256 cellar: :any_skip_relocation, monterey:       "224def4ba5476fe2b74cd7b3331165aa42b82cbf724922e9812b1767f42bc588"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c572af83f9e5a4b57eec4bdb82fbacc31df24465996a48c5e8567a635f196679"
   end
 
   depends_on "go" => :build
@@ -36,7 +36,7 @@ class Kumactl < Formula
   end
 
   test do
-    assert_match "Management tool for Kuma.", shell_output("#{bin}/kumactl")
+    assert_match "Management tool for Kuma.", shell_output(bin/"kumactl")
     assert_match version.to_s, shell_output("#{bin}/kumactl version 2>&1")
 
     touch testpath/"config.yml"

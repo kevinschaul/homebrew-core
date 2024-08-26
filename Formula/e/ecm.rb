@@ -4,12 +4,7 @@ class Ecm < Formula
   url "https://web.archive.org/web/20091021035854/www.neillcorlett.com/downloads/ecm100.zip"
   version "1.0"
   sha256 "1d0d19666f46d9a2fc7e534f52475e80a274e93bdd3c010a75fe833f8188b425"
-
-  # The first-party web page was been missing since 2014, so we can't check for
-  # new versions and the developer doesn't seem to be actively working on this.
-  livecheck do
-    skip "No available sources to check for versions"
-  end
+  license "GPL-2.0-or-later"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "fdf32f3a049870985a1a971414a46077e2735cf8d4df10326ed5807d661601a4"
@@ -27,6 +22,8 @@ class Ecm < Formula
     sha256 cellar: :any_skip_relocation, el_capitan:     "3ecb325a368ef42737e77003e9ecc13a8d402a34da3a25c039b36565fef0b55d"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "f41307b6ed8b2c02efc9269a74424428f099ab9802a26e28dad16d7282c46324"
   end
+
+  deprecate! date: "2024-06-18", because: :repo_removed
 
   def install
     system ENV.cc, "-o", "ecm", "ecm.c"

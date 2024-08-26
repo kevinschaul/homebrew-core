@@ -1,18 +1,18 @@
 class Enchant < Formula
   desc "Spellchecker wrapping library"
   homepage "https://abiword.github.io/enchant/"
-  url "https://github.com/AbiWord/enchant/releases/download/v2.6.9/enchant-2.6.9.tar.gz"
-  sha256 "d9a5a10dc9b38a43b3a0fa22c76ed6ebb7e09eb535aff62954afcdbd40efff6b"
+  url "https://github.com/AbiWord/enchant/releases/download/v2.8.2/enchant-2.8.2.tar.gz"
+  sha256 "8f19535adb5577b83b00e02f330fe9b9eb40dd21f19e2899636fc4d3a7696375"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 arm64_sonoma:   "8ae5eb2d204a14780d6bfd6a707a3fb182a87d19e66a60b74fcbaf550d443716"
-    sha256 arm64_ventura:  "4e11d762a4b73dbdf34abd7bda9b45087d092d4e1fc727551b11d3c552527f2b"
-    sha256 arm64_monterey: "0408083f5fb77fa4ae68a9e89fef6ba2069c2daf3f45b6446dfe3f6820b9bd88"
-    sha256 sonoma:         "8499ad0376679963ccad9125720df47181e6e0069445b2b9ec1dfd25a9352f49"
-    sha256 ventura:        "d95aaed76be7564b9d26e42dad0354f4022460f8fd9e0db9e0c17090e6a99590"
-    sha256 monterey:       "8eacb51ac8a5e15a1e2c775023e4a7f9c037f6ea369ac1d25028ba4ac9987521"
-    sha256 x86_64_linux:   "45dfca538691158fab2c71a5f533f653489a661829bc35de1e6b445e2d7bf254"
+    sha256 arm64_sonoma:   "4327d3746697c8a0935580936c827a2ded1dd92d91bc2655d4ba9ee643ede046"
+    sha256 arm64_ventura:  "912e6067764e4402e6c718a909cca6b1fe1a380902d5e536cae1fe05d6cad047"
+    sha256 arm64_monterey: "e617eed7551db798a3b0fbcf8da0f8fbb51c72a351952309a5ba5a70b189dc12"
+    sha256 sonoma:         "7c53b37a59b7be9b065d5a45e75a4b605fd671c6e4495abd96b3e689b8624aba"
+    sha256 ventura:        "f6ea7979e2ef7d12132449e590ef560b6c1d2a068da3bbe42206051d00f08eca"
+    sha256 monterey:       "10cdfb36ac05c8f07d43cf0687425f3677a03cddcd0ab39c42065aad1e7d0f22"
+    sha256 x86_64_linux:   "d0aab4334f7a0feb7d168863bb81a4800982aacd709bee3b96146328b0a9f097"
   end
 
   depends_on "pkg-config" => :build
@@ -20,6 +20,14 @@ class Enchant < Formula
   depends_on "glib"
 
   uses_from_macos "mandoc" => :build
+
+  on_macos do
+    depends_on "gettext"
+  end
+
+  on_system :linux, macos: :ventura_or_newer do
+    depends_on "groff" => :build
+  end
 
   def install
     # mandoc is only available since Ventura, but groff is available for older macOS
@@ -41,6 +49,7 @@ class Enchant < Formula
 
     # Explicitly set locale so that the correct dictionary can be found
     ENV["LANG"] = "en_US.UTF-8"
+    ENV["LC_ALL"] = "en_US.UTF-8"
 
     assert_equal enchant_result, shell_output("#{bin}/enchant-2 -l #{file}").chomp
   end

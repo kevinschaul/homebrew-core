@@ -1,9 +1,9 @@
 class Clamav < Formula
   desc "Anti-virus software"
   homepage "https://www.clamav.net/"
-  url "https://github.com/Cisco-Talos/clamav/releases/download/clamav-1.3.0/clamav-1.3.0.tar.gz"
-  mirror "https://www.clamav.net/downloads/production/clamav-1.3.0.tar.gz"
-  sha256 "0a86a6496320d91576037b33101119af6fd8d5b91060cd316a3a9c229e9604aa"
+  url "https://github.com/Cisco-Talos/clamav/releases/download/clamav-1.4.0/clamav-1.4.0.tar.gz"
+  mirror "https://www.clamav.net/downloads/production/clamav-1.4.0.tar.gz"
+  sha256 "d67ab299e5ca05dad3da299a5ea73d60209372a5becd7f13b9a33c290338a4e6"
   license "GPL-2.0-or-later"
   head "https://github.com/Cisco-Talos/clamav.git", branch: "main"
 
@@ -13,13 +13,13 @@ class Clamav < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "b82c02d3b3965d924e4d28bbddeff6aea8f365beae15f052a0ea23b7dd6e019c"
-    sha256 arm64_ventura:  "8c001b2b1ac6b1622c59d26da75ddd50f5ac71ac21289dfc472b2b8f2ce2d545"
-    sha256 arm64_monterey: "1827315b489bf48a99803f01dab47aa87a74e65ec8bff66371bef561386be864"
-    sha256 sonoma:         "ec610703603d1393ff95574e5548d8047046c90921bcf4545af0eca171c2bb4e"
-    sha256 ventura:        "78e0a282d0c42ccf8afc0f70e7462fccc02f66ec21d76e47589c459b51eda3a8"
-    sha256 monterey:       "0429d15a691d8c05c934d8db1cc089264111a607589c04f9cfd802b244f2f790"
-    sha256 x86_64_linux:   "4a15884a204451842473338b46e6f9141a64415a9819b4822194cd39e1cd6c49"
+    sha256 arm64_sonoma:   "867e8d51daabdf5c937d66f0e7b5ce735b37d3c7ec49258eae1a4c21ee42779f"
+    sha256 arm64_ventura:  "fea4325cc6b4cf352d77a97811aed9748d55377a38fbaf37e1c6e0a3ca3813b0"
+    sha256 arm64_monterey: "c8494f9c0ad5ac0479bf7f69a910bc08373b072babbda72ee153a0b34eb8414a"
+    sha256 sonoma:         "94aecedb7856e532d50dde6da1f5274a8e9e350e3a2d0b27a3fedd83b03a1967"
+    sha256 ventura:        "0a34742c336f7d0fe84290d26c04a472fd5b869da4e47f6947fba52b4c87ac3c"
+    sha256 monterey:       "5ca75fc10106d7f2bc67df49dc16708eb3cdd7c1fc62d75647393e209bf81060"
+    sha256 x86_64_linux:   "8b8befd2218ed485c7e9ea40a3769c05d750e862a258adc5a007f9a12db1bb89"
   end
 
   depends_on "cmake" => :build
@@ -74,11 +74,13 @@ class Clamav < Formula
 
   test do
     assert_match "Database directory: #{var}/lib/clamav", shell_output("#{bin}/clamconf")
+
     (testpath/"freshclam.conf").write <<~EOS
       DNSDatabaseInfo current.cvd.clamav.net
       DatabaseMirror database.clamav.net
     EOS
-    system "#{bin}/freshclam", "--datadir=#{testpath}", "--config-file=#{testpath}/freshclam.conf"
-    system "#{bin}/clamscan", "--database=#{testpath}", testpath
+
+    system bin/"freshclam", "--datadir=#{testpath}", "--config-file=#{testpath}/freshclam.conf"
+    system bin/"clamscan", "--database=#{testpath}", testpath
   end
 end

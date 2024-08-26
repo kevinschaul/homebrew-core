@@ -1,19 +1,19 @@
 class Fn < Formula
   desc "Command-line tool for the fn project"
   homepage "https://fnproject.io"
-  url "https://github.com/fnproject/cli/archive/refs/tags/0.6.31.tar.gz"
-  sha256 "4bc673fceba2b1f372889a9c66049b9705043cc775d1f626b30ac6cbb13ac024"
+  url "https://github.com/fnproject/cli/archive/refs/tags/0.6.34.tar.gz"
+  sha256 "136c9783b6ce10194bdcdebc8aa28ab15efce7d623b33fe0620a9cf32b8b97d7"
   license "Apache-2.0"
   head "https://github.com/fnproject/cli.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "beb3ad37c1a9c92dc37bbe000755eff2631c3bb80067345e9bcc263d6470f99f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5509f3cbb1cbcd73ef3c71cea3201242a86cd8253199710a91998325eb5f73d1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a929414621d4e68f844fb0740d1a6794a294289ebab6c827f690ba67eeddc218"
-    sha256 cellar: :any_skip_relocation, sonoma:         "acf9194fb67bf0018dbdc670e422049e6373876d2c146614c6fb2e18534d5fea"
-    sha256 cellar: :any_skip_relocation, ventura:        "76566d9c8c5671ee3e622b2bc0a6e5babddb045aa2fc81ba33f5e3bfe5c950c0"
-    sha256 cellar: :any_skip_relocation, monterey:       "c5e432daf7f9a66db151e6f7264d5bf7ebf59fe62e29ca36f516d491c4956a4c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a59bbf7f977a37ef855c7501e5e6ee14fe9e313f7231302b5f3c70627408d65d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "eb96ee5b5378ffc71a777074b3356ee88bce54ae046f0cb19060236643e0a4a5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1774841f8fa3f267b2e07fe14c947088b613fa2102fbce9bfe19dabc0a0ba479"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "0c983120de02048e7ffe6557266e0f81d57b19a046090e04af3c9930c7e981a0"
+    sha256 cellar: :any_skip_relocation, sonoma:         "e596a7e0be60952a48de68685a86e027ebb146502564b45a0c035ab6979cc545"
+    sha256 cellar: :any_skip_relocation, ventura:        "e150e791b0ded1e44021333af844049bf24abadd8f619ea8e48beb72b9a629af"
+    sha256 cellar: :any_skip_relocation, monterey:       "c756bbeaeb6874e86a85118c385ca8369ec2dbd45f50a8b4863649df856d00d5"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b58fd86c06271ae9046fd5d367d8452e0ccb940e103a4536279d876d13283e44"
   end
 
   depends_on "go" => :build
@@ -24,7 +24,7 @@ class Fn < Formula
 
   test do
     assert_match version.to_s, shell_output("#{bin}/fn --version")
-    system "#{bin}/fn", "init", "--runtime", "go", "--name", "myfunc"
+    system bin/"fn", "init", "--runtime", "go", "--name", "myfunc"
     assert_predicate testpath/"func.go", :exist?, "expected file func.go doesn't exist"
     assert_predicate testpath/"func.yaml", :exist?, "expected file func.yaml doesn't exist"
     port = free_port

@@ -14,17 +14,31 @@ class Qt < Formula
   head "https://code.qt.io/qt/qt5.git", branch: "dev"
 
   stable do
-    url "https://download.qt.io/official_releases/qt/6.6/6.6.2/single/qt-everywhere-src-6.6.2.tar.xz"
-    mirror "https://qt.mirror.constant.com/archive/qt/6.6/6.6.2/single/qt-everywhere-src-6.6.2.tar.xz"
-    mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.6/6.6.2/single/qt-everywhere-src-6.6.2.tar.xz"
-    sha256 "3c1e42b3073ade1f7adbf06863c01e2c59521b7cc2349df2f74ecd7ebfcb922d"
+    url "https://download.qt.io/official_releases/qt/6.7/6.7.0/single/qt-everywhere-src-6.7.0.tar.xz"
+    mirror "https://qt.mirror.constant.com/archive/qt/6.7/6.7.0/single/qt-everywhere-src-6.7.0.tar.xz"
+    mirror "https://mirrors.ukfast.co.uk/sites/qt.io/archive/qt/6.7/6.7.0/single/qt-everywhere-src-6.7.0.tar.xz"
+    sha256 "bf5089912364f99cf9baf6c109de76a3172eec6267f148c69800575c47f90087"
 
-    # Fix build with newer libc++.
+    # Backport support for FFMpeg 7.
+    # Ref: https://bugreports.qt.io/browse/QTBUG-125227
     patch do
-      url "https://github.com/google/angle/commit/c23029d2fe0a55a5b26cd8005f0bf74943ed3865.patch?full_index=1"
-      sha256 "c6aa0f3237001e9ad9ed17dab671a2f402aa0060012a90349113f6cf9c0c95c1"
-      directory "qtwebengine/src/3rdparty/chromium/third_party/angle"
+      # Use Fedora's backport of https://github.com/qt/qtwebengine-chromium/commit/b30e3535717e1cb970c6e4095b412a2c5fdbce40
+      url "https://src.fedoraproject.org/rpms/qt6-qtwebengine/raw/864539f2140a11fda9bf3ef878a2e627f04f0b2d/f/qtwebengine-fix-building-with-system-ffmpeg.patch"
+      sha256 "70b8c468be1954b8dad59243069c6369d7c6eae332f154d99e3027b9119eb7c5"
+      directory "qtwebengine"
     end
+    patch do
+      url "https://github.com/qt/qtwebengine-chromium/commit/65aaac35d040aef90c2e9f41a651b5a23470e457.patch?full_index=1"
+      sha256 "2875e9c534da34902fb113b4171d7a4960e6bc27f6ad45d49929ecf667856d48"
+      directory "qtwebengine/src/3rdparty"
+    end
+    patch do
+      url "https://github.com/qt/qtwebengine-chromium/commit/d9944bcb991c981574a229e5267e535b4eac8e1c.patch?full_index=1"
+      sha256 "11d8c7db91e76ea886dd0f30aedb3bfb33211f6ba39236d684ad63bfe80682ff"
+      directory "qtwebengine/src/3rdparty"
+    end
+    # Backport of https://github.com/qt/qtwebengine-chromium/commit/afcbb2eab7c5b0329ad0045782768dd2805d6a05
+    patch :DATA
   end
 
   # The first-party website doesn't make version information readily available,
@@ -35,20 +49,20 @@ class Qt < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "b38f05cfe4fa5c500aef53c3c5ea473a74bb1ede45d1780b2319a8a8c6705a88"
-    sha256 cellar: :any,                 arm64_ventura:  "ab22a0f5ab48473cbab19430b6da428ce7f10cb53021a4c52d1d20bffd03c160"
-    sha256 cellar: :any,                 arm64_monterey: "41296897961f7be62e2c3660b2bcad7d1bc42cf0bc1d4527b459795032ef5d26"
-    sha256 cellar: :any,                 sonoma:         "97ae8277d876f50e1606dd8b5bb73e934848ba0e29e61bdc9374c3bab5bcc4ab"
-    sha256 cellar: :any,                 ventura:        "f14630f2e75dfbfc5f2aaa704a174996290c3df08e31832cc3f310dbd1e904f6"
-    sha256 cellar: :any,                 monterey:       "c422a0bd0ef0d4e3faffe44949adbfa1029769ab277ff802712ff9969a6e649c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "75b1bde75ac96973f5c4a333fa0b0b2f1258a8f3bbd780e59334ba183ff4a2e1"
+    sha256 cellar: :any,                 arm64_sonoma:   "e91ea08a9b8cfcbcf43b932875aeb2201eae09806e59655be08685b9acd7624d"
+    sha256 cellar: :any,                 arm64_ventura:  "6ef7081cc3284bfb4e7ec02e5f3aa94150128cab70ddd6ca9e5ddfd9df963d15"
+    sha256 cellar: :any,                 arm64_monterey: "c81a6fa0b3f95518bbb06e1c97332db4c6561bc63e528a3310863cde489d00a0"
+    sha256 cellar: :any,                 sonoma:         "dee140746e16c9d7acb484daa9f957f9cd8b337513573c3a084b3fa7476fcbf0"
+    sha256 cellar: :any,                 ventura:        "6f69293a85e2ce056bf25c9ef54ce6ccedee49f8856dec0cec9c579a3598d727"
+    sha256 cellar: :any,                 monterey:       "7df9c26be7011eae551a272b2256f9525a66a56c5a79007d82514d9b6fb7da4f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4e77123a7c36a4480792d8566a760ec3c80c51fe4c8f0c5171e9dbd83698fed4"
   end
 
   depends_on "cmake" => [:build, :test]
   depends_on "ninja" => :build
   depends_on "node" => :build
   depends_on "pkg-config" => :build
-  depends_on "python@3.11" => :build # Python 3.12 needs newer Chromium without imp usage (maybe 118 or 120)
+  depends_on "python@3.12" => :build
   depends_on "vulkan-headers" => [:build, :test]
   depends_on "vulkan-loader" => [:build, :test]
   depends_on xcode: :build
@@ -78,7 +92,6 @@ class Qt < Formula
   uses_from_macos "bison" => :build
   uses_from_macos "flex" => :build
   uses_from_macos "gperf" => :build
-  uses_from_macos "llvm" => :test # Our test relies on `clang++` in `PATH`.
 
   uses_from_macos "cups"
   uses_from_macos "krb5"
@@ -93,7 +106,7 @@ class Qt < Formula
     depends_on "alsa-lib"
     depends_on "at-spi2-core"
     # TODO: depends_on "bluez"
-    depends_on "ffmpeg@6"
+    depends_on "ffmpeg"
     depends_on "fontconfig"
     depends_on "gstreamer"
     # TODO: depends_on "gypsy"
@@ -118,6 +131,7 @@ class Qt < Formula
     depends_on "systemd"
     depends_on "wayland"
     depends_on "xcb-util"
+    depends_on "xcb-util-cursor"
     depends_on "xcb-util-image"
     depends_on "xcb-util-keysyms"
     depends_on "xcb-util-renderutil"
@@ -141,18 +155,26 @@ class Qt < Formula
     sha256 "b36a1c245f2d304965eb4e0a82848379241dc04b865afcc4aab16748587e1923"
   end
 
+  # Backport fix to allow QtWebEngine to build with ninja>=1.12.0.
+  # Issue ref: https://bugreports.qt.io/browse/QTBUG-124375
+  patch do
+    url "https://github.com/qt/qtwebengine-chromium/commit/a766045f65f934df3b5f1aa63bc86fbb3e003a09.patch?full_index=1"
+    sha256 "4d097145bf99a61704a99bf3e4b449b9bf613ae1f06efdcf44b881a045c5230c"
+    directory "qtwebengine/src/3rdparty"
+  end
+
   def install
+    python3 = "python3.12"
+
     # Allow -march options to be passed through, as Qt builds
     # arch-specific code with runtime detection of capabilities:
     # https://bugreports.qt.io/browse/QTBUG-113391
     ENV.runtime_cpu_detection
 
-    python = "python3.11"
     # Install python dependencies for QtWebEngine
-    venv_root = buildpath/"venv"
-    venv = virtualenv_create(venv_root, python)
+    venv = virtualenv_create(buildpath/"venv", python3)
     venv.pip_install resources
-    ENV.prepend_path "PYTHONPATH", venv_root/Language::Python.site_packages(python)
+    ENV.prepend_path "PYTHONPATH", venv.site_packages
 
     # FIXME: GN requires clang in clangBasePath/bin
     inreplace "qtwebengine/src/3rdparty/chromium/build/toolchain/apple/toolchain.gni",
@@ -187,49 +209,80 @@ class Qt < Formula
       -archdatadir share/qt
       -datadir share/qt
       -examplesdir share/qt/examples
+      -hostdatadir share/qt/mkspecs
       -testsdir share/qt/tests
-
-      -no-feature-relocatable
-      -system-harfbuzz
-      -system-sqlite
 
       -no-sql-mysql
       -no-sql-odbc
       -no-sql-psql
     ]
 
+    # We prefer CMake `-DQT_FEATURE_system*=ON` arg over configure `-system-*` arg
+    # since the latter may be ignored when auto-detection fails.
+    #
+    # We disable clang feature to avoid linkage to `llvm`. This is how we have always
+    # built on macOS and it prevents complicating `llvm` version bumps on Linux.
     cmake_args = std_cmake_args(install_prefix: HOMEBREW_PREFIX, find_framework: "FIRST") + %w[
       -DFEATURE_pkg_config=ON
-      -DINSTALL_MKSPECSDIR=share/qt/mkspecs
+      -DQT_FEATURE_clang=OFF
+      -DQT_FEATURE_relocatable=OFF
+      -DQT_FEATURE_system_assimp=ON
+      -DQT_FEATURE_system_doubleconversion=ON
+      -DQT_FEATURE_system_freetype=ON
+      -DQT_FEATURE_system_harfbuzz=ON
+      -DQT_FEATURE_system_hunspell=ON
+      -DQT_FEATURE_system_jpeg=ON
+      -DQT_FEATURE_system_libb2=ON
+      -DQT_FEATURE_system_pcre2=ON
+      -DQT_FEATURE_system_png=ON
+      -DQT_FEATURE_system_sqlite=ON
+      -DQT_FEATURE_system_tiff=ON
+      -DQT_FEATURE_system_webp=ON
+      -DQT_FEATURE_system_zlib=ON
       -DQT_FEATURE_webengine_proprietary_codecs=ON
       -DQT_FEATURE_webengine_kerberos=ON
       -DQT_ALLOW_SYMLINK_IN_PATHS=ON
     ]
 
-    if OS.mac?
-      # Fix a regression in Qt 6.5.2 w.r.t. system libpng
-      # https://bugreports.qt.io/browse/QTBUG-115357
-      cmake_args << "-DQT_FEATURE_webengine_system_libpng=OFF"
-
-      cmake_args << "-DCMAKE_OSX_DEPLOYMENT_TARGET=#{MacOS.version}.0"
+    cmake_args += if OS.mac?
       config_args << "-sysroot" << MacOS.sdk_path.to_s
       # NOTE: `chromium` should be built with the latest SDK because it uses
       # `___builtin_available` to ensure compatibility.
       config_args << "-skip" << "qtwebengine" if DevelopmentTools.clang_build_version <= 1200
+
+      # FIXME: `-DQT_FEATURE_webengine_vulkan=OFF` is a workaround for
+      # error: use of undeclared identifier 'importMemoryHandleInfo'
+      # Remove once properly handled by Qt.
+      %W[
+        -DCMAKE_OSX_DEPLOYMENT_TARGET=#{MacOS.version}.0
+        -DQT_FEATURE_ffmpeg=OFF
+        -DQT_FEATURE_webengine_vulkan=OFF
+      ]
     else
       # Explicitly specify QT_BUILD_INTERNALS_RELOCATABLE_INSTALL_PREFIX so
       # that cmake does not think $HOMEBREW_PREFIX/lib is the install prefix.
-      cmake_args << "-DQT_BUILD_INTERNALS_RELOCATABLE_INSTALL_PREFIX=#{prefix}"
-
-      # The vendored copy of libjpeg is also used instead of the brewed copy, because the build
-      # fails due to a missing symbol otherwise.
-      # On macOS chromium will always use bundled copies and the QT_FEATURE_webengine_system_*
-      # arguments are ignored.
-      cmake_args += %w[
+      #
+      # For QtWebEngine arguments:
+      # * The vendored copy of `libvpx` is used for VA-API hardware acceleration,
+      #   see https://codereview.qt-project.org/c/qt/qtwebengine/+/454908
+      # * The vendored copy of `re2` is used to avoid rebuilds with `re2` version
+      #   bumps and due to frequent API incompatibilities in Qt's copy of Chromium
+      # * On macOS Chromium will always use bundled copies and the
+      #   -DQT_FEATURE_webengine_system_*=ON arguments are ignored.
+      # * As of Qt 6.6.0, webengine_ozone_x11 feature appears to be mandatory for Linux.
+      %W[
+        -DQT_BUILD_INTERNALS_RELOCATABLE_INSTALL_PREFIX=#{prefix}
+        -DQT_FEATURE_xcb=ON
+        -DQT_FEATURE_system_xcb_xinput=ON
+        -DQT_FEATURE_webengine_ozone_x11=ON
         -DQT_FEATURE_webengine_system_alsa=ON
         -DQT_FEATURE_webengine_system_ffmpeg=ON
+        -DQT_FEATURE_webengine_system_freetype=ON
+        -DQT_FEATURE_webengine_system_harfbuzz=ON
         -DQT_FEATURE_webengine_system_icu=ON
+        -DQT_FEATURE_webengine_system_lcms2=ON
         -DQT_FEATURE_webengine_system_libevent=ON
+        -DQT_FEATURE_webengine_system_libjpeg=ON
         -DQT_FEATURE_webengine_system_libpng=ON
         -DQT_FEATURE_webengine_system_libxml=ON
         -DQT_FEATURE_webengine_system_libwebp=ON
@@ -237,11 +290,9 @@ class Qt < Formula
         -DQT_FEATURE_webengine_system_opus=ON
         -DQT_FEATURE_webengine_system_poppler=ON
         -DQT_FEATURE_webengine_system_pulseaudio=ON
+        -DQT_FEATURE_webengine_system_snappy=ON
         -DQT_FEATURE_webengine_system_zlib=ON
       ]
-
-      # As of Qt 6.6.0, this feature appears to be mandatory for Linux.
-      cmake_args << "-DQT_FEATURE_webengine_ozone_x11=ON"
     end
 
     system "./configure", *config_args, "--", *cmake_args
@@ -341,7 +392,7 @@ class Qt < Formula
         3DCore Svg Quick3D Network NetworkAuth WebEngineCore REQUIRED)
 
       add_executable(test
-          main.cpp
+        main.cpp
       )
 
       target_link_libraries(test PRIVATE Qt6::Core Qt6::Widgets
@@ -402,7 +453,7 @@ class Qt < Formula
       }
     EOS
 
-    ENV["QT_VULKAN_LIB"] = Formula["vulkan-loader"].opt_lib/(shared_library "libvulkan")
+    ENV["QT_VULKAN_LIB"] = Formula["vulkan-loader"].opt_lib/shared_library("libvulkan")
     ENV["QT_QPA_PLATFORM"] = "minimal" if OS.linux? && ENV["HOMEBREW_GITHUB_ACTIONS"]
 
     system "cmake", testpath
@@ -415,3 +466,94 @@ class Qt < Formula
     system "./test"
   end
 end
+
+__END__
+diff --git a/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.cc b/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.cc
+index aaab17bdc3b9c157981f2708c680eea03657f211..737ba737872ca5df4ee9a5efe03d17573a1f2e49 100644
+--- a/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.cc
++++ b/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.cc
+@@ -142,7 +142,7 @@ bool FFmpegVideoDecoder::IsCodecSupported(VideoCodec codec) {
+ }
+
+ FFmpegVideoDecoder::FFmpegVideoDecoder(MediaLog* media_log)
+-    : media_log_(media_log) {
++    : media_log_(media_log), timestamp_map_(128) {
+   DVLOG(1) << __func__;
+   DETACH_FROM_SEQUENCE(sequence_checker_);
+ }
+@@ -371,8 +371,10 @@ bool FFmpegVideoDecoder::FFmpegDecode(const DecoderBuffer& buffer) {
+     DCHECK(packet->data);
+     DCHECK_GT(packet->size, 0);
+
+-    // Let FFmpeg handle presentation timestamp reordering.
+-    codec_context_->reordered_opaque = buffer.timestamp().InMicroseconds();
++    const int64_t timestamp = buffer.timestamp().InMicroseconds();
++    const TimestampId timestamp_id = timestamp_id_generator_.GenerateNextId();
++    timestamp_map_.Put(std::make_pair(timestamp_id, timestamp));
++    packet->opaque = reinterpret_cast<void*>(timestamp_id.GetUnsafeValue());
+   }
+   FFmpegDecodingLoop::DecodeStatus decode_status = decoding_loop_->DecodePacket(
+       packet, base::BindRepeating(&FFmpegVideoDecoder::OnNewFrame,
+@@ -431,7 +433,12 @@ bool FFmpegVideoDecoder::OnNewFrame(AVFrame* frame) {
+   }
+   gfx::Size natural_size = aspect_ratio.GetNaturalSize(visible_rect);
+
+-  const auto pts = base::Microseconds(frame->reordered_opaque);
++  const auto ts_id = TimestampId(reinterpret_cast<size_t>(frame->opaque));
++  const auto ts_lookup = timestamp_map_.Get(ts_id);
++  if (ts_lookup == timestamp_map_.end()) {
++    return false;
++  }
++  const auto pts = base::Microseconds(std::get<1>(*ts_lookup));
+   auto video_frame = VideoFrame::WrapExternalDataWithLayout(
+       opaque->layout, visible_rect, natural_size, opaque->data, opaque->size,
+       pts);
+@@ -506,8 +513,10 @@ bool FFmpegVideoDecoder::ConfigureDecoder(const VideoDecoderConfig& config,
+   codec_context_->thread_count = GetFFmpegVideoDecoderThreadCount(config);
+   codec_context_->thread_type =
+       FF_THREAD_SLICE | (low_delay ? 0 : FF_THREAD_FRAME);
++
+   codec_context_->opaque = this;
+   codec_context_->get_buffer2 = GetVideoBufferImpl;
++  codec_context_->flags |= AV_CODEC_FLAG_COPY_OPAQUE;
+
+   if (decode_nalus_)
+     codec_context_->flags2 |= AV_CODEC_FLAG2_CHUNKS;
+diff --git a/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.h b/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.h
+index d02cb89c3ddf7cee0d1a79ee095eae5f52ff5111..0a2de1c623ffff7dc9c5d381344714e9ee3d2f2a 100644
+--- a/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.h
++++ b/qtwebengine/src/3rdparty/chromium/media/filters/ffmpeg_video_decoder.h
+@@ -7,10 +7,12 @@
+
+ #include <memory>
+
++#include "base/containers/lru_cache.h"
+ #include "base/functional/callback.h"
+ #include "base/memory/raw_ptr.h"
+ #include "base/memory/scoped_refptr.h"
+ #include "base/sequence_checker.h"
++#include "base/types/id_type.h"
+ #include "media/base/supported_video_decoder_config.h"
+ #include "media/base/video_decoder.h"
+ #include "media/base/video_decoder_config.h"
+@@ -87,6 +89,20 @@ class MEDIA_EXPORT FFmpegVideoDecoder : public VideoDecoder {
+   // FFmpeg structures owned by this object.
+   std::unique_ptr<AVCodecContext, ScopedPtrAVFreeContext> codec_context_;
+
++  // The gist here is that timestamps need to be 64 bits to store microsecond
++  // precision. A 32 bit integer would overflow at ~35 minutes at this level of
++  // precision. We can't cast the timestamp to the void ptr object used by the
++  // opaque field in ffmpeg then, because it would lose data on a 32 bit build.
++  // However, we don't actually have 2^31 timestamped frames in a single
++  // playback, so it's fine to use the 32 bit value as a key in a map which
++  // contains the actual timestamps. Additionally, we've in the past set 128
++  // outstanding frames for re-ordering as a limit for cross-thread decoding
++  // tasks, so we'll do that here too with the LRU cache.
++  using TimestampId = base::IdType<int64_t, size_t, 0>;
++
++  TimestampId::Generator timestamp_id_generator_;
++  base::LRUCache<TimestampId, int64_t> timestamp_map_;
++
+   VideoDecoderConfig config_;
+
+   scoped_refptr<FrameBufferPool> frame_pool_;

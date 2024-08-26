@@ -1,8 +1,8 @@
 class NodeAT20 < Formula
   desc "Platform built on V8 to build network applications"
   homepage "https://nodejs.org/"
-  url "https://nodejs.org/dist/v20.12.1/node-v20.12.1.tar.xz"
-  sha256 "6840d490ba4d1d51655e0fbe1209956a15db405510d7ea166bad98a8c9d37a4e"
+  url "https://nodejs.org/dist/v20.17.0/node-v20.17.0.tar.xz"
+  sha256 "9abf03ac23362c60387ebb633a516303637145cb3c177be3348b16880fd8b28c"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,13 @@ class NodeAT20 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "f3bef54651aa0074f18b830a72794c94c030217b738c167ef1abc8568910a8bf"
-    sha256 arm64_ventura:  "1cea32d0434b754be096faaed1fcb7d4c7d63fbf7f755018672580593528477c"
-    sha256 arm64_monterey: "eb5f65e1a0dc68a65684a3e75998260187651731a572cc9b55fc6c3780591274"
-    sha256 sonoma:         "5a6e1191103773e34d5c791ea3d5db5dcc21f07f6c4430e46b525c1b356eb32e"
-    sha256 ventura:        "33b37db7bc7392c53c8ed42ef143fa6b657ac7fdb574eb10dc253d3609c2619b"
-    sha256 monterey:       "247a3aacced9ee6188755b1c210ce8a82c026316742107fc5ea0b17c6a31d65e"
-    sha256 x86_64_linux:   "1e67b8935838a0bf02d92db8b7f617758a2687615e163d239df88e1cf508ae44"
+    sha256 arm64_sonoma:   "69e82b4f11cf002776892d0576fedd78a77b03dbbc5712163dad46859d40a18d"
+    sha256 arm64_ventura:  "400af32a0afc9de914df08a3170c5ad751f7fa5c659e4f75f57845a98c92f6b7"
+    sha256 arm64_monterey: "a89cd12cb649ba14bca37c882c4c709c18d0c276a36393676669da51e609446a"
+    sha256 sonoma:         "a66f44eaca2b373732556ff45bbb3434e84736a40aa85bd894d0edfcc9fc8b42"
+    sha256 ventura:        "53b736b679ac8da42dcbd1d92097d6ffd9e763b0176920309073e1723ad74e74"
+    sha256 monterey:       "865409db21de6a591aef15bc03ec627e44287e78506bfcd628020c84f9b3a062"
+    sha256 x86_64_linux:   "7a7686cab5b96cf61ae8af6d95d2ab2162f12b82ed0fcc9f2136ef9219a3a2db"
   end
 
   keg_only :versioned_formula
@@ -27,7 +27,6 @@ class NodeAT20 < Formula
   deprecate! date: "2025-10-28", because: :unsupported
 
   depends_on "pkg-config" => :build
-  depends_on "python-setuptools" => :build
   depends_on "python@3.12" => :build
   depends_on "brotli"
   depends_on "c-ares"
@@ -120,7 +119,7 @@ class NodeAT20 < Formula
     assert_predicate bin/"npm", :executable?, "npm must be executable"
     npm_args = ["-ddd", "--cache=#{HOMEBREW_CACHE}/npm_cache", "--build-from-source"]
     system bin/"npm", *npm_args, "install", "npm@latest"
-    system bin/"npm", *npm_args, "install", "ref-napi" unless head?
+    system bin/"npm", *npm_args, "install", "ref-napi"
     assert_predicate bin/"npx", :exist?, "npx must exist"
     assert_predicate bin/"npx", :executable?, "npx must be executable"
     assert_match "< hello >", shell_output("#{bin}/npx --yes cowsay hello")

@@ -1,18 +1,18 @@
 class GoCamo < Formula
   desc "Secure image proxy server"
   homepage "https://github.com/cactus/go-camo"
-  url "https://github.com/cactus/go-camo/archive/refs/tags/v2.4.11.tar.gz"
-  sha256 "aad1d60112779aed4643c69f83feeb83722578986f3ea12d5b74d1f999c1f0c0"
+  url "https://github.com/cactus/go-camo/archive/refs/tags/v2.5.1.tar.gz"
+  sha256 "1aa9a052cd787da3bddbaed90c67210df72b4a615daa79488eac63b8d5beeac9"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a8518fa5cda3bf97a38cb0fcf860c2395416a570ccc702cafe235544dad3a78e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a8518fa5cda3bf97a38cb0fcf860c2395416a570ccc702cafe235544dad3a78e"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a8518fa5cda3bf97a38cb0fcf860c2395416a570ccc702cafe235544dad3a78e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "38a1f5f4d87b8ab3483306cd5d2a8c78fec415e9efb93e2a2af9a15eead98b52"
-    sha256 cellar: :any_skip_relocation, ventura:        "38a1f5f4d87b8ab3483306cd5d2a8c78fec415e9efb93e2a2af9a15eead98b52"
-    sha256 cellar: :any_skip_relocation, monterey:       "38a1f5f4d87b8ab3483306cd5d2a8c78fec415e9efb93e2a2af9a15eead98b52"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b6a1d61f2cfd083f9f60e9bcf311f4d76a40a27e7cd898b9ea427ef4c4338965"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "7db930aad26e38df0d568048470de4d846c5164b5aaefb61210972bd2c5f6787"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7db930aad26e38df0d568048470de4d846c5164b5aaefb61210972bd2c5f6787"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7db930aad26e38df0d568048470de4d846c5164b5aaefb61210972bd2c5f6787"
+    sha256 cellar: :any_skip_relocation, sonoma:         "78bc6472492330ae6f4d3ab485c3084c642c6e9efb1c50216b42f85444841c3a"
+    sha256 cellar: :any_skip_relocation, ventura:        "78bc6472492330ae6f4d3ab485c3084c642c6e9efb1c50216b42f85444841c3a"
+    sha256 cellar: :any_skip_relocation, monterey:       "78bc6472492330ae6f4d3ab485c3084c642c6e9efb1c50216b42f85444841c3a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b73738c6a888a22ecae35f9a953cd3b56540f01893b41ff23f4de4de43cf0440"
   end
 
   depends_on "go" => :build
@@ -30,7 +30,7 @@ class GoCamo < Formula
     sleep 1
     assert_match "200 OK", shell_output("curl -sI http://localhost:#{port}/metrics")
 
-    url = "http://golang.org/doc/gopher/frontpage.png"
+    url = "https://golang.org/doc/gopher/frontpage.png"
     encoded = shell_output("#{bin}/url-tool -k 'test' encode -p 'https://img.example.org' '#{url}'").chomp
     decoded = shell_output("#{bin}/url-tool -k 'test' decode '#{encoded}'").chomp
     assert_equal url, decoded

@@ -1,8 +1,8 @@
 class Mawk < Formula
   desc "Interpreter for the AWK Programming Language"
   homepage "https://invisible-island.net/mawk/"
-  url "https://invisible-mirror.net/archives/mawk/mawk-1.3.4-20240123.tgz"
-  sha256 "a8e319a83744b1f1fb6988dfa189d61887f866e9140cc9a49eb003b2b0655e88"
+  url "https://invisible-mirror.net/archives/mawk/mawk-1.3.4-20240819.tgz"
+  sha256 "6e1fde8ee7ad8a5c15382316863fd6b4c6d23fab781dd5ab0177ffa3ee9aae5c"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,13 +11,13 @@ class Mawk < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "87cdbd179ee1d059becf026dedaf803f58d967b323f74ff3eb846532231f118f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "057db0aa8e071e3f22ac5bae73d91f3260f1a313fbf3546e82337563313aad85"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "999282dc0302c6edc8b63ff4d4fbc590d6bc718e48736b4c5d0f21fc9f16c4be"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0398aec6314c7a30855a0c5d3ba958dc21b81fbe33c6d1c2f9e403278bd7a1a7"
-    sha256 cellar: :any_skip_relocation, ventura:        "e52b3d6b5be1915a08cb43d49152ffa897d0ced32615f5b4c5a49e235a043529"
-    sha256 cellar: :any_skip_relocation, monterey:       "5978bbc4cfcf2f229e2e7ae1ec7d3f1209e4802c503c014cdd382a22bffae66a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7ea58859198dbd4b5b250b79c134a6a40251e08ec8b69c50d67fd24432bc638d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b909ad5d59d6d8ea70bb34ff898bfd6c96a5a1e3526996320033cfa2012c79eb"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "46d31aac577fc4cfe955a4f5c4e6a84701a53280cc0db8fc49ec2a05d4a2ab2b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "db5f5001ae4e3298474c1bf3c931ef405b200f3fe13a95ae77bb500e95c40dd1"
+    sha256 cellar: :any_skip_relocation, sonoma:         "da06fbbbd3a1a453db1767ac80bd83ccc8a3598e0557f836a52dbb70cb1a9f41"
+    sha256 cellar: :any_skip_relocation, ventura:        "04eb27368fccac1a4e6656eadedcc29fe4a6db9c7b35a3ea27910263567ae058"
+    sha256 cellar: :any_skip_relocation, monterey:       "742aec50aa51412f356edef9ae1fe6bdc042e8d85310a6b922b445e819e47d6a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9b127e2aef4d1e96aa1a9206d5b7b3ba367dcd442987e304fc403d687150da95"
   end
 
   def install

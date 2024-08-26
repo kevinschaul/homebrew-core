@@ -2,8 +2,8 @@ class Zeek < Formula
   desc "Network security monitor"
   homepage "https://www.zeek.org"
   url "https://github.com/zeek/zeek.git",
-      tag:      "v6.2.0",
-      revision: "e90c6e4d0bd6a60af0c5cea9f89b8ce6afff9827"
+      tag:      "v7.0.0",
+      revision: "d1f6e91988c0eacf2c7a75ef7817f6c128be8445"
   license "BSD-3-Clause"
   head "https://github.com/zeek/zeek.git", branch: "master"
 
@@ -13,13 +13,13 @@ class Zeek < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "a4fe1e0c29d37e29409fbdaf76006e6f2a5a3f59b50e6ee189b5c38933a36f76"
-    sha256 arm64_ventura:  "ddc90c194bf7312fc41effb57beefc3abc94beb36badf735c849b968e6a7f5c3"
-    sha256 arm64_monterey: "487d2add970f8f5736e0b93f5144deb3ccb7841b97bae2bd93eeab397e0cb83a"
-    sha256 sonoma:         "d84fdfcaa30b026b7ca0e2256a52100c0563ee72b305a972a7173e41a4a989ce"
-    sha256 ventura:        "ab23d66f22d056a807f7faa23b975b2b037666918014cd845cd3e1d73c71eda6"
-    sha256 monterey:       "1ea3ab15c0b9376ad6866e4040643c3e47121045a29e87c6957551cdcde19701"
-    sha256 x86_64_linux:   "3e4ec1678b96f46a8567e4926f19fa55f887e0dcca1c5a418edbe075130dbb76"
+    sha256 arm64_sonoma:   "d5b9fd7c57d909b8d1a69b2bed7bb410b4221214212b624874ee6047595ec020"
+    sha256 arm64_ventura:  "eecc2726f8f38dbb007412358d1c94f58106ea6e7f584700cb8852fdab2bac2c"
+    sha256 arm64_monterey: "f8737f7ee7af38b70be2b8934623876a20aaba81b7eca3fdcdcef902b290e700"
+    sha256 sonoma:         "9e8e44d15df6340ad0d990613c14ea8726695e49d15e75f122b5cb8e64b811f7"
+    sha256 ventura:        "a76991d2fb24dc8ec84124d7078749c7b96d6ebd18614cfc59cb06bee8af875f"
+    sha256 monterey:       "a937eb54f73c9e548e4d082ae5e4a9578100e4111edc01d4b59921c3b97e89d6"
+    sha256 x86_64_linux:   "7e52813e075ac7849b9906457abbb1d2fcfe92948b6768db144853baaca85d5e"
   end
 
   depends_on "bison" => :build
@@ -32,6 +32,7 @@ class Zeek < Formula
   depends_on "openssl@3"
   depends_on "python@3.12"
 
+  uses_from_macos "krb5"
   uses_from_macos "libpcap"
   uses_from_macos "libxcrypt"
   uses_from_macos "zlib"

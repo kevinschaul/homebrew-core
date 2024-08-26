@@ -1,8 +1,8 @@
 class Monetdb < Formula
   desc "Column-store database"
   homepage "https://www.monetdb.org/"
-  url "https://www.monetdb.org/downloads/sources/Dec2023-SP1/MonetDB-11.49.5.tar.xz"
-  sha256 "44a6299c45431bde2966c06ab3e40a34b593145e3c3aa6f08a3ec131d91ab7ab"
+  url "https://www.monetdb.org/downloads/sources/Aug2024/MonetDB-11.51.3.tar.xz"
+  sha256 "2f4499349e7917e12ec5d2d33d477bb50b4a302485cfcce1ca20129c7e791264"
   license "MPL-2.0"
   head "https://dev.monetdb.org/hg/MonetDB", using: :hg
 
@@ -12,13 +12,13 @@ class Monetdb < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "336b20d1ffeaa7b34327044fbdbac0246790efbf6facc38b6d5afa4eb69b7dcc"
-    sha256 arm64_ventura:  "31dd2741dd9f5e530c86416815fd3bf377c54e8dcb809ccd729774ab42e9ba96"
-    sha256 arm64_monterey: "eb79b56cabc01c0dc302585fb26ef543e5a49b3f7120c6d00e85533eb6dc3a29"
-    sha256 sonoma:         "3f7020ec4bc81578af0b3d404f6cfc8457b9570c4ece76dc01a5e7a01db04605"
-    sha256 ventura:        "06bce53afb3601d435a871fe95279d84fe809f738fd940365d90b10ac539c1a1"
-    sha256 monterey:       "6c300e106b00522af7372f01e36cd46ac324c9ebe261cbdc3863206a1cd0ea3f"
-    sha256 x86_64_linux:   "dee49b401f9223551cbd6b8c6c8ad9b39ff6e90f81fb8cbe32df0bbc7e59fd56"
+    sha256 arm64_sonoma:   "e0614266a5bec3fb9cb384151619f90cd029069a8ad1a2e7218db2fe31c56d26"
+    sha256 arm64_ventura:  "65981cd668538e4b9d79a8cd6297594a8c65e8cac03358d86e56620691cabbe7"
+    sha256 arm64_monterey: "854708fc0d738d4d4bb4e8a18b0b1e6febcf81b3643a9f83a7e423d6ab39958d"
+    sha256 sonoma:         "7d67c99b5bc5ecb03c06f0d96af1119730e7ce0c4e84a9a213da3ac1b330b187"
+    sha256 ventura:        "61fd24dc0a7e50526d29dc28a642904827ad1cc921c6ebbd1c1c52fe0bfc0ca8"
+    sha256 monterey:       "f3e27bb257cbe9f74b7564c9b2d17b26847ec588f702de6249786c9ad42a3ed8"
+    sha256 x86_64_linux:   "70f646cdad185a3ffebc909386b43fb2035e4ee81e7c03ff1ce3ae6ac4470f05"
   end
 
   depends_on "bison" => :build # macOS bison is too old
@@ -54,7 +54,6 @@ class Monetdb < Formula
                       "-DWITH_OPENSSL=ON",
                       "-DWITH_PCRE=ON",
                       "-DWITH_PROJ=OFF",
-                      "-DWITH_SNAPPY=OFF",
                       "-DWITH_XML2=ON",
                       "-DWITH_ZLIB=ON"
       # remove reference to shims directory from compilation/linking info

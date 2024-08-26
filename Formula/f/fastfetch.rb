@@ -1,8 +1,8 @@
 class Fastfetch < Formula
   desc "Like neofetch, but much faster because written mostly in C"
   homepage "https://github.com/fastfetch-cli/fastfetch"
-  url "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/2.9.1.tar.gz"
-  sha256 "f22bb197095ea80c4aa17e1d4b5e0dd6e79234f4a18f427691c7e6f93a812ac8"
+  url "https://github.com/fastfetch-cli/fastfetch/archive/refs/tags/2.22.0.tar.gz"
+  sha256 "ada2d56e14ce2eadaa88573dada5881684ceeaaa11df23017631b91dfa745d00"
   license "MIT"
   head "https://github.com/fastfetch-cli/fastfetch.git", branch: "dev"
 
@@ -12,13 +12,13 @@ class Fastfetch < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "cfa60d00023573bbc1c5a9cc73baba9e1e428d0e538b7762c26865c5f0b08b0a"
-    sha256 arm64_ventura:  "84fb18bf889b4f5d1339504b223eb6bbcb65069b1b7a236e1970e3e40e36d3dd"
-    sha256 arm64_monterey: "91b856bf5d3928f7b02c4a3bf2d2307773fa502c6545f2bc563e9547509c8326"
-    sha256 sonoma:         "db86e3c273dfb2987db0718e0f70e69c204da53e40c64c427b3ff1fc92a90496"
-    sha256 ventura:        "8f68d2ec7f3ab2bb93b3d353e899426dadcffbd7773bddc409a3370c3e59d11e"
-    sha256 monterey:       "66f94e3c1aa9c58e22025548694db5d22afbf6a59561a9685c1086c3fdf0e627"
-    sha256 x86_64_linux:   "f808d3848a17a97c7fa1597f5493bf17dc8c211e9132edd406cfbedfbeb14bac"
+    sha256 arm64_sonoma:   "406949e2d44fc658ae5f0a796722d7c0c19095d841066e426c0f80f84e1d6ed4"
+    sha256 arm64_ventura:  "5b8eb6963bb5c8523fb7f052c8d9d89b448401fbdd37debb2d5ddb5ab6fd7983"
+    sha256 arm64_monterey: "973c68470c08963738819c5324996ce200bf63e8ea69ce51a9eceabad1c45f6f"
+    sha256 sonoma:         "9dd81d60b62ec7720913acb91298fd37f449f53d9cbf15859ef2d92fcb0b7ccd"
+    sha256 ventura:        "fd6690ca583613e8a14f441b71bc378c9a861d61ebf7c2c7c07c78418e3eacd6"
+    sha256 monterey:       "1a06bf74aeec16a4d4559141c23ad8473f9e07ec6322589e7fcbfe511ba67803"
+    sha256 x86_64_linux:   "2615c949d9c4f71b74fbd075f350bfac1fdeae1ae0f2b9a1511629e3c8824115"
   end
 
   depends_on "chafa" => :build
@@ -35,13 +35,14 @@ class Fastfetch < Formula
   on_linux do
     depends_on "dbus" => :build
     depends_on "ddcutil" => :build
+    depends_on "elfutils" => :build
     depends_on "libdrm" => :build
     depends_on "libx11" => :build
     depends_on "libxcb" => :build
     depends_on "libxrandr" => :build
+    depends_on "linux-headers@5.15" => :build
     depends_on "mesa" => :build
     depends_on "opencl-icd-loader" => :build
-    depends_on "pciutils" => :build
     depends_on "pulseaudio" => :build
     depends_on "rpm" => :build
     depends_on "wayland" => :build

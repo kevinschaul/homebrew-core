@@ -3,18 +3,20 @@ class Sysaidmin < Formula
 
   desc "GPT-powered sysadmin"
   homepage "https://github.com/skorokithakis/sysaidmin"
-  url "https://files.pythonhosted.org/packages/1d/20/83d3990757074c4e43f29da3f306d3ab5e25edcb4bf31aca14ebb4591e4a/sysaidmin-0.2.0.tar.gz"
-  sha256 "7e91afa743d60b1b7c9bb5ff6d9b5edc0774bafb687e9b7e550fda0e3acf5aed"
+  url "https://files.pythonhosted.org/packages/64/c7/9f23e1bef4cd534f6efbddada2c3da089dbb6f15b5ecb51f089b6c196c9b/sysaidmin-0.2.1.tar.gz"
+  sha256 "37f8a58c35c3fed39430c83c563e43c709cfaed6cefe23a2f1564d504597a56d"
   license "AGPL-3.0-or-later"
+  revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "4fb9c302497179f9cb51abd6d379ab0e2c7e79c940f8b5efe98c7fe0e56c12d4"
-    sha256 cellar: :any,                 arm64_ventura:  "27d4081785eb8389aa07f995fd178b1e8e75264540be237a91b75ec4a7eb0cf9"
-    sha256 cellar: :any,                 arm64_monterey: "7676f2a22f2282097a1f034d375f1cb76451dc8adc2a912a2a12a92e497548d4"
-    sha256 cellar: :any,                 sonoma:         "6d0cfd48b68ed6da09fa894db866cd3b1ad6d764eec500b28e9483849397c850"
-    sha256 cellar: :any,                 ventura:        "4eea2c2e62d727a5a2e909fe4f6cabc66d9940c2fc69bdc7c2c858d99f32a785"
-    sha256 cellar: :any,                 monterey:       "76652c90ea831bc1eb4574fd7e4d7725009e8a8ead411fdd5af3856ac712b696"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6f2d699ea60b37f82fae235c6ed47cca0f6729fb6d012784ed448c37bae738fa"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sonoma:   "0a4a74558e6fa430a60758712b68e6431e56c5ac17572b00a34116e13310f0e6"
+    sha256 cellar: :any,                 arm64_ventura:  "1f7354d1417b31d5db762dcc4d5ab21b923872e73fc2a762b710ca7d6fafd2c9"
+    sha256 cellar: :any,                 arm64_monterey: "b7a04bc2191c970194f70bf8b98cfa35de1b54af992d5950f8170f4165d14aef"
+    sha256 cellar: :any,                 sonoma:         "66ad937034d917e162508f0f897b0f36b90995bc8f421a7c3a9dd92c91dacbca"
+    sha256 cellar: :any,                 ventura:        "a8798426727c6f8a487fcb8e872b989a776d7ee41c3f8df0eb75e6ecae751ed4"
+    sha256 cellar: :any,                 monterey:       "fd99435770df0b9aefbd62e55df00bb2d4737aa8a53a96acf2a21cb667ef9157"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e85384e02d58639ef9222788cf3cd789513b3ede9b877c77ed30d37441264b55"
   end
 
   depends_on "rust" => :build # for pydantic_core
@@ -22,13 +24,13 @@ class Sysaidmin < Formula
   depends_on "python@3.12"
 
   resource "annotated-types" do
-    url "https://files.pythonhosted.org/packages/67/fe/8c7b275824c6d2cd17c93ee85d0ee81c090285b6d52f4876ccc47cf9c3c4/annotated_types-0.6.0.tar.gz"
-    sha256 "563339e807e53ffd9c267e99fc6d9ea23eb8443c08f112651963e24e22f84a5d"
+    url "https://files.pythonhosted.org/packages/ee/67/531ea369ba64dcff5ec9c3402f9f51bf748cec26dde048a2f973a4eea7f5/annotated_types-0.7.0.tar.gz"
+    sha256 "aff07c09a53a08bc8cfccb9c85b05f1aa9a2a6f23728d790723543408344ce89"
   end
 
   resource "anyio" do
-    url "https://files.pythonhosted.org/packages/db/4d/3970183622f0330d3c23d9b8a5f52e365e50381fd484d08e3285104333d3/anyio-4.3.0.tar.gz"
-    sha256 "f75253795a87df48568485fd18cdd2a3fa5c4f7c5be8e5e36637733fce06fed6"
+    url "https://files.pythonhosted.org/packages/e6/e3/c4c8d473d6780ef1853d630d581f70d655b4f8d7553c6997958c283039a2/anyio-4.4.0.tar.gz"
+    sha256 "5aadc6a1bbb7cdb0bede386cac5e2940f5e2ff3aa20277e991cf028e0585ce94"
   end
 
   resource "distro" do
@@ -57,23 +59,23 @@ class Sysaidmin < Formula
   end
 
   resource "openai" do
-    url "https://files.pythonhosted.org/packages/74/21/6c17ea073a1643611e99a64934cb7d6f0c5ef74c5bd2ecd9ca8f748867a3/openai-1.17.0.tar.gz"
-    sha256 "72e6758cec080a3e5a9daf843178c975fed656fe0831919f4dd89bb62431724f"
+    url "https://files.pythonhosted.org/packages/8f/23/c02b7184912fa9c634f099531a9879e2c8941cded026a56cb0a79ad76bc3/openai-1.34.0.tar.gz"
+    sha256 "95c8e2da4acd6958e626186957d656597613587195abd0fb2527566a93e76770"
   end
 
   resource "pydantic" do
-    url "https://files.pythonhosted.org/packages/cd/fc/70fe71ff78f680d584eba9c55a30092f6ef0b9cf0c75a74bd35a24151a83/pydantic-2.7.0.tar.gz"
-    sha256 "b5ecdd42262ca2462e2624793551e80911a1e989f462910bb81aef974b4bb383"
+    url "https://files.pythonhosted.org/packages/0d/fc/ccd0e8910bc780f1a4e1ab15e97accbb1f214932e796cff3131f9a943967/pydantic-2.7.4.tar.gz"
+    sha256 "0c84efd9548d545f63ac0060c1e4d39bb9b14db8b3c0652338aecc07b5adec52"
   end
 
   resource "pydantic-core" do
-    url "https://files.pythonhosted.org/packages/3d/28/d693aab237fca82da327990a88a983b2b84b890032076ee4a87e18038dbb/pydantic_core-2.18.1.tar.gz"
-    sha256 "de9d3e8717560eb05e28739d1b35e4eac2e458553a52a301e51352a7ffc86a35"
+    url "https://files.pythonhosted.org/packages/02/d0/622cdfe12fb138d035636f854eb9dc414f7e19340be395799de87c1de6f6/pydantic_core-2.18.4.tar.gz"
+    sha256 "ec3beeada09ff865c344ff3bc2f427f5e6c26401cc6113d77e372c3fdac73864"
   end
 
   resource "setuptools" do
-    url "https://files.pythonhosted.org/packages/4d/5b/dc575711b6b8f2f866131a40d053e30e962e633b332acf7cd2c24843d83d/setuptools-69.2.0.tar.gz"
-    sha256 "0ff4183f8f42cd8fa3acea16c45205521a4ef28f73c6391d8a25e92893134f2e"
+    url "https://files.pythonhosted.org/packages/d6/4f/b10f707e14ef7de524fe1f8988a294fb262a29c9b5b12275c7e188864aed/setuptools-69.5.1.tar.gz"
+    sha256 "6c1fccdac05a97e598fb0ae3bbed5904ccb317337a51139dcd51453611bbb987"
   end
 
   resource "sniffio" do
@@ -82,13 +84,13 @@ class Sysaidmin < Formula
   end
 
   resource "tqdm" do
-    url "https://files.pythonhosted.org/packages/ea/85/3ce0f9f7d3f596e7ea57f4e5ce8c18cb44e4a9daa58ddb46ee0d13d6bff8/tqdm-4.66.2.tar.gz"
-    sha256 "6cd52cdf0fef0e0f543299cfc96fec90d7b8a7e88745f411ec33eb44d5ed3531"
+    url "https://files.pythonhosted.org/packages/5a/c0/b7599d6e13fe0844b0cda01b9aaef9a0e87dbb10b06e4ee255d3fa1c79a2/tqdm-4.66.4.tar.gz"
+    sha256 "e4d936c9de8727928f3be6079590e97d9abfe8d39a590be678eb5919ffc186bb"
   end
 
   resource "typing-extensions" do
-    url "https://files.pythonhosted.org/packages/f6/f3/b827b3ab53b4e3d8513914586dcca61c355fa2ce8252dea4da56e67bf8f2/typing_extensions-4.11.0.tar.gz"
-    sha256 "83f085bd5ca59c80295fc2a82ab5dac679cbe02b9f33f7d83af68e241bea51b0"
+    url "https://files.pythonhosted.org/packages/df/db/f35a00659bc03fec321ba8bce9420de607a1d37f8342eee1863174c69557/typing_extensions-4.12.2.tar.gz"
+    sha256 "1a7ead55c7e559dd4dee8856e3a88b41225abfe1ce8df57b7c13915fe121ffb8"
   end
 
   def install

@@ -1,35 +1,26 @@
 class GoAT121 < Formula
   desc "Open source programming language to build simple/reliable/efficient software"
   homepage "https://go.dev/"
-  url "https://go.dev/dl/go1.21.9.src.tar.gz"
-  mirror "https://fossies.org/linux/misc/go1.21.9.src.tar.gz"
-  sha256 "58f0c5ced45a0012bce2ff7a9df03e128abcc8818ebabe5027bb92bafe20e421"
+  url "https://go.dev/dl/go1.21.13.src.tar.gz"
+  mirror "https://fossies.org/linux/misc/go1.21.13.src.tar.gz"
+  sha256 "71fb31606a1de48d129d591e8717a63e0c5565ffba09a24ea9f899a13214c34d"
   license "BSD-3-Clause"
 
-  livecheck do
-    url "https://go.dev/dl/?mode=json"
-    regex(/^go[._-]?v?(1\.21(?:\.\d+)*)[._-]src\.t.+$/i)
-    strategy :json do |json, regex|
-      json.map do |release|
-        next if release["stable"] != true
-        next if release["files"].none? { |file| file["filename"].match?(regex) }
-
-        release["version"][/(\d+(?:\.\d+)+)/, 1]
-      end
-    end
-  end
-
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "6697373eb3f827ae6be663bef4d8e40fb77ba5444bd2750758034b2455c0e112"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8b7bb33890a2c95fe872c08a0a7d703ac026bd64e0351057c768999327bebdbd"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4e453fd4a64a3a327bb0af1ff248c182c4e86590ef5bbc45291fccaed36af2c7"
-    sha256 cellar: :any_skip_relocation, sonoma:         "21ff92f9139c9c208d59d075f924423cc074099029600e4a3eb0d614e7b4d708"
-    sha256 cellar: :any_skip_relocation, ventura:        "6c56bde935c96314882e083fd91b0258195b70f6e503c7b08339261727441e9d"
-    sha256 cellar: :any_skip_relocation, monterey:       "45935bf32c74bbd6194746c8cf17fd203019c67fa89569b688b92571809cba3c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e9ac5dc39a1a6db538b819b81d33bbe37cc6617211de4b4b9c64d9e42ef07bc2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "753f1a7914bc53660aa8625690faedfe243e1dc0026d0265985321598e188386"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e70be09433f39ccefc348359ddc317acc74fca91bdfef36be59e07aef4d014f1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8c49b9a80d8d0e33df0de46859cf7cc89e27343d0ba7f38d09ffeab8dbb10549"
+    sha256 cellar: :any_skip_relocation, sonoma:         "76bfebd5a396fde119f4046af3d435eb28eac3974475f915e132922502e628b3"
+    sha256 cellar: :any_skip_relocation, ventura:        "1e259f4ba9faf08f6816a32a5404de6fa17f7de93e85de7a12dfdf2a22f1eab6"
+    sha256 cellar: :any_skip_relocation, monterey:       "10591630d63b94757b26c708787b81700ddfc5d5c44280e869a7c8c1cf21574a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e18ce9e4b70b577f4b87a65b18d27858cfa9aa4886a71626013598050a4a1806"
   end
 
   keg_only :versioned_formula
+
+  # EOL with Go 1.23 release (2024-08-13)
+  # Ref: https://go.dev/doc/devel/release#policy
+  deprecate! date: "2024-08-16", because: :unsupported
 
   depends_on "go" => :build
 
@@ -49,9 +40,9 @@ class GoAT121 < Formula
 
     # Remove useless files.
     # Breaks patchelf because folder contains weird debug/test files
-    (libexec/"src/debug/elf/testdata").rmtree
+    rm_r(libexec/"src/debug/elf/testdata")
     # Binaries built for an incompatible architecture
-    (libexec/"src/runtime/pprof/testdata").rmtree
+    rm_r(libexec/"src/runtime/pprof/testdata")
   end
 
   test do

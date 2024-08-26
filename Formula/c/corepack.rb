@@ -1,10 +1,8 @@
 class Corepack < Formula
-  require "language/node"
-
   desc "Package acting as bridge between Node projects and their package managers"
   homepage "https://github.com/nodejs/corepack"
-  url "https://registry.npmjs.org/corepack/-/corepack-0.26.0.tgz"
-  sha256 "0593c2ef1ff4aa4189c970294ca0063f4cbf7dcda936ee5a411ac9bdb5c422d0"
+  url "https://registry.npmjs.org/corepack/-/corepack-0.29.3.tgz"
+  sha256 "63b88391da952a8c977e1e85db734bfa975805cf22c1c5dc5dc9e54eb9eed97e"
   license "MIT"
 
   livecheck do
@@ -13,7 +11,8 @@ class Corepack < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "219e79e0fe176eb914e0d895851558229827911b43ceaa6abfdf08c5971e5067"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, all: "7d90b3f17059a78d6b20c20afe53e1d6d91484af19bff3c8256a61d79b2e3414"
   end
 
   depends_on "node"
@@ -23,7 +22,7 @@ class Corepack < Formula
   conflicts_with "pnpm", because: "both install `pnpm` and `pnpx` binaries"
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 
@@ -35,7 +34,7 @@ class Corepack < Formula
     system bin/"yarn", "add", "fsevents", "--build-from-source=true" if OS.mac?
 
     (testpath/"package.json").delete
-    system "#{bin}/pnpm", "init"
+    system bin/"pnpm", "init"
     assert_predicate testpath/"package.json", :exist?, "package.json must exist"
   end
 end

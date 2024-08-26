@@ -3,25 +3,20 @@ class Dunamai < Formula
 
   desc "Dynamic version generation"
   homepage "https://github.com/mtkennerly/dunamai"
-  url "https://files.pythonhosted.org/packages/04/c6/ca9a7d5365c31e3e8442efe4bd24ced6784ca4b8934b00cdc9f537f700f5/dunamai-1.20.0.tar.gz"
-  sha256 "c3f1ee64a1e6cc9ebc98adafa944efaccd0db32482d2177e59c1ff6bdf23cd70"
+  url "https://files.pythonhosted.org/packages/a0/fe/aee602f08765de4dd753d2e5d6cbd480857182e345f161f7a19ad1979e4d/dunamai-1.22.0.tar.gz"
+  sha256 "375a0b21309336f0d8b6bbaea3e038c36f462318c68795166e31f9873fdad676"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "220d0359c2ab265a889d1e2893769caf2f5b6d9ecbd29c02e042674f04c24f6d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "220d0359c2ab265a889d1e2893769caf2f5b6d9ecbd29c02e042674f04c24f6d"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "220d0359c2ab265a889d1e2893769caf2f5b6d9ecbd29c02e042674f04c24f6d"
-    sha256 cellar: :any_skip_relocation, sonoma:         "220d0359c2ab265a889d1e2893769caf2f5b6d9ecbd29c02e042674f04c24f6d"
-    sha256 cellar: :any_skip_relocation, ventura:        "220d0359c2ab265a889d1e2893769caf2f5b6d9ecbd29c02e042674f04c24f6d"
-    sha256 cellar: :any_skip_relocation, monterey:       "220d0359c2ab265a889d1e2893769caf2f5b6d9ecbd29c02e042674f04c24f6d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a931ddc9fa7f7193476b135e1a2643f9dad810bc07507a54ff79ccdd881356c1"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "c7a9215f66563eafc21eee6b408109e12b5bb924f34d0b51245bd2be72ba999c"
   end
 
   depends_on "python@3.12"
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/ee/b5/b43a27ac7472e1818c4bafd44430e69605baefe1f34440593e0332ec8b4d/packaging-24.0.tar.gz"
-    sha256 "eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"
+    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
+    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
   end
 
   def install

@@ -2,8 +2,8 @@ class Argocd < Formula
   desc "GitOps Continuous Delivery for Kubernetes"
   homepage "https://argoproj.github.io/cd"
   url "https://github.com/argoproj/argo-cd.git",
-      tag:      "v2.10.6",
-      revision: "d504d2b1d92f0cf831a124a5fd1a96ee29fa7679"
+      tag:      "v2.12.2",
+      revision: "560953c37b343c956f3a18f3db7d006e694c0dc4"
   license "Apache-2.0"
 
   # There can be a notable gap between when a version is tagged and a
@@ -18,13 +18,13 @@ class Argocd < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bb8d57b1937f081406f2dee0e813c6c30a568194e509d0de13cab9ff9b3e36dc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4370ac8f9f5983a15e6980024a5cf5f4409485b7e5cb79801eb5cb9500a62920"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "65ecf3152c9b3463789e15721920b31e8314ec3c2f5c2702bf0cb3f93d9b4fe2"
-    sha256 cellar: :any_skip_relocation, sonoma:         "c6dab56fe4a42b3127415dfe7e1a15741a4d3706c60702e0932e73608f320bd1"
-    sha256 cellar: :any_skip_relocation, ventura:        "5992447e29db9177fdf758a81633ceb432e8e116ef76b63e9df09abaa7a15cce"
-    sha256 cellar: :any_skip_relocation, monterey:       "574f01dae160499e519c2563cae60120d564e893b228adb94dfeb591a347eb84"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a2b286b6c024b6a9faa5d0d88bc9ea6b4a38046b6cf6e9e1f44aed701a6ec16d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "ed6a3b379cf68b8195acfbbc915345c086bb8b00b0a1361177b76e2a2b993f04"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "05ca2ac874f374969045e6ec278927a28dc67703f3d3129c261a464117e1c306"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "6fb5da3b5e1f8ddfd5fc50a933aed8ef97ff700a2051f895d234cb5936730368"
+    sha256 cellar: :any_skip_relocation, sonoma:         "364ca45f0c087f1ed0368635e86e73165625ed0a52d630ca5d1d7acb47abf2d7"
+    sha256 cellar: :any_skip_relocation, ventura:        "97dcec6f06c54512f2bbed487bea98f0d8da9db4f9f59c6715d4f283499e9d82"
+    sha256 cellar: :any_skip_relocation, monterey:       "0d463da9216bf5e90d843c087e469b36554192f06c606a0a8aead3e756e56254"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c2a10abc3cd64ea8a352f5376a04b92f1b9dba79bb6b0f431fbd867e5a1a12c5"
   end
 
   depends_on "go" => :build
@@ -42,7 +42,7 @@ class Argocd < Formula
     system "make", "cli-local"
     bin.install "dist/argocd"
 
-    generate_completions_from_executable(bin/"argocd", "completion", shells: [:bash, :zsh])
+    generate_completions_from_executable(bin/"argocd", "completion")
   end
 
   test do

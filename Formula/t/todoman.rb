@@ -22,6 +22,7 @@ class Todoman < Formula
   depends_on "jq" # Needed for ZSH completions.
   depends_on "python@3.12"
 
+  conflicts_with "bash-snippets", because: "both install `todo` binaries"
   conflicts_with "devtodo", because: "both install a `todo` binary"
 
   resource "atomicwrites" do
@@ -98,13 +99,15 @@ class Todoman < Formula
 
   test do
     ENV["LC_ALL"] = "en_US.UTF-8"
+
     (testpath/".config/todoman/config.py").write <<~EOS
       path = "#{testpath}/.calendar/*"
       date_format = "%Y-%m-%d"
       default_list = "Personal"
     EOS
+
     (testpath/".calendar/Personal").mkpath
-    system "#{bin}/todo", "new", "newtodo"
+    system bin/"todo", "new", "newtodo"
     assert_match "newtodo", shell_output("#{bin}/todo list")
   end
 end

@@ -1,19 +1,20 @@
 class PhpCodeSniffer < Formula
   desc "Check coding standards in PHP, JavaScript and CSS"
   homepage "https://github.com/PHPCSStandards/PHP_CodeSniffer"
-  url "https://github.com/PHPCSStandards/PHP_CodeSniffer/releases/download/3.9.1/phpcs.phar"
-  sha256 "665c8459a5e157e1b909ef6561ffedebfe54b42303288c0784755450bbefd232"
+  url "https://github.com/PHPCSStandards/PHP_CodeSniffer/releases/download/3.10.2/phpcs.phar"
+  sha256 "5f580b08328af20a4138a6dcefdbb4c3307e133d9dfbabdf925c08c7d87f18de"
   license "BSD-3-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "997ed2a458bef8142db9103683477f39c29932d6cd0683bc9b355a6452903e66"
+    rebuild 1
+    sha256 cellar: :any_skip_relocation, all: "195960ef111bf7ec5ef4b25b05c544d0690f05b259f31e952f5b82d7c73aa9fb"
   end
 
   depends_on "php"
 
   resource "phpcbf.phar" do
-    url "https://github.com/PHPCSStandards/PHP_CodeSniffer/releases/download/3.9.1/phpcbf.phar"
-    sha256 "040d1d519d49dd47174789ccf12ebbc49f1e109278c11f2a0b968dfd491e0675"
+    url "https://github.com/PHPCSStandards/PHP_CodeSniffer/releases/download/3.10.2/phpcbf.phar"
+    sha256 "7b4b1316ce388600c2a052b41b9badd2d906827f0a08a08873ca5d1063dd1038"
   end
 
   def install
@@ -39,6 +40,6 @@ class PhpCodeSniffer < Formula
 
     assert_match "FOUND 13 ERRORS", shell_output("#{bin}/phpcs --runtime-set ignore_errors_on_exit true test.php")
     assert_match "13 ERRORS WERE FIXED", shell_output("#{bin}/phpcbf test.php", 1)
-    system "#{bin}/phpcs", "test.php"
+    system bin/"phpcs", "test.php"
   end
 end

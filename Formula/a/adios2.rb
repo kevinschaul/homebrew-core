@@ -1,10 +1,10 @@
 class Adios2 < Formula
   desc "Next generation of ADIOS developed in the Exascale Computing Program"
   homepage "https://adios2.readthedocs.io"
-  url "https://github.com/ornladios/ADIOS2/archive/refs/tags/v2.9.2.tar.gz"
-  sha256 "78309297c82a95ee38ed3224c98b93d330128c753a43893f63bbe969320e4979"
+  url "https://github.com/ornladios/ADIOS2/archive/refs/tags/v2.10.1.tar.gz"
+  sha256 "ce776f3a451994f4979c6bd6d946917a749290a37b7433c0254759b02695ad85"
   license "Apache-2.0"
-  revision 2
+  revision 1
   head "https://github.com/ornladios/ADIOS2.git", branch: "master"
 
   livecheck do
@@ -13,13 +13,13 @@ class Adios2 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "adae563be0e6a56fec81f3d396ad4611b818c70a7acc54be504b1a3b0896e652"
-    sha256 arm64_ventura:  "283d482432e189fe6cb1a302089e2615e49a12bfac57db69f087efe80290eae9"
-    sha256 arm64_monterey: "e28f7eb517b74faaefb469e0b7bca433a7f68f04e0bde43743a866f8d3e3effc"
-    sha256 sonoma:         "7933ca4cad6d0c75fa5bf2b7caf4f0675980880c4d259bf31e7294be03d75433"
-    sha256 ventura:        "4a90152c29da3dcb1b329191b3bdb783eb11730b3014864080d93005fdc17534"
-    sha256 monterey:       "e883fb195102fcb4e142baee668cb5532bfb0aec8413e67d35d28575915dd2a4"
-    sha256 x86_64_linux:   "50dab40f7ef2a78b751fc532b74ee32d0c28a0636e1fa5c81fe59450c4806e55"
+    sha256 arm64_sonoma:   "c6173e887d128c8868a087e0cb87c024d6a4eca32509f5de491875d637e18632"
+    sha256 arm64_ventura:  "4063bcd651c2f7e2a7b387a8fbba8962835575e9d087f908a23f62e66a4e463d"
+    sha256 arm64_monterey: "cc1db18103afaa9280c284a63976630445f3b2f1bc7eb0ff2d21300aa817a8d7"
+    sha256 sonoma:         "097a2eebee3f943828cd737fe4973b7029fc6dffa6f7ff0d54143b91944b52c8"
+    sha256 ventura:        "5cdf5e17e24daa2bfa0d641c3d28737ac616237d4637ccc851963a6552d800ea"
+    sha256 monterey:       "cec63f45515bf942144e7d15be9c87606949b42f85dfc9424b1f1be97dda582e"
+    sha256 x86_64_linux:   "d9f8c709fc2a57f9bd8970160862a10b2070fe87cb30705e0758ca1317b17cc4"
   end
 
   depends_on "cmake" => :build
@@ -35,10 +35,12 @@ class Adios2 < Formula
   depends_on "pugixml"
   depends_on "pybind11"
   depends_on "python@3.12"
+  depends_on "sqlite"
   depends_on "yaml-cpp"
   depends_on "zeromq"
 
   uses_from_macos "bzip2"
+  uses_from_macos "zlib"
 
   on_macos do
     depends_on "llvm" => :build if DevelopmentTools.clang_build_version == 1400
@@ -92,18 +94,18 @@ class Adios2 < Formula
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
-    (pkgshare/"test").install "examples/hello/bpWriter/helloBPWriter.cpp"
-    (pkgshare/"test").install "examples/hello/bpWriter/helloBPWriter.py"
+    (pkgshare/"test").install "examples/hello/bpWriter/bpWriter.cpp"
+    (pkgshare/"test").install "examples/hello/bpWriter/bpWriter.py"
   end
 
   test do
     adios2_config_flags = Utils.safe_popen_read(bin/"adios2-config", "--cxx").chomp.split
-    system "mpic++", pkgshare/"test/helloBPWriter.cpp", *adios2_config_flags
+    system "mpic++", pkgshare/"test/bpWriter.cpp", *adios2_config_flags
     system "./a.out"
     assert_predicate testpath/"myVector_cpp.bp", :exist?
 
     system python3, "-c", "import adios2"
-    system python3, pkgshare/"test/helloBPWriter.py"
-    assert_predicate testpath/"npArray.bp", :exist?
+    system python3, pkgshare/"test/bpWriter.py"
+    assert_predicate testpath/"bpWriter-py.bp", :exist?
   end
 end

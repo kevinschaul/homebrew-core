@@ -1,18 +1,18 @@
 class Feroxbuster < Formula
   desc "Fast, simple, recursive content discovery tool written in Rust"
   homepage "https://epi052.github.io/feroxbuster"
-  url "https://github.com/epi052/feroxbuster/archive/refs/tags/v2.10.2.tar.gz"
-  sha256 "c73d26f21431c5dad77b6910471f768df5b27d5486b276f328f2d370d1c57003"
+  url "https://github.com/epi052/feroxbuster/archive/refs/tags/v2.10.4.tar.gz"
+  sha256 "6eea0602971de78fe24b5c93c1985e57e0b8cb5a8f3a05688d2465e96b27329c"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b6d1ef665eddbad1a89e9fbb8cf066694b410726f591bb11615ea456c1ff43a6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c64eaec6765bc9413e7d1db2d5ef37c92ba9d91786bed337c5828d14430340b0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "cdef706d68c0771251418d3c63e6701b53a03aec98eeb255b327402ab16b8509"
-    sha256 cellar: :any_skip_relocation, sonoma:         "35eb32ffb62b4f9c846871f52341dc1ccf3f43aa33f7297d76aaf5af5f58ff93"
-    sha256 cellar: :any_skip_relocation, ventura:        "16eb1bd6d427d9bac449ff3686b44b694097e978dac4cd66221fe18ce13e4e9b"
-    sha256 cellar: :any_skip_relocation, monterey:       "855c37a904eb953b4f2730619c16d0201451857e4be19de34ef5fd065e620821"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "940658785b8c3a454e6b71ff0e2c555f733e7ce3bb5f8b6d84cfc62ef7b6f1a7"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "deb6a5f5e0d086c3b48694f1f571036a07265e21a94af1610e90cdc9cfc783bd"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4bd32781603abaafa34c092cf83681779d7fdc18f5fdf2217fbe1c840793f4ab"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "8f1f11691218e38df06fc75788693b75c76893a42c9a8d4e0801bd42d383cda5"
+    sha256 cellar: :any_skip_relocation, sonoma:         "2c0542e745b92048e6b0f46588f07176abb2f604b4c8608b939fe624c4ca43ee"
+    sha256 cellar: :any_skip_relocation, ventura:        "1a0c17f47377b4d28ef3b937623fc043ad6f156374fd3872eba02bb84bea865b"
+    sha256 cellar: :any_skip_relocation, monterey:       "ea383abecb20d6e7473f026acd5f88b6def15a1c65d8c3d44c501d4b98d82e32"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c16bda01bb5093d778bb252c297ac77adadf53b8ae7e4a151f551b2318ce81fe"
   end
 
   depends_on "pkg-config" => :build

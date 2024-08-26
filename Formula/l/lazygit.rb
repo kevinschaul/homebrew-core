@@ -1,8 +1,8 @@
 class Lazygit < Formula
   desc "Simple terminal UI for git commands"
   homepage "https://github.com/jesseduffield/lazygit/"
-  url "https://github.com/jesseduffield/lazygit/archive/refs/tags/v0.41.0.tar.gz"
-  sha256 "f2176fa253588fe4b7118bf83f4316ae3ecb914ae1e99aad8c474e23cea49fb8"
+  url "https://github.com/jesseduffield/lazygit/archive/refs/tags/v0.43.1.tar.gz"
+  sha256 "a9dad9e5bc9edb1111b3331d1ccb25f97f2593f51b1557a36c1765df08cb3006"
   license "MIT"
   head "https://github.com/jesseduffield/lazygit.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Lazygit < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "aa67afc9301e53f0d9c9cdea51f7961541b8a064348ae669ce9b78e26ac623ee"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d1f2fa7ccf783321da492f96df275dc9e7794344b57eb331c964b3698c076bfc"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "99d10b3248296d6377edfe2be208c62a095bf26528054465c75b676b9450cf71"
-    sha256 cellar: :any_skip_relocation, sonoma:         "1c8a45629756b110a79694abd05541581da4fe5aea846ce2109f393555d36e16"
-    sha256 cellar: :any_skip_relocation, ventura:        "992eb14986960531c0c315956eb311c6f5565a6d5c0bdb200d685ed6f5addb9e"
-    sha256 cellar: :any_skip_relocation, monterey:       "2e790f701508550756d9ab0d64b99335470b2eee9e07e2df1f4e15ab70be34a4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fc82fe1c54fcabd0b4846149d37e442f54bde937a030c856848c594309f9a331"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "8d046877e0bc378a0925d06511fbaa6248757429574d286abe5fd51c4383f6b3"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ee306c2a63eaf6b4e91ab839218d4ce8c40a44fc2817061829b4740c00787625"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "4ddce43fd65e9b0bd5cf9ed813b06e20fcff3e9aba72d9f513095e892c193fb7"
+    sha256 cellar: :any_skip_relocation, sonoma:         "20db4312183b643da7c97b44bad07fe5a52f2c5cdfe2f6a2abcbcbb5e9e7ed83"
+    sha256 cellar: :any_skip_relocation, ventura:        "d1fb08bd417529a94039003fbe29d91ba2050dc33745402f616a98c6c566031e"
+    sha256 cellar: :any_skip_relocation, monterey:       "1789abe1d2497e77541da89006f548e6a493c7ff0168e7e163f1c8c60b4c0017"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "46f260535e1e9616a985a9e36ef74f586ff2ba8fdd13a849cde63b92263c1c1d"
   end
 
   depends_on "go" => :build
@@ -28,12 +28,12 @@ class Lazygit < Formula
     system "go", "build", "-mod=vendor", *std_go_args(ldflags:)
   end
 
-  # lazygit is a terminal GUI, but it can be run in 'client mode' to do certain tasks
   test do
-    (testpath/"git-rebase-todo").write ""
-    ENV["LAZYGIT_DAEMON_KIND"] = "2" # cherry pick commit
-    ENV["LAZYGIT_DAEMON_INSTRUCTION"] = "{\"Todo\":\"pick 401a0c3\"}"
-    system "#{bin}/lazygit", "git-rebase-todo"
-    assert_match "pick 401a0c3", (testpath/"git-rebase-todo").read
+    system "git", "init", "--initial-branch=main"
+
+    output = shell_output("#{bin}/lazygit log 2>&1", 1)
+    assert_match "errors.errorString terminal not cursor addressable", output
+
+    assert_match version.to_s, shell_output("#{bin}/lazygit -v")
   end
 end

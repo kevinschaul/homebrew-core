@@ -1,18 +1,18 @@
 class Edgevpn < Formula
   desc "Immutable, decentralized, statically built p2p VPN"
   homepage "https://mudler.github.io/edgevpn"
-  url "https://github.com/mudler/edgevpn/archive/refs/tags/v0.25.1.tar.gz"
-  sha256 "70fbc53e2d458de60a01c04d61aa3729378d4b954dcb5a56133e0cf8c7b597a1"
+  url "https://github.com/mudler/edgevpn/archive/refs/tags/v0.27.3.tar.gz"
+  sha256 "7dc2617cc8a7f157ba7b17d50f340207d8798f85edb722bed24c0ff112bac0de"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2d4ac3066b10354a85585f58ba4f452ab66dee0a04181f249a0edcc5d0d2a876"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "2d4ac3066b10354a85585f58ba4f452ab66dee0a04181f249a0edcc5d0d2a876"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "2d4ac3066b10354a85585f58ba4f452ab66dee0a04181f249a0edcc5d0d2a876"
-    sha256 cellar: :any_skip_relocation, sonoma:         "072d8c7f189feb197f9556130d4d6a28e09a22ced6df64e30b74d4d42f241a5b"
-    sha256 cellar: :any_skip_relocation, ventura:        "072d8c7f189feb197f9556130d4d6a28e09a22ced6df64e30b74d4d42f241a5b"
-    sha256 cellar: :any_skip_relocation, monterey:       "072d8c7f189feb197f9556130d4d6a28e09a22ced6df64e30b74d4d42f241a5b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ce5feffc0561d24e640c6b2e3294d6bfebda494b8c32c7f8891a6d34ad43431b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "7e1b2efebe5487d18ef95da1111abef339f6eb7bb83a20991649f6154e19402d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "7e1b2efebe5487d18ef95da1111abef339f6eb7bb83a20991649f6154e19402d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7e1b2efebe5487d18ef95da1111abef339f6eb7bb83a20991649f6154e19402d"
+    sha256 cellar: :any_skip_relocation, sonoma:         "54770d5bb213b324f1454712358ef12a096e5b47cd92a05101ab9d09764ea858"
+    sha256 cellar: :any_skip_relocation, ventura:        "54770d5bb213b324f1454712358ef12a096e5b47cd92a05101ab9d09764ea858"
+    sha256 cellar: :any_skip_relocation, monterey:       "54770d5bb213b324f1454712358ef12a096e5b47cd92a05101ab9d09764ea858"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "753a06735b10587255f57ed889bf54c6706fe023fa77256d5d19b1fbf820ccd9"
   end
 
   depends_on "go" => :build
@@ -20,8 +20,7 @@ class Edgevpn < Formula
   def install
     ldflags = %W[
       -s -w
-      -X main.version=#{version}
-      -X main.date=#{time.iso8601}
+      -X github.com/mudler/edgevpn/internal.Version=#{version}
     ]
 
     ENV["CGO_ENABLED"] = "0"

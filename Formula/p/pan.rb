@@ -1,18 +1,18 @@
 class Pan < Formula
   desc "Usenet newsreader that's good at both text and binaries"
   homepage "https://gitlab.gnome.org/GNOME/pan"
-  url "https://gitlab.gnome.org/GNOME/pan/-/archive/v0.157/pan-v0.157.tar.bz2"
-  sha256 "1ab5f59a9e1e9cb9bfe978be55fda812d5b46936c1c14d9dae30a555c665eb51"
+  url "https://gitlab.gnome.org/GNOME/pan/-/archive/v0.160/pan-v0.160.tar.bz2"
+  sha256 "6506955fc3c94a7e395f82763f45a63dcb564028419ea32249090997c08962a9"
   license "GPL-2.0-only"
 
   bottle do
-    sha256 arm64_sonoma:   "f0f8d01a20e693fff3e196754238a7cb488d35424b864c9668fbba1e46eaf06d"
-    sha256 arm64_ventura:  "9a27968f0cf3aa20f7a22387dcc51a062f3987db002265b77731038bcb3ae4ce"
-    sha256 arm64_monterey: "afeae9b7e194af60be2d2da2db359ff559e595fcbc041b9c71f0f310cd027018"
-    sha256 sonoma:         "47bb4ec160c0148d0ef3750ae7a62edac08e5c3eba51fc361956435d3cb555a4"
-    sha256 ventura:        "4087aef297472f7c8f42df6b7261083770d5bb08b72189b4a9cf2b385e680fbc"
-    sha256 monterey:       "4b196dfa4e2e9ddc311ae0c5d6a2f3d26f3485cb33ae459b555315e899a8cd94"
-    sha256 x86_64_linux:   "f6b0cc5dee1673657fdad6f75befb3fa9bd9dc6ace1dfd3e38dcb6ed47903cf0"
+    sha256 arm64_sonoma:   "ed0101aa7ef6a55f7c44f5dd93d321e5f91731819017843c2e0972d231c375d3"
+    sha256 arm64_ventura:  "150c7878f91aa47b9bb5d207dd35ef1fb6b3a118365a9ccfd06fd98b0a4f3629"
+    sha256 arm64_monterey: "aab4b5bfc736daa16ea5fe040b8df21fef8b7e714c8934002921a1eba6410c4f"
+    sha256 sonoma:         "e0073c66807b3e8232900fec88462999893bf4e32c3536bb70b2f0fadc856f6c"
+    sha256 ventura:        "66cd09584cc4d9db3d300f7ddcf015c8ca2d49d12795b9f73a8580db981b10c9"
+    sha256 monterey:       "e19ee512b8432bd1865a3ac97df9b7468a345e736df5dc5fe5a9f94fe29756d3"
+    sha256 x86_64_linux:   "fa9be5e5e4c9047dbaf84acf4920464e2c04767de4826943f39d76719b8e92fb"
   end
 
   depends_on "cmake" => :build
@@ -29,6 +29,12 @@ class Pan < Formula
   depends_on "gtkspell3"
   depends_on "harfbuzz"
   depends_on "pango"
+
+  uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "at-spi2-core"
+  end
 
   def install
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args

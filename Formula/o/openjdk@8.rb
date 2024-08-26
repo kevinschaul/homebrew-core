@@ -1,9 +1,9 @@
 class OpenjdkAT8 < Formula
   desc "Development kit for the Java programming language"
   homepage "https://openjdk.java.net/"
-  url "https://github.com/openjdk/jdk8u/archive/refs/tags/jdk8u402-ga.tar.gz"
-  version "1.8.0-402"
-  sha256 "4e7495914ca02ef8e3d467d0026ff76672891b4ba026b4200aeb9a0666e22238"
+  url "https://github.com/openjdk/jdk8u/archive/refs/tags/jdk8u422-ga.tar.gz"
+  version "1.8.0-422"
+  sha256 "3931898b4336f0e583a5e97df7e5c339d859d53afaff6dafe20124107e836ebe"
   license "GPL-2.0-only"
 
   livecheck do
@@ -15,10 +15,10 @@ class OpenjdkAT8 < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 sonoma:       "1e901572b4fce1133d8756af7a6c8d5c33e6b149e380c8522f0007bc0b1afe21"
-    sha256 cellar: :any,                 ventura:      "d2305fca54292a5152ca641221b39377b0a52ff86c74d9720eac6b5e930e8f8f"
-    sha256 cellar: :any,                 monterey:     "7fcaf5b6bf40ba8cb74efbc894894bf2e7f0dea1a0bef624dc854f00316ef3d8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "237c6366e97df8e42427ff80f49bc7c2e02754f32baf609011397e9d79d625f3"
+    sha256 cellar: :any,                 sonoma:       "cb987dc52503fcabc91b10c4700fc5c46d10f32c36caf3698d850a6d57124026"
+    sha256 cellar: :any,                 ventura:      "25366b96f7324d1499663cb679cacd0d826d174e05d9f69b4c2e4f9e5fe44507"
+    sha256 cellar: :any,                 monterey:     "4f75d93506ba05e827ab68b1e6e415584bed506eb881c7088f3f27b621e4aac3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "1bc71861ff5e8041f23f12b299f45b6bcf4b47cfba392500f800add2b7693d50"
   end
 
   keg_only :versioned_formula
@@ -42,6 +42,7 @@ class OpenjdkAT8 < Formula
     depends_on "fontconfig"
     depends_on "libx11"
     depends_on "libxext"
+    depends_on "libxi"
     depends_on "libxrandr"
     depends_on "libxrender"
     depends_on "libxt"
@@ -94,11 +95,6 @@ class OpenjdkAT8 < Formula
         s.gsub! "$(subst .,,$(MACOSX_VERSION_MIN))", ENV["HOMEBREW_MACOS_VERSION_NUMERIC"]
         s.gsub! "MACOSX_VERSION_MIN=10.7.0", "MACOSX_VERSION_MIN=#{MacOS.version}"
       end
-
-      # Fix Xcode 13 detection.
-      inreplace "common/autoconf/toolchain.m4",
-                "if test \"${XC_VERSION_PARTS[[0]]}\" != \"6\"",
-                "if test \"${XC_VERSION_PARTS[[0]]}\" != \"#{MacOS::Xcode.version.major}\""
     else
       # Fix linker errors on brewed GCC
       inreplace "common/autoconf/flags.m4", "-Xlinker -O1", ""
@@ -138,7 +134,7 @@ class OpenjdkAT8 < Formula
           --with-extra-cxxflags=-F#{javavm_framework_path}
         ]
         ldflags << "-F#{javavm_framework_path}"
-        # Fix "'JavaNativeFoundation/JavaNativeFoundation.h' file not found" issue on MacOS Sonoma.
+      # Fix "'JavaNativeFoundation/JavaNativeFoundation.h' file not found" issue on MacOS Sonoma.
       elsif MacOS.version == :sonoma
         javavm_framework_path = "/Library/Developer/CommandLineTools/SDKs/MacOSX13.sdk/System/Library/Frameworks"
         args += %W[
@@ -209,6 +205,23 @@ class OpenjdkAT8 < Formula
 end
 
 __END__
+--- jdk/src/share/bin/splashscreen_stubs.c
++++ jdk/src/share/bin/splashscreen_stubs.c
+@@ -61,11 +61,11 @@
+ #define INVOKEV(name) _INVOKE(name, ,;)
+
+ int     DoSplashLoadMemory(void* pdata, int size) {
+-    INVOKE(SplashLoadMemory, NULL)(pdata, size);
++    INVOKE(SplashLoadMemory, 0)(pdata, size);
+ }
+
+ int     DoSplashLoadFile(const char* filename) {
+-    INVOKE(SplashLoadFile, NULL)(filename);
++    INVOKE(SplashLoadFile, 0)(filename);
+ }
+
+ void    DoSplashInit(void) {
+
 --- jdk/src/share/native/com/sun/java/util/jar/pack/jni.cpp
 +++ jdk/src/share/native/com/sun/java/util/jar/pack/jni.cpp
 @@ -292,7 +292,7 @@

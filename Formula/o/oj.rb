@@ -1,19 +1,19 @@
 class Oj < Formula
   desc "JSON parser and visualization tool"
   homepage "https://github.com/ohler55/ojg"
-  url "https://github.com/ohler55/ojg/archive/refs/tags/v1.21.5.tar.gz"
-  sha256 "57998b71bb60b2463abf41c26ef5c5272769ba6bf97114a76056a1950b90f7d1"
+  url "https://github.com/ohler55/ojg/archive/refs/tags/v1.24.0.tar.gz"
+  sha256 "ef776d0b91f9689f5e4812f6c04662f72a633b744f6a074d6f3951bb7c03cea8"
   license "MIT"
   head "https://github.com/ohler55/ojg.git", branch: "develop"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bdd24f936f64f02152887d9e3522b20e7b737fa55fe83add8c4e23f35c0307db"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bdd24f936f64f02152887d9e3522b20e7b737fa55fe83add8c4e23f35c0307db"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bdd24f936f64f02152887d9e3522b20e7b737fa55fe83add8c4e23f35c0307db"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8ca3d58b6b3b8f29a30dc363c998e6d51a703f21a946bc80a4c85f3f9de4f59b"
-    sha256 cellar: :any_skip_relocation, ventura:        "8ca3d58b6b3b8f29a30dc363c998e6d51a703f21a946bc80a4c85f3f9de4f59b"
-    sha256 cellar: :any_skip_relocation, monterey:       "8ca3d58b6b3b8f29a30dc363c998e6d51a703f21a946bc80a4c85f3f9de4f59b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8851f63a6e95054dbf6c3ddeb6264fbc3f918a80c8c178830c1ca64f6318a39e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bf43c52bcb83406c59990d117d64a9aefeb87beef11c1baa457c65f521da3701"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bf43c52bcb83406c59990d117d64a9aefeb87beef11c1baa457c65f521da3701"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "bf43c52bcb83406c59990d117d64a9aefeb87beef11c1baa457c65f521da3701"
+    sha256 cellar: :any_skip_relocation, sonoma:         "ff97aded0137863b07ed66cbfbdf94bbaa4ec421a0b097d7694d86daf2ad5877"
+    sha256 cellar: :any_skip_relocation, ventura:        "ff97aded0137863b07ed66cbfbdf94bbaa4ec421a0b097d7694d86daf2ad5877"
+    sha256 cellar: :any_skip_relocation, monterey:       "ff97aded0137863b07ed66cbfbdf94bbaa4ec421a0b097d7694d86daf2ad5877"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c399aec052d1c3072bc23c4a5d9bf47b9bef2c77acf5c7d49ec5f4584b4a4f00"
   end
 
   depends_on "go" => :build

@@ -1,8 +1,8 @@
 class Pixi < Formula
   desc "Package management made easy"
   homepage "https://pixi.sh"
-  url "https://github.com/prefix-dev/pixi/archive/refs/tags/v0.19.1.tar.gz"
-  sha256 "94b745a46a40c52e087b422db4cb7f1c22711c4e7b8211e8e10fbc9d90a810d5"
+  url "https://github.com/prefix-dev/pixi/archive/refs/tags/v0.28.1.tar.gz"
+  sha256 "373aaa1130be73d3196e7de3fa1f99c438b3052a3990b83a87e4bfcfd9b8b45f"
   license "BSD-3-Clause"
   head "https://github.com/prefix-dev/pixi.git", branch: "main"
 
@@ -15,41 +15,29 @@ class Pixi < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "3ff8e953c61ceb31b95649b8051ec8b2a13e60699c84b2e3cfcd10517d882210"
-    sha256 cellar: :any,                 arm64_ventura:  "e4800c7a3b79669202b615c6ed073e854f4965db6d810523002fd9479fa47df3"
-    sha256 cellar: :any,                 arm64_monterey: "771012fe14f691197f7836ccf52baeb5891072eb439c9a260e9d8572c0560adc"
-    sha256 cellar: :any,                 sonoma:         "3524f75492d3449b30357a7354bff45f84b5f1fd0dbf5f7c37e389dca7083596"
-    sha256 cellar: :any,                 ventura:        "f3d119d64e5f2e16b4e610ef2de44f346c768cef232f80e0e673f78e81726ef8"
-    sha256 cellar: :any,                 monterey:       "75a788446d2cfc1f45765ad0b58c967db155e52bd604ccb38b44ace46350b2a2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "91f224293ee0f747e0cbec32d91467ea64466133a40c569383d11518201e55cb"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d7065eeeae9e2b054abe23ac163accfb3ac570805a7ed716ed33d028db220336"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "11ddd0191ef9c603626ee339c15d6c883cab1c12dadb2b7905471abfe754e376"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "10c20463676ec6801f108e0a80d7e4918aae0adb790aff56b42166e61504d8ec"
+    sha256 cellar: :any_skip_relocation, sonoma:         "f38aff3f76b4303c046b06f719c2b89bacedcff62cfe29466a1ef7fdb6151af4"
+    sha256 cellar: :any_skip_relocation, ventura:        "b1fb5c2835ba51b578e7c48c62929e8973fd638f19932499ed322f4c7d3c7a4f"
+    sha256 cellar: :any_skip_relocation, monterey:       "6da2c7895d256e5d20787d7a3d999dd3442f8131bd58068bea78a5502c6947e0"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "953a017fcc3dbe3fc743ff670be8cd656aa0e4a4ef47280b36befeb5d0199df1"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
   depends_on "rust" => :build
 
-  depends_on "libgit2"
-  depends_on "openssl@3"
-
   uses_from_macos "bzip2"
 
-  def install
-    ENV["LIBGIT2_NO_VENDOR"] = "1"
-    # Ensure the correct `openssl` will be picked up.
-    ENV["OPENSSL_DIR"] = Formula["openssl@3"].opt_prefix
-    ENV["OPENSSL_NO_VENDOR"] = "1"
+  on_linux do
+    depends_on "openssl@3"
+  end
 
+  def install
     system "cargo", "install", *std_cargo_args
 
     generate_completions_from_executable(bin/"pixi", "completion", "-s")
-  end
-
-  def check_binary_linkage(binary, library)
-    binary.dynamically_linked_libraries.any? do |dll|
-      next false unless dll.start_with?(HOMEBREW_PREFIX.to_s)
-
-      File.realpath(dll) == File.realpath(library)
-    end
   end
 
   test do
@@ -57,15 +45,5 @@ class Pixi < Formula
 
     system bin/"pixi", "init"
     assert_path_exists testpath/"pixi.toml"
-
-    linked_libraries = [
-      Formula["libgit2"].opt_lib/shared_library("libgit2"),
-      Formula["openssl@3"].opt_lib/shared_library("libssl"),
-      Formula["openssl@3"].opt_lib/shared_library("libcrypto"),
-    ]
-    linked_libraries.each do |library|
-      assert check_binary_linkage(bin/"pixi", library),
-             "No linkage with #{library.basename}! Cargo is likely using a vendored version."
-    end
   end
 end

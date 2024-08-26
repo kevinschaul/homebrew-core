@@ -1,8 +1,8 @@
 class Gtk4 < Formula
   desc "Toolkit for creating graphical user interfaces"
   homepage "https://gtk.org/"
-  url "https://download.gnome.org/sources/gtk/4.14/gtk-4.14.2.tar.xz"
-  sha256 "22604cef2898a79e5f2143bb7aee2b7d1fa2eb946989a9d1338ecf9c8ae0e072"
+  url "https://download.gnome.org/sources/gtk/4.14/gtk-4.14.5.tar.xz"
+  sha256 "5547f2b9f006b133993e070b87c17804e051efda3913feaca1108fa2be41e24d"
   license "LGPL-2.1-or-later"
 
   livecheck do
@@ -11,26 +11,31 @@ class Gtk4 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "a196f5fca023a504d029fa62d20a6c7df95a9f8bc2844483ae0f606de18fb8d8"
-    sha256 arm64_ventura:  "e05ebbe2b6f5daa4b46d1cae0ba217d352f808d30fd7aeb4607cedaf7f5a8d69"
-    sha256 arm64_monterey: "91fb02876687ecf3c051a54aa478e59b6289f38ec6055b1007fa9f49ec013a03"
-    sha256 sonoma:         "96fa3fc09f6107463f3265b0d026f8aea0bab63897d232503321f9bec8fd93ed"
-    sha256 ventura:        "1218ec85327d652f6adfff0b0cf7cad76ccc423b64567c681bb10c861ced3a7d"
-    sha256 monterey:       "ff4786552f1f351e67c832477483de131d51b5c036e2eeb60d98814f8c16bb6c"
-    sha256 x86_64_linux:   "5e00d2d33ca397fde056c881ae344f5a456262ef846cf237d9707e0fe4c567c1"
+    sha256 arm64_sonoma:   "91707419b88b5d666898ba30a059897110641293f6ce1d602dfd51076e129258"
+    sha256 arm64_ventura:  "abf0b4b61f5d3c87328986dcb08ebd821879909367bf9fa9feff758e97f3bb52"
+    sha256 arm64_monterey: "b2eca390766bbe96317aed281103636b391a5948cedd24b0128aad012e2e66e3"
+    sha256 sonoma:         "77f5bef853a8cf40afe4d38e2bf5ae4c365ff24634c9d5f2b7170750408fb162"
+    sha256 ventura:        "8da15fe0eba18ef4b952dbf104b00649bbb30554b35be0c5c9800f0424fbf84c"
+    sha256 monterey:       "3a51a6b4bd19c22fe04f4c8145f826962d5687a58861dde56d70184f963c8c4e"
+    sha256 x86_64_linux:   "9e53798297c2c6e3988a73aecf5e431f5164cb3bc959a553fc84dac76001707a"
   end
 
   depends_on "docbook" => :build
   depends_on "docbook-xsl" => :build
   depends_on "docutils" => :build
+  depends_on "gettext" => :build
   depends_on "gobject-introspection" => :build
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => [:build, :test]
   depends_on "sassc" => :build
+  depends_on "cairo"
+  depends_on "fontconfig"
+  depends_on "fribidi"
   depends_on "gdk-pixbuf"
   depends_on "glib"
   depends_on "graphene"
+  depends_on "harfbuzz"
   depends_on "hicolor-icon-theme"
   depends_on "jpeg-turbo"
   depends_on "libepoxy"
@@ -41,9 +46,21 @@ class Gtk4 < Formula
   uses_from_macos "libxslt" => :build # for xsltproc
   uses_from_macos "cups"
 
+  on_macos do
+    depends_on "gettext"
+  end
+
   on_linux do
+    depends_on "libx11"
     depends_on "libxcursor"
+    depends_on "libxdamage"
+    depends_on "libxext"
+    depends_on "libxfixes"
+    depends_on "libxi"
+    depends_on "libxinerama"
     depends_on "libxkbcommon"
+    depends_on "libxrandr"
+    depends_on "wayland"
   end
 
   def install
@@ -72,8 +89,8 @@ class Gtk4 < Formula
     # Disable asserts and cast checks explicitly
     ENV.append "CPPFLAGS", "-DG_DISABLE_ASSERT -DG_DISABLE_CAST_CHECKS"
 
-    system "meson", *std_meson_args, "build", *args
-    system "meson", "compile", "-C", "build", "-v"
+    system "meson", "setup", "build", *args, *std_meson_args
+    system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
   end
 
@@ -92,7 +109,7 @@ class Gtk4 < Formula
         return 0;
       }
     EOS
-    ENV.prepend_path "PKG_CONFIG_PATH", Formula["jpeg-turbo"].opt_lib/"pkgconfig"
+
     flags = shell_output("#{Formula["pkg-config"].opt_bin}/pkg-config --cflags --libs gtk4").strip.split
     system ENV.cc, "test.c", "-o", "test", *flags
     system "./test"

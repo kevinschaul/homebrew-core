@@ -1,19 +1,19 @@
 class Sfcgal < Formula
   desc "C++ wrapper library around CGAL"
   homepage "https://sfcgal.gitlab.io/SFCGAL/"
-  url "https://gitlab.com/sfcgal/SFCGAL/-/archive/v1.5.1/SFCGAL-v1.5.1.tar.gz"
-  sha256 "ea5d1662fada7de715ad564dc810c3059024ed81ae393f5352489f706fdfa3b1"
+  url "https://gitlab.com/sfcgal/SFCGAL/-/archive/v1.5.2/SFCGAL-v1.5.2.tar.gz"
+  sha256 "b946b3c20d53f6e2703046085f0fcfea6c1a4081163f7bedd30b1195801efdd2"
   license "LGPL-2.0-or-later"
   revision 1
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "1e231f2da7b5607dcb1becb61d1a1ad325204a9237c1f3bb75e2957702bfcc1f"
-    sha256 cellar: :any,                 arm64_ventura:  "0ebb2eb96864826e1c0746e88ff4c9eb201a2a8ea722a1a1efc0f003176b92de"
-    sha256 cellar: :any,                 arm64_monterey: "78d3c2da9e4158cfa53b4d4afe9a502d5242915ebaa9159cc797b631185022d6"
-    sha256 cellar: :any,                 sonoma:         "582092143e0f1ad9a2367e4834fcd69fbf080aec1de7686ffec9b004f95babc3"
-    sha256 cellar: :any,                 ventura:        "aaba53cbe22214cafb54c712fbf57880148a4b78def27333a9197c4babf951f1"
-    sha256 cellar: :any,                 monterey:       "3c97cb18901905c043e1c1f815f2c49f99303ba8d91acf9546fe267ca71fe467"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "19055419c3024400502c06a0d02880a8a670847413062a9533b2493c04f70309"
+    sha256 cellar: :any,                 arm64_sonoma:   "a2b1a9cac32d00ecf18cb0a7d9d88ed889ae1c82177042893ee1cc0b151971d6"
+    sha256 cellar: :any,                 arm64_ventura:  "3143d8fcaa298e88ef25967d3023a38788736677278a6b4f0e0503b9e99e9afc"
+    sha256 cellar: :any,                 arm64_monterey: "87555736150d79ed8a8840e4c7bee8bccb3b02964bb876707e88ed063dd21621"
+    sha256 cellar: :any,                 sonoma:         "ed8cd80f0a7b6052ef7bbc6c3d063b8ae0e823885b635b2276b12b82aa3d2e86"
+    sha256 cellar: :any,                 ventura:        "c2ec6da16f95a8de586fc6ee9038f06407afcc4ec70feedb92d89ef7c9bf6545"
+    sha256 cellar: :any,                 monterey:       "abf15d5e04078f3b49e8dc25dfa09de808ab08fe5f630bc1f0efb43d9a65d535"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "eb8e65d7e83c0426427154292e266e8f771213c2b38d2ef9e02ddce37886ce84"
   end
 
   depends_on "cmake" => :build

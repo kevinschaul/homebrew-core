@@ -1,8 +1,8 @@
 class Webkitgtk < Formula
   desc "GTK interface to WebKit"
   homepage "https://webkitgtk.org"
-  url "https://webkitgtk.org/releases/webkitgtk-2.44.1.tar.xz"
-  sha256 "425b1459b0f04d0600c78d1abb5e7edfa3c060a420f8b231e9a6a2d5d29c5561"
+  url "https://webkitgtk.org/releases/webkitgtk-2.44.3.tar.xz"
+  sha256 "dc82d042ecaca981a4852357c06e5235743319cf10a94cd36ad41b97883a0b54"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,7 +11,7 @@ class Webkitgtk < Formula
   end
 
   bottle do
-    sha256 x86_64_linux: "12f27454bf4206e515b0768fba6a12f8369396f2cc5460c5928e87d8f83986ff"
+    sha256 x86_64_linux: "05b04683c47fdb271742630657b1ce895ad718b0f5b9abdd363a109766ffd6ac"
   end
 
   depends_on "cmake" => :build
@@ -54,6 +54,17 @@ class Webkitgtk < Formula
   depends_on "woff2"
   depends_on "wpebackend-fdo"
   depends_on "zlib"
+
+  on_linux do
+    depends_on "at-spi2-core"
+    depends_on "gdk-pixbuf"
+    depends_on "libdrm"
+    depends_on "libepoxy"
+    depends_on "libtasn1"
+    depends_on "libx11"
+    depends_on "pango"
+    depends_on "wayland"
+  end
 
   fails_with gcc: "5"
 
@@ -106,7 +117,7 @@ class Webkitgtk < Formula
           g_signal_connect(webView, "close", G_CALLBACK(closeWebViewCb), main_window);
 
           // Load a web page into the browser instance
-          webkit_web_view_load_uri(webView, "http://www.webkitgtk.org/");
+          webkit_web_view_load_uri(webView, "https://www.webkitgtk.org/");
 
           // Make sure that when the browser area becomes visible, it will get mouse
           // and keyboard events

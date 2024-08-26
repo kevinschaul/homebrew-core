@@ -1,19 +1,19 @@
 class ProtocGenGo < Formula
   desc "Go support for Google's protocol buffers"
   homepage "https://github.com/protocolbuffers/protobuf-go"
-  url "https://github.com/protocolbuffers/protobuf-go/archive/refs/tags/v1.33.0.tar.gz"
-  sha256 "21661d7634e3f783b015b93ceafc0261f2f02a270799bac871602c3a2172cfbe"
+  url "https://github.com/protocolbuffers/protobuf-go/archive/refs/tags/v1.34.2.tar.gz"
+  sha256 "a91d3129e38945b612b7a377364dae324ed3a489c3a805a412805a0cee76e7a2"
   license "BSD-3-Clause"
   head "https://github.com/protocolbuffers/protobuf-go.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b44d95ef619de8304e7e448c041659b9bfd1bda1004ea71b39eb6f024af05797"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b44d95ef619de8304e7e448c041659b9bfd1bda1004ea71b39eb6f024af05797"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "b44d95ef619de8304e7e448c041659b9bfd1bda1004ea71b39eb6f024af05797"
-    sha256 cellar: :any_skip_relocation, sonoma:         "4932f0be514789162278c9866f611aefbd0bc12daf91085ea643269e8f78d05f"
-    sha256 cellar: :any_skip_relocation, ventura:        "4932f0be514789162278c9866f611aefbd0bc12daf91085ea643269e8f78d05f"
-    sha256 cellar: :any_skip_relocation, monterey:       "4932f0be514789162278c9866f611aefbd0bc12daf91085ea643269e8f78d05f"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6f6cf5e13a71565be22b62df98e9187a8842114029d924c0dc0278c6f66db404"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "74a1e9415b32c7f9884a7bbdbcb981c4a74d8b7511bb4a5e101c25f915cd0556"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "74a1e9415b32c7f9884a7bbdbcb981c4a74d8b7511bb4a5e101c25f915cd0556"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "74a1e9415b32c7f9884a7bbdbcb981c4a74d8b7511bb4a5e101c25f915cd0556"
+    sha256 cellar: :any_skip_relocation, sonoma:         "60587bf8876bc3968ed3956b135ac37ec4a0c2a9e7e4bc1fa1b6f95fa006ab00"
+    sha256 cellar: :any_skip_relocation, ventura:        "60587bf8876bc3968ed3956b135ac37ec4a0c2a9e7e4bc1fa1b6f95fa006ab00"
+    sha256 cellar: :any_skip_relocation, monterey:       "60587bf8876bc3968ed3956b135ac37ec4a0c2a9e7e4bc1fa1b6f95fa006ab00"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "27dd3ac78a00efcdddb97774b73e972facf31c8edc773a9952d04ac0530db4f2"
   end
 
   depends_on "go" => :build
@@ -21,7 +21,6 @@ class ProtocGenGo < Formula
 
   def install
     system "go", "build", *std_go_args(ldflags: "-s -w"), "./cmd/protoc-gen-go"
-    prefix.install_metafiles
   end
 
   test do

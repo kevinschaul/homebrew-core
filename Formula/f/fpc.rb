@@ -33,6 +33,8 @@ class Fpc < Formula
     depends_on "mesa" => :test
   end
 
+  conflicts_with "px", because: "both install `ptop` binaries"
+
   resource "bootstrap" do
     on_macos do
       url "https://downloads.sourceforge.net/project/freepascal/Mac%20OS%20X/3.2.2/fpc-3.2.2.intelarm64-macosx.dmg"
@@ -80,10 +82,10 @@ class Fpc < Formula
     bin.install_symlink lib/name/version/compiler_name
 
     # Prevent non-executable audit warning
-    rm_f Dir[bin/"*.rsj"]
+    rm(Dir[bin/"*.rsj"])
 
     # Generate a default fpc.cfg to set up unit search paths
-    system "#{bin}/fpcmkcfg", "-p", "-d", "basepath=#{lib}/fpc/#{version}", "-o", "#{prefix}/etc/fpc.cfg"
+    system bin/"fpcmkcfg", "-p", "-d", "basepath=#{lib}/fpc/#{version}", "-o", prefix/"etc/fpc.cfg"
 
     if OS.linux?
       # On Linux, non-executable IDE support files get built and end up in bin.
@@ -105,8 +107,9 @@ class Fpc < Formula
         writeln('Hello Homebrew')
       end.
     EOS
+
     (testpath/"hello.pas").write(hello)
-    system "#{bin}/fpc", "hello.pas"
+    system bin/"fpc", "hello.pas"
     assert_equal "Hello Homebrew", shell_output("./hello").strip
   end
 end

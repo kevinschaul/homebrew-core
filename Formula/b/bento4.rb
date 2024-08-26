@@ -24,7 +24,6 @@ class Bento4 < Formula
   depends_on "cmake" => :build
   depends_on "python@3.12"
 
-  conflicts_with "gpac", because: "both install `mp42ts` binaries"
   conflicts_with "mp4v2", because: "both install `mp4extract` and `mp4info` binaries"
 
   def install
@@ -40,7 +39,7 @@ class Bento4 < Formula
   end
 
   test do
-    system "#{bin}/mp4mux", "--track", test_fixtures("test.m4a"), "out.mp4"
+    system bin/"mp4mux", "--track", test_fixtures("test.m4a"), "out.mp4"
     assert_predicate testpath/"out.mp4", :exist?, "Failed to create out.mp4!"
   end
 end

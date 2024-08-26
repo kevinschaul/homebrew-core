@@ -1,18 +1,18 @@
 class Ugrep < Formula
   desc "Ultra fast grep with query UI, fuzzy search, archive search, and more"
   homepage "https://ugrep.com/"
-  url "https://github.com/Genivia/ugrep/archive/refs/tags/v5.1.4.tar.gz"
-  sha256 "5b80b527c3c5b4cd8f0ec300d816ac0c1dea11c6de7774d69e9becebf492274d"
+  url "https://github.com/Genivia/ugrep/archive/refs/tags/v6.5.0.tar.gz"
+  sha256 "eec1ddcd17dcc017987caad916ed245adef5ccc151837eefae5f86047fae0d99"
   license "BSD-3-Clause"
 
   bottle do
-    sha256                               arm64_sonoma:   "9ce6444da4fe8722ca0ef48413f6313a38ad28e71eb97a8ed0e3a4b200eeb600"
-    sha256                               arm64_ventura:  "e9c3a86edc480f40c089ded4b137c70d5b8a4cb6f1ff95ed17fe4c8b89e12508"
-    sha256                               arm64_monterey: "5660f233467b103b148e93165b7a6a0b12948a52ce2afd339faae8ff151346bb"
-    sha256                               sonoma:         "ad482b768721f85a16d6cfc17bb6387e060bfb960b331fce18257e78c5d6e56e"
-    sha256                               ventura:        "523fc74dba74a74c6c8cb70094257e3a897b13b54ed29ef63c3caea95df676fb"
-    sha256                               monterey:       "6ed44233df466d576f55a5daf3536235e02c22f091c33a556f558f75d7dbf744"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2ba2b0babb42d1b456ddd9c3cd9e6d4983c3340427efb87ebc37528e6df76632"
+    sha256                               arm64_sonoma:   "747a229920f7a80acb779dbcf4baa859c32a9d6a54e0ee81da2b60cbab5ef03d"
+    sha256                               arm64_ventura:  "4f080182f663401473f83a548e7f7cccfe1adc345cf7d905a681ec0ddb2de42c"
+    sha256                               arm64_monterey: "293aad93929c0c3dfbe0182df593d279ff6b0da30cccad74daa266e30b468e85"
+    sha256                               sonoma:         "65e17f9c311c4c71bf1c143d2fb65b4d7072b47c91da14d19929c88c1467691f"
+    sha256                               ventura:        "7300be5cfa413212de3f0da14d07d3754ebfde5b6f4e96ec1934464237dc39e1"
+    sha256                               monterey:       "434e1d916a8170207df99636ee288c219c5e1574cf56711b7ecefdf58b8e7828"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cc15cb18e70d2e344a66b59695c60cca13d6a21a1ff781512a8124cbce182a4d"
   end
 
   depends_on "brotli"
@@ -20,6 +20,9 @@ class Ugrep < Formula
   depends_on "pcre2"
   depends_on "xz"
   depends_on "zstd"
+
+  uses_from_macos "bzip2"
+  uses_from_macos "zlib"
 
   def install
     system "./configure", "--enable-color",

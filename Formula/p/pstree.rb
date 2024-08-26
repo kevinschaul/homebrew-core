@@ -6,6 +6,7 @@ class Pstree < Formula
   homepage "https://github.com/FredHucht/pstree"
   url "https://github.com/FredHucht/pstree/archive/refs/tags/v2.40.tar.gz"
   sha256 "64d613d8f66685b29f13a80e08cddc08616cf3e315a0692cbbf9de0d8aa376b3"
+  license "GPL-3.0-only"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "05dcf81f64516f4b96ccb2a82fe610e65d2733d0cfb6dbff41b54fcd9f45f111"
@@ -29,6 +30,6 @@ class Pstree < Formula
   test do
     lines = shell_output("#{bin}/pstree #{Process.pid}").strip.split("\n")
     assert_match $PROGRAM_NAME, lines[0]
-    assert_match "#{bin}/pstree", lines[1]
+    assert_match bin/"pstree", lines[1]
   end
 end

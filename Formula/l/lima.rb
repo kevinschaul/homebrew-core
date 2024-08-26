@@ -1,19 +1,19 @@
 class Lima < Formula
   desc "Linux virtual machines"
   homepage "https://lima-vm.io/"
-  url "https://github.com/lima-vm/lima/archive/refs/tags/v0.21.0.tar.gz"
-  sha256 "86ecdc2758b6afd55faa06918b7a506108e95fbdfd93aa18a0ef5e7b59b4e7b4"
+  url "https://github.com/lima-vm/lima/archive/refs/tags/v0.23.1.tar.gz"
+  sha256 "90485789d02071106864a3003b62975bc213dcedbcc96e53c07adc4c2a91c38d"
   license "Apache-2.0"
   head "https://github.com/lima-vm/lima.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a1f62d01a2012a493cdde3039567bedae4060a3734c563a5c5efc0551e7d14b3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a72ed11b8f0f2ae4abd81d9dae701791f9b55d6fd1f743aefac8aff4aa786ae8"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6bea3b91b8373c70d6baa115f8f49f543424019362c2f6724cf3c0f8117d6d77"
-    sha256 cellar: :any_skip_relocation, sonoma:         "f9748a8dcc19bddeebd008542083260c074689aa530f811b7681899bb569917f"
-    sha256 cellar: :any_skip_relocation, ventura:        "2e622cc16d4b946331a75571479ab15604e3dade49a6e67a2d6a8370acb71b7a"
-    sha256 cellar: :any_skip_relocation, monterey:       "64335ae23a01ad1ef3d4701f39206586d287cd4c958bdaadb119fa635ee93fa8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "3754561f003249b8706ffe4d7b585c9356b7ca297ab5c3c6a24cea2ef68c850d"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "26ae2da9e402bd6ba5b64d7f4a00205b5110d1756653ab57bdf9ba36f491e8b6"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1f7a16d80d6e814af2487f44886342e7fd080477b209482ff23abaf5e8993dc7"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d3fee62d7e72b489bec9c83313cb98c2520d3391ab1cbec0d1ad0048870b845e"
+    sha256 cellar: :any_skip_relocation, sonoma:         "d7eb0a95c2af024732f8c9086836129b404098e4ac9e918d8b6985af88cb04a9"
+    sha256 cellar: :any_skip_relocation, ventura:        "ef5d07ca44630f4d3a3f42b1971d994bde5e14a00757d151d4f22f3181e7b2bc"
+    sha256 cellar: :any_skip_relocation, monterey:       "0d0591bd1739a634d4e0468f959b28629fc429c837bcab9362688407f566ee3c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9efb37b5f45e66d8d5bd9c31171d82dad402d9c950758349080054091b870c33"
   end
 
   depends_on "go" => :build

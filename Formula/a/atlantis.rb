@@ -1,10 +1,9 @@
 class Atlantis < Formula
   desc "Terraform Pull Request Automation tool"
   homepage "https://www.runatlantis.io/"
-  url "https://github.com/runatlantis/atlantis/archive/refs/tags/v0.27.2.tar.gz"
-  sha256 "e44a53d4fa43cdaa88a2e7734da2854a97b1b555a425ab26ac5787ef9f3d3076"
+  url "https://github.com/runatlantis/atlantis/archive/refs/tags/v0.28.5.tar.gz"
+  sha256 "470f68b302be9c5763a44a093ad4d19d5b72b8cdb7ec8ebecb5f696c9271d952"
   license "Apache-2.0"
-  revision 1
   head "https://github.com/runatlantis/atlantis.git", branch: "main"
 
   livecheck do
@@ -13,13 +12,13 @@ class Atlantis < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b8845a4c5c5fec862421b6ac27d9ff8b9e31e396efa1c40057fc7db430690e93"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d1d52f85b02755ff8bbe196a77712a4688df129bf02dba756f1e6ac0a2b9d260"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "07809a2647989121d6a929ab5a8f7344a2f13bcc6e029f1a0219dca6ab9d200e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "a028543e426c3f8ae015deabcf7f8f1103e7c4cb9e02efce93d569593b9f2179"
-    sha256 cellar: :any_skip_relocation, ventura:        "dd6ee28da1ffbda533aa0154ada6c6a4d5d9684998ab351ebed6181e979eeae6"
-    sha256 cellar: :any_skip_relocation, monterey:       "a7b370e28a832dad0377cec8624ebe9f76c9dac817dcd9fa1c665ef3a035b4f4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a12a6068bf37a14576b2b45311dddc82006a308765aea858322835e397d06648"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "8944b3eb13dd3a4f00bc38a39928e112b8a56504bb528a06c6607087aa2f1623"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fae63c353059d260ac09ee900cd3999ba3f6039e64845a5f17e28a56e9700515"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "91c2065dba98761a842cc1baabfc15231260ea26cfc496d8cb5e25bf88a1469d"
+    sha256 cellar: :any_skip_relocation, sonoma:         "8d69683ed9f877ba2311b9bd03c2af46e54510553f73cbbdf0be54bdc23aaa9c"
+    sha256 cellar: :any_skip_relocation, ventura:        "e355f09d29bd18cfc7d81860ec763eba357971f797f0cf3fef9df414ab28bad6"
+    sha256 cellar: :any_skip_relocation, monterey:       "0d46861395dd0a8bab9d3df09199997c24bb5e7f43dc05208ca4195f7c410abc"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "114770b2f9e60f2473dc385d0ee570b581c83c5c128d864ed8a9e9345971f948"
   end
 
   depends_on "go" => :build
@@ -37,14 +36,19 @@ class Atlantis < Formula
       system "go", "build", *std_go_args(ldflags: "-s -w", output: libexec/"bin/terraform")
     end
 
-    system "go", "build", *std_go_args(ldflags: "-s -w", output: libexec/"bin/atlantis")
+    ldflags = %W[
+      -s -w
+      -X main.version=#{version}
+      -X main.commit=brew
+      -X main.date=#{time.iso8601}
+    ]
+    system "go", "build", *std_go_args(ldflags:, output: libexec/"bin/atlantis")
 
-    env = { PATH: libexec/"bin" }
-    (bin/"atlantis").write_env_script libexec/"bin/atlantis", env
+    (bin/"atlantis").write_env_script libexec/"bin/atlantis", PATH: libexec/"bin"
   end
 
   test do
-    system bin/"atlantis", "version"
+    assert_match version.to_s, shell_output("#{bin}/atlantis version")
     port = free_port
     loglevel = "info"
     gh_args = "--gh-user INVALID --gh-token INVALID --gh-webhook-secret INVALID --repo-allowlist INVALID"

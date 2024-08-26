@@ -28,10 +28,20 @@ class WhisperCpp < Formula
     pkgshare.install ["samples/jfk.wav", "models/for-tests-ggml-tiny.bin", "ggml-metal.metal"]
   end
 
+  def caveats
+    <<~EOS
+      whisper-cpp requires GGML model files to work. These are not downloaded by default.
+      To obtain model files (.bin), visit one of these locations:
+
+        https://huggingface.co/ggerganov/whisper.cpp/tree/main
+        https://ggml.ggerganov.com/
+    EOS
+  end
+
   test do
     cp [pkgshare/"jfk.wav", pkgshare/"for-tests-ggml-tiny.bin", pkgshare/"ggml-metal.metal"], testpath
 
-    system "#{bin}/whisper-cpp", "samples", "-m", "for-tests-ggml-tiny.bin"
+    system bin/"whisper-cpp", "samples", "-m", "for-tests-ggml-tiny.bin"
     assert_equal 0, $CHILD_STATUS.exitstatus, "whisper-cpp failed with exit code #{$CHILD_STATUS.exitstatus}"
   end
 end

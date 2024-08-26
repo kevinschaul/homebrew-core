@@ -1,30 +1,30 @@
 class Tio < Formula
   desc "Simple TTY terminal I/O application"
   homepage "https://tio.github.io"
-  url "https://github.com/tio/tio/releases/download/v2.7/tio-2.7.tar.xz"
-  sha256 "bf8fe434848c2c1b6540af0b42503c986068176ddc1a988cf02e521e7de5daa5"
+  url "https://github.com/tio/tio/releases/download/v3.6/tio-3.6.tar.xz"
+  sha256 "04a91686f8a19f157b885a7c146a138b4cff6a3fb8dba48723d1fdad15c61167"
   license "GPL-2.0-or-later"
   head "https://github.com/tio/tio.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "8b5af18879b92601b2d54f48016cc38547d84ea924568ecda5bb28b00fc43187"
-    sha256 cellar: :any,                 arm64_ventura:  "d88d8a16795a32de17b89d3c996321ab617a5eaa142d2ba28e479895c59ae435"
-    sha256 cellar: :any,                 arm64_monterey: "dbafc0da143fdbbf7c6d3de7b87027448e7224a951c27268fe1400d5b8fad0b9"
-    sha256 cellar: :any,                 arm64_big_sur:  "56f3900c997c905216b20a75ebdd9169eea400532a82e40cbbfd6ddefe5d59a8"
-    sha256 cellar: :any,                 sonoma:         "1a0eac5a04f3628bddfa1a35579597ba59462f6bcede5b728740b38679bb6535"
-    sha256 cellar: :any,                 ventura:        "53b6076a88662668a22dfa0b914ac4c05bd568dd707f7f078df4c7f238db2fa2"
-    sha256 cellar: :any,                 monterey:       "07d407983719b49255f611569ffc6de78c244446f658120845021137075119e8"
-    sha256 cellar: :any,                 big_sur:        "afbc51bc418883782e5b23914b7351f78afde46d2086378f0317052dcc748e83"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a696f56d7f0b1676b547743ef45737d135c1f853cd8784366eb9b4a89c8ca7f7"
+    sha256 cellar: :any, arm64_sonoma:   "e21b5db45b997387be149e757a17219d6a132520803f5b6ff9dc9876b99c4da3"
+    sha256 cellar: :any, arm64_ventura:  "7dca2cb864b1b26862c3497760537e291ad60f177aee4ef36097936f34c3a85c"
+    sha256 cellar: :any, arm64_monterey: "7a27b15f8631beb6a3b3f52294d61512d2fef4ba1a0ff12c421dc98938dd44a7"
+    sha256 cellar: :any, sonoma:         "553d53f3c409f4884f0ea0e0160673da5ac0a9bd4889d290f39183e9521fab97"
+    sha256 cellar: :any, ventura:        "712718a9a41bd8be856e4f99646f553a74db9937e2a10d1d145fa31b8ffe4e4c"
+    sha256 cellar: :any, monterey:       "0d527af33c975555de83a519cd0a50263be3311b36654567dd8cc09b0d38b892"
+    sha256               x86_64_linux:   "f46497f793be55fdf41963b13a870ec53d19c64cd874eb64518822dfe3a5b53d"
   end
 
   depends_on "meson" => :build
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
-  depends_on "inih"
+  depends_on "gettext"
+  depends_on "glib"
+  depends_on "lua"
 
   def install
-    system "meson", "setup", "build", *std_meson_args
+    system "meson", "setup", "build", "-Dbashcompletiondir=#{bash_completion}", *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
   end

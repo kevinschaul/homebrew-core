@@ -1,9 +1,9 @@
 class Zabbix < Formula
   desc "Availability and monitoring solution"
   homepage "https://www.zabbix.com/"
-  url "https://cdn.zabbix.com/zabbix/sources/stable/6.4/zabbix-6.4.13.tar.gz"
-  sha256 "a92ba21b0679e3abb3a8bfa0b6e16f2b5363bd50460eafec6da4d7050f32b092"
-  license "GPL-2.0-or-later" => { with: "openvpn-openssl-exception" }
+  url "https://cdn.zabbix.com/zabbix/sources/stable/7.0/zabbix-7.0.3.tar.gz"
+  sha256 "173059f57f11716146da79345e5a6bc52eceee6a5c4410664b8500a955598b2a"
+  license "AGPL-3.0-only"
   head "https://github.com/zabbix/zabbix.git", branch: "master"
 
   livecheck do
@@ -12,13 +12,13 @@ class Zabbix < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "786238b65ff14f5f9555fb6a9d518695b5e01e4a0dd4298b5dcceb9ee90cd4e1"
-    sha256 arm64_ventura:  "4cedef75f53a7e3ac2cf4c8fb798449421ed01f9627a6be86dbb7afa4be7c998"
-    sha256 arm64_monterey: "0d085ad165c820ab7478b9d25bf794c61a3d35f52bd20bba058654efcd847f47"
-    sha256 sonoma:         "46706181b3bcb4e261f6e496ec3f4fafdea25e53b80cd83269392437e1f5b82f"
-    sha256 ventura:        "5ec0e2e3c2a4fe89bbbe4d1f501704429d6acac342af131f6c93af25ccf31f5b"
-    sha256 monterey:       "0d0646dcdab82e25a0235a10ebaa8f90795f3b2baba7984d18dfabf6ff449fd0"
-    sha256 x86_64_linux:   "7b03d29527880ad4087760c0fe4e90d9c1e6336f0ee6a83df37feace4dc25939"
+    sha256 arm64_sonoma:   "0b3de39ab674d3979927725bba021617388e5a6dbd5380c38424b86ea90f8fe1"
+    sha256 arm64_ventura:  "522086a2d2e729d8c75a371a4df4aaf126fe5362bc26ac243d52e450b1aacf34"
+    sha256 arm64_monterey: "c634ae005eb477baf1c6d167962d507be98dd595f5e27889ace990b5bcb2f006"
+    sha256 sonoma:         "85a5ee366b9d04b93ab6fee76d5b6b79b214a3c6cf7668f1a53e61b0679a07b1"
+    sha256 ventura:        "913f38f6817b20e76012579a0118161f1838972c386408a67bf5fabe87f50b9a"
+    sha256 monterey:       "d6c3c0ef5c3854620966ac1960e1b53e8063bfef23b954abe106ae47dbc9c9dd"
+    sha256 x86_64_linux:   "2cce851ba3b3dd1082706569f7b892e3b0a28a26eca7448167ae044520ca9c7a"
   end
 
   depends_on "pkg-config" => :build
@@ -27,11 +27,9 @@ class Zabbix < Formula
 
   def install
     args = %W[
-      --disable-dependency-tracking
-      --prefix=#{prefix}
-      --sysconfdir=#{etc}/zabbix
       --enable-agent
       --with-libpcre2
+      --sysconfdir=#{pkgetc}
       --with-openssl=#{Formula["openssl@3"].opt_prefix}
     ]
 
@@ -40,7 +38,7 @@ class Zabbix < Formula
       args << "--with-iconv=#{sdk}/usr"
     end
 
-    system "./configure", *args
+    system "./configure", *args, *std_configure_args
     system "make", "install"
   end
 

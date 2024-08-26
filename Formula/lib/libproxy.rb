@@ -1,19 +1,19 @@
 class Libproxy < Formula
   desc "Library that provides automatic proxy configuration management"
   homepage "https://libproxy.github.io/libproxy/"
-  url "https://github.com/libproxy/libproxy/archive/refs/tags/0.5.5.tar.gz"
-  sha256 "11a2eace773755e79b8d37833985ce475aed4ca4d3e6656defd5eef67b5a00f1"
+  url "https://github.com/libproxy/libproxy/archive/refs/tags/0.5.8.tar.gz"
+  sha256 "64e363855012175bf796b37cacddf7bc7e08af0bf406eea94b549ce207987d3e"
   license "LGPL-2.1-or-later"
   head "https://github.com/libproxy/libproxy.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "f7af9bb48495f511c57183b47a7d3ac8bb4ead48a50b252348ae9294ea2921a2"
-    sha256 cellar: :any, arm64_ventura:  "5aedc5db073fbbc9142e17999de0e4337063099c9501e2f23032661ad1a47adb"
-    sha256 cellar: :any, arm64_monterey: "4fb3913d08421f55f9e917bda3477bcc196a01c7c878b6496ebef53a1915abb1"
-    sha256 cellar: :any, sonoma:         "9b03479d1716f047f848a619107a2d4324cdd8486422ad03eee056580d0ecbda"
-    sha256 cellar: :any, ventura:        "cf4417118d857f73f7688d284cc2bb36ac87cfd071accd4df36f7badda2c1002"
-    sha256 cellar: :any, monterey:       "faa37948031b1cb36785e478b50b130d94cf0708b35950963b87c23f74b2bbe7"
-    sha256               x86_64_linux:   "810b20dc5fcb5ee6b85cd8071fa529e3c3c9c61115347633c1a0d957363b7af0"
+    sha256 cellar: :any, arm64_sonoma:   "8502495b79120ea9ad1b682050a5301035ec705e579b297e17080d155578b386"
+    sha256 cellar: :any, arm64_ventura:  "a7fe2b0cdf6f3c21381ac5e069f81b699e750c8df561b2d2853998acb684cb14"
+    sha256 cellar: :any, arm64_monterey: "028921c7f386ae5e359672b3328e90f853b17a1388175e2ea334af84d24d5530"
+    sha256 cellar: :any, sonoma:         "329c947ca753ff82b6eeb1582229f1eee3a445a313bd8f3a08d9411d0c986eac"
+    sha256 cellar: :any, ventura:        "a582a209110cef3e51b0e0de3d4c95c61f813db3056b81b67a7c0500f0d3c952"
+    sha256 cellar: :any, monterey:       "762d7caf7527a710c572fc7e8991183707f8a6f6dbd04ef0ae00f53c9e68ff24"
+    sha256               x86_64_linux:   "b965dcf27682322b59b42ebb46206910ffa3c6b6d1abae45f119bd6c688ef98c"
   end
 
   depends_on "gobject-introspection" => :build

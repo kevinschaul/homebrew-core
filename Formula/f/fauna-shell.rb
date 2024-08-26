@@ -1,26 +1,24 @@
-require "language/node"
-
 class FaunaShell < Formula
   desc "Interactive shell for FaunaDB"
   homepage "https://fauna.com/"
-  url "https://registry.npmjs.org/fauna-shell/-/fauna-shell-1.2.1.tgz"
-  sha256 "151d0222447add9d7b01125b3d80a8559e1be180e253835abfc8cb1d5b77fa88"
+  url "https://registry.npmjs.org/fauna-shell/-/fauna-shell-2.0.2.tgz"
+  sha256 "26810b12aaa3b1794f7dc384db4dcc8e6be721ff14d6d97d414f7499b6a11aa0"
   license "MPL-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a11ab79a373ed99e271f1fcb2a4e07ea1ddeb79282fdbd6dccdc197f8abe82fc"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a11ab79a373ed99e271f1fcb2a4e07ea1ddeb79282fdbd6dccdc197f8abe82fc"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "a11ab79a373ed99e271f1fcb2a4e07ea1ddeb79282fdbd6dccdc197f8abe82fc"
-    sha256 cellar: :any_skip_relocation, sonoma:         "98446314f3996b624b1fec8306494c83fd608e4afa1d2ece2e37ffed83475dd8"
-    sha256 cellar: :any_skip_relocation, ventura:        "98446314f3996b624b1fec8306494c83fd608e4afa1d2ece2e37ffed83475dd8"
-    sha256 cellar: :any_skip_relocation, monterey:       "98446314f3996b624b1fec8306494c83fd608e4afa1d2ece2e37ffed83475dd8"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a11ab79a373ed99e271f1fcb2a4e07ea1ddeb79282fdbd6dccdc197f8abe82fc"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b65e24ac1b5a2dbaa84bb7e322769a5998a51057bdfa1d47848c3e46787d5a7b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b65e24ac1b5a2dbaa84bb7e322769a5998a51057bdfa1d47848c3e46787d5a7b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "b65e24ac1b5a2dbaa84bb7e322769a5998a51057bdfa1d47848c3e46787d5a7b"
+    sha256 cellar: :any_skip_relocation, sonoma:         "184b4a9e54bae80675c164bac45864224e4e3cf4ff42a624303d53daa24ab078"
+    sha256 cellar: :any_skip_relocation, ventura:        "184b4a9e54bae80675c164bac45864224e4e3cf4ff42a624303d53daa24ab078"
+    sha256 cellar: :any_skip_relocation, monterey:       "184b4a9e54bae80675c164bac45864224e4e3cf4ff42a624303d53daa24ab078"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b65e24ac1b5a2dbaa84bb7e322769a5998a51057bdfa1d47848c3e46787d5a7b"
   end
 
   depends_on "node"
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 

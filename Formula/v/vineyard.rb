@@ -3,27 +3,27 @@ class Vineyard < Formula
 
   desc "In-memory immutable data manager. (Project under CNCF)"
   homepage "https://v6d.io"
-  url "https://github.com/v6d-io/v6d/releases/download/v0.21.5/v6d-0.21.5.tar.gz"
-  sha256 "c434f61e71fb5e414add093b302375f27084dc03800e026019199db984183036"
+  url "https://github.com/v6d-io/v6d/releases/download/v0.23.2/v6d-0.23.2.tar.gz"
+  sha256 "2a2788ed77b9459477b3e90767a910e77e2035a34f33c29c25b9876568683fd4"
   license "Apache-2.0"
-  revision 3
+  revision 2
 
   bottle do
-    sha256                               arm64_sonoma:   "d5cffba2127b91d73218c8e35091b482cb4735df98d145609afa988d84050b0b"
-    sha256                               arm64_ventura:  "f02b2f658b66ec9c6b957be59dd8efe03a411b8a217ed54f86b6ce2883b0ca64"
-    sha256                               arm64_monterey: "7486a4a9bfbd5573973d0863f3264dfc88647bf528a37b1bb13dbae49ffe7177"
-    sha256                               sonoma:         "627c89f654e0d8a63d1c471f82b5e7d99152a3068120d682cf529567bbb6f5ee"
-    sha256                               ventura:        "278d437f3be3b49fec36b60a9e84760483d2d272ab1cfdfcc6fbddaf702e789c"
-    sha256                               monterey:       "cb5beb52a278df15303624903560217cbe9a9476e7601b451c536f3c41e649ce"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6890332a11185595eea54cfeb9e47f897c630b4283511c861f9f4f26f16a3b02"
+    sha256                               arm64_sonoma:   "b8e3536263aa443e1470e32f30a9ca7256b551e104689e0a265dfac22d0e1821"
+    sha256                               arm64_ventura:  "52bbe6e043bbb75dd8d5e70a964012045d75c5e60218cd41f1db38869b0799ea"
+    sha256                               arm64_monterey: "5b441eb66d81bc59736933a5953c0eaebdbb6337f18b1d6e298cd57ed14ce562"
+    sha256                               sonoma:         "f2f82b33cc4ed6a4b224332f58907265397ac695bd02a4a46f0b3b7b0ecccc16"
+    sha256                               ventura:        "d5eb9d7a6e858e2cebced5e26d7980d907cab9a83b8802cee23fff783c1422f0"
+    sha256                               monterey:       "30c5104aaf7425e92de4c9871e1b057b4d6c15165061b99555d1c712117e8169"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "458712fa6edc1cb5a6f58dbcaea6872872018d8aedf0d3e3d2c5ec0595b228eb"
   end
 
   depends_on "cmake" => [:build, :test]
   depends_on "llvm" => [:build, :test]
-  depends_on "python-setuptools" => :build
   depends_on "python@3.12" => :build
   depends_on "apache-arrow"
   depends_on "boost"
+  depends_on "cpprestsdk"
   depends_on "etcd"
   depends_on "etcd-cpp-apiv3"
   depends_on "gflags"
@@ -36,10 +36,23 @@ class Vineyard < Formula
   depends_on "protobuf"
   depends_on "redis"
 
+  on_macos do
+    depends_on "abseil"
+    depends_on "c-ares"
+    depends_on "re2"
+  end
+
   fails_with gcc: "5"
+
+  resource "setuptools" do
+    url "https://files.pythonhosted.org/packages/1c/1c/8a56622f2fc9ebb0df743373ef1a96c8e20410350d12f44ef03c588318c3/setuptools-70.1.0.tar.gz"
+    sha256 "01a1e793faa5bd89abc851fa15d0a0db26f160890c7102cd8dce643e886b47f5"
+  end
 
   def install
     python = "python3.12"
+    venv = virtualenv_create(libexec, python)
+    venv.pip_install resources
     # LLVM is keg-only.
     ENV.prepend_path "PYTHONPATH", Formula["llvm"].opt_prefix/Language::Python.site_packages(python)
 
@@ -50,7 +63,7 @@ class Vineyard < Formula
     system "cmake", "-S", ".", "-B", "build",
                     "-DCMAKE_CXX_STANDARD=17",
                     "-DCMAKE_CXX_STANDARD_REQUIRED=TRUE",
-                    "-DPYTHON_EXECUTABLE=#{which(python)}",
+                    "-DPYTHON_EXECUTABLE=#{venv.root}/bin/python",
                     "-DUSE_EXTERNAL_ETCD_LIBS=ON",
                     "-DUSE_EXTERNAL_REDIS_LIBS=ON",
                     "-DUSE_EXTERNAL_HIREDIS_LIBS=ON",
@@ -58,6 +71,7 @@ class Vineyard < Formula
                     "-DUSE_LIBUNWIND=OFF",
                     "-DLIBGRAPELITE_INCLUDE_DIRS=#{Formula["libgrape-lite"].opt_include}",
                     "-DOPENSSL_ROOT_DIR=#{Formula["openssl@3"].opt_prefix}",
+                    "-DBUILD_VINEYARD_SERVER_ETCD=OFF", # Fails with protobuf 27
                     *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"

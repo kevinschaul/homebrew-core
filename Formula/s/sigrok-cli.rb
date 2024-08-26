@@ -36,6 +36,10 @@ class SigrokCli < Formula
   depends_on "libsigrok"
   depends_on "libsigrokdecode"
 
+  on_macos do
+    depends_on "gettext"
+  end
+
   def install
     system "./autogen.sh" if build.head?
     mkdir "build" do
@@ -46,6 +50,6 @@ class SigrokCli < Formula
 
   test do
     # Make sure that we can capture samples from the demo device
-    system "#{bin}/sigrok-cli", "-d", "demo", "--samples", "1"
+    system bin/"sigrok-cli", "-d", "demo", "--samples", "1"
   end
 end

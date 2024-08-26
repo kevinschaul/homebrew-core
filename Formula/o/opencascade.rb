@@ -1,11 +1,10 @@
 class Opencascade < Formula
   desc "3D modeling and numerical simulation software for CAD/CAM/CAE"
   homepage "https://dev.opencascade.org/"
-  url "https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V7_7_2;sf=tgz"
-  version "7.7.2"
-  sha256 "2fb23c8d67a7b72061b4f7a6875861e17d412d524527b2a96151ead1d9cfa2c1"
+  url "https://git.dev.opencascade.org/gitweb/?p=occt.git;a=snapshot;h=refs/tags/V7_8_1;sf=tgz"
+  version "7.8.1"
+  sha256 "33f2bdb67e3f6ae469f3fa816cfba34529a23a9cb736bf98a32b203d8531c523"
   license "LGPL-2.1-only"
-  revision 3
 
   # The first-party download page (https://dev.opencascade.org/release)
   # references version 7.5.0 and hasn't been updated for later maintenance
@@ -21,13 +20,13 @@ class Opencascade < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "eb9808875fec8e1ca5f80d97959e38cee9d224589a846eaa78f25ea7199363d7"
-    sha256 cellar: :any,                 arm64_ventura:  "c5d9ea960850f4d532ab06d98e53760fd2764348a2d5d3c26809571f5e23d6ad"
-    sha256 cellar: :any,                 arm64_monterey: "cb4e9713df84d22209ec461ebffccd362ddc50d94334c60c1216c1c513b4b22a"
-    sha256 cellar: :any,                 sonoma:         "e1cee0b2983fd140e7da2227b4ec43cd221b9ecbcddb4e9aa919e9b62e504334"
-    sha256 cellar: :any,                 ventura:        "49a241949374fa04f3c6937bb59f7abfd525481d2b4886ceed2dd54ed9a4177d"
-    sha256 cellar: :any,                 monterey:       "62cf8aed6468f9ba9820f13dad4d393326137a90a62f6bb8e069c9992bc776e4"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c867bb275811aa102d3da70c979abb1938c8db206ee9da339366efc95aa9118e"
+    sha256 cellar: :any,                 arm64_sonoma:   "725b60ffcfcdc50edb28dd8c5d8d87c44fd9e2c5267c64c677b6098e64b68f83"
+    sha256 cellar: :any,                 arm64_ventura:  "ebd45601d545eeeb65ac441d57a1a90b0cc615707eb9b0896d6161e9ace3ee2d"
+    sha256 cellar: :any,                 arm64_monterey: "55758e47849fa92c48982fb5c0898d4c53a034d4de6cbb64f69a555f36de2a8c"
+    sha256 cellar: :any,                 sonoma:         "f89cadd051255fe193fe39aebd04c2c2716393568189c343501767b4950d3a4a"
+    sha256 cellar: :any,                 ventura:        "f6b02e2c9146c3834f40673233f6091d50464f777416b80338d1a0e705096cbf"
+    sha256 cellar: :any,                 monterey:       "49121a638da14d08516ccefc1b28f0d7591984cc913fae410cc9f18362b68908"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e7f813cfab8bc0c4dcf3ec91c7d6ca16c2e1ad732bda317f6d12a9334095850b"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -40,6 +39,7 @@ class Opencascade < Formula
   depends_on "tcl-tk"
 
   on_linux do
+    depends_on "libx11"
     depends_on "mesa" # For OpenGL
   end
 
@@ -72,6 +72,32 @@ class Opencascade < Formula
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
 
+    # The soname / install name of libtbb and libtbbmalloc are versioned only
+    # by the minor version (e.g., `libtbb.so.12`), but Open CASCADE's CMake
+    # config files reference the fully-versioned filenames (e.g.,
+    # `libtbb.so.12.11`).
+    # This mandates rebuilding opencascade upon tbb's minor version updates.
+    # To avoid this, we change the fully-versioned references to the minor-only
+    # version. For example:
+    #   libtbb.so.12.11 => libtbb.so.12
+    #   libtbbmalloc.so.2.11 => libtbbmalloc.so.2
+    #   libtbb.12.11.dylib => libtbb.12.dylib
+    #   libtbbmalloc.2.11.dylib => libtbbmalloc.2.dylib
+    # See also:
+    #   https://github.com/Homebrew/homebrew-core/issues/129111
+    #   https://dev.opencascade.org/content/cmake-files-macos-link-non-existent-libtbb128dylib
+    tbb_regex = /
+      libtbb
+      (malloc)? # 1
+      (\.so)? # 2
+      \.(\d+) # 3
+      \.(\d+) # 4
+      (\.dylib)? # 5
+    /x
+    inreplace (lib/"cmake/opencascade").glob("*.cmake") do |s|
+      s.gsub! tbb_regex, 'libtbb\1\2.\3\5', false
+    end
+
     bin.env_script_all_files(libexec, CASROOT: prefix)
 
     # Some apps expect resources in legacy ${CASROOT}/src directory
@@ -85,10 +111,9 @@ class Opencascade < Formula
     assert_equal "1", output.split("\n", 2)[1].chomp
 
     # Make sure hardcoded library name references in our CMake config files are valid.
-    # https://github.com/Homebrew/homebrew-core/issues/129111
-    # https://dev.opencascade.org/content/cmake-files-macos-link-non-existent-libtbb128dylib
     (testpath/"CMakeLists.txt").write <<~CMAKE
       cmake_minimum_required(VERSION 3.5)
+      set(CMAKE_CXX_STANDARD 11)
       project(test LANGUAGES CXX)
       find_package(OpenCASCADE REQUIRED)
       add_executable(test main.cpp)

@@ -1,18 +1,18 @@
 class Corrosion < Formula
   desc "Easy Rust and C/C++ Integration"
   homepage "https://github.com/corrosion-rs/corrosion"
-  url "https://github.com/corrosion-rs/corrosion/archive/refs/tags/v0.4.8.tar.gz"
-  sha256 "6b9090647d372adec2b09ac7a553458b6e39004238967f9a25e9dd8c1d77584d"
+  url "https://github.com/corrosion-rs/corrosion/archive/refs/tags/v0.5.tar.gz"
+  sha256 "d225753d54b482e04d2eb9e1a56f4b569d20dc70b00481dec279de1b5baa02f0"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2269f4cc55813ff736d10dcd49ee300c26313cead6735a1dd9347b1e218937a0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "948d5a318c8f6f24d4e474418827e3f0a72bd449af40222d0e3fb0c9b24502b0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "fe9bb6c2f4711f30f5531580f6e270ee3b236f453d4472006c83b914e9bc0207"
-    sha256 cellar: :any_skip_relocation, sonoma:         "91ec019b2634cf6852cff1e489e625b99eaba07d9e8077b24046a2350ec4f632"
-    sha256 cellar: :any_skip_relocation, ventura:        "1903ef8ffac92626b59f6faa5694a52afaabf99f87b7658dc195be23259933b7"
-    sha256 cellar: :any_skip_relocation, monterey:       "8529160c6876fda0f6ba6e30d3cd6e5066562a9a838d62925e3bf776f92be1c5"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bcdb0daf276814700a3c3e692184c0259e624f77a234992858fab5ffe4a78f8b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d531a2a4a85f1bad53e797ec22fa3b09e99455c3f768b9a67c4291ad36ade9ca"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "ec6c73422174eafe97b1aa344c43c7154262b6593c013740608d4a0cd4d1c925"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d5dda963ae5656cde3da9a5cb6923765d75e9fefbec5e85b4295552a9b402261"
+    sha256 cellar: :any_skip_relocation, sonoma:         "e0f08c4ce5fb360b3a812840caf5e1ae30fdb22a0cdeb55e0b6cc28daf580dba"
+    sha256 cellar: :any_skip_relocation, ventura:        "795542e04976a74ac3a5a2f161c627eed210dfdccbd4f5d49b0dc277c8c93d35"
+    sha256 cellar: :any_skip_relocation, monterey:       "0a94b4efb02cab9d60da080527c6dcbc118a4bf83451435d90d96236c0bf39e4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f8f17b3ca11c86ca26efd75a07c36e2e68bbc948ad65770423fe62ef9aa6f1c3"
   end
 
   depends_on "cmake" => [:build, :test]

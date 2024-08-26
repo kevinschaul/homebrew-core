@@ -1,8 +1,8 @@
 class Fend < Formula
   desc "Arbitrary-precision unit-aware calculator"
   homepage "https://printfn.github.io/fend"
-  url "https://github.com/printfn/fend/archive/refs/tags/v1.4.6.tar.gz"
-  sha256 "88fe4abf2caf96241a2964f510fd8801ac22f5c1511a4817361e676e931b0ce0"
+  url "https://github.com/printfn/fend/archive/refs/tags/v1.5.1.tar.gz"
+  sha256 "2f52729dee2e775c1adc52879a95429dd00748fe183df0f744f763b7f0d2aedf"
   license "MIT"
   head "https://github.com/printfn/fend.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Fend < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "dcd9a91024ddcc24752c06208b69db49770bd442fcc1b6e3703c77cd70e2bbad"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e17da28f1c828f53598dd26e5d03a026ae7bb6e91f0f78b660a1d40f963c9632"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4d71ff5b3029a277b9730ea2f62e332844f804c92e6d2dbd5a88b099861e2013"
-    sha256 cellar: :any_skip_relocation, sonoma:         "392585774c86e00074aa0de655f1ec304478af61c6c3ee876bb194882ca52d45"
-    sha256 cellar: :any_skip_relocation, ventura:        "e4781d07249b0364061665eb0534a0f9505847ee67fbc30b58bf3dda25c585ee"
-    sha256 cellar: :any_skip_relocation, monterey:       "fc25a4ca3a345198105e033f041cf06d20a4114231da885b01a4c4e81816212d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "861a14b1c5a86cd2e5d7c11d922da45a2e52794549506b05da569c3b13880ef8"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2ac2d93d1108b73a9b83d03f90c55901a7732fc55e16e72463f266758eed9a8f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "29b629a46d3d400a37884bc354128e1dbc6fb525beaa91e7e7225196f3d58321"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7a0ddfba6b074c9481d97a94efdb50b9a1af8288ef8657d553976880b89d9479"
+    sha256 cellar: :any_skip_relocation, sonoma:         "09a5c2e47bf763a920914e1b80899bf1eb41ab099013799d060a1825f0e4ccae"
+    sha256 cellar: :any_skip_relocation, ventura:        "c4bd219849793ebd7505ecc904ecf13665b03b298420d9c0a191420bc33f3d4d"
+    sha256 cellar: :any_skip_relocation, monterey:       "5cda829a22b4fd0db8ac940f920d95e1df1ab143291347f90947ac7e2261c121"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "992ed6f0fd44e737f6dd203b0c09a667c2c799889b4c280282198f94c84a6417"
   end
 
   depends_on "pandoc" => :build

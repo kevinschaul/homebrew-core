@@ -1,32 +1,38 @@
 class AwsSsoCli < Formula
   desc "Securely manage AWS API credentials using AWS SSO"
   homepage "https://github.com/synfinatic/aws-sso-cli"
-  url "https://github.com/synfinatic/aws-sso-cli.git",
-      tag:      "v1.15.0",
-      revision: "9f897c5be301ea1a3cd1b143dc75d0d2bff5e500"
+  url "https://github.com/synfinatic/aws-sso-cli/archive/refs/tags/v1.17.0.tar.gz"
+  sha256 "60e1c76b652f8c005f45e1755a6ecf16772f05e43a11f7ad26d27aef762c28b6"
   license "GPL-3.0-only"
   head "https://github.com/synfinatic/aws-sso-cli.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2fc117f8e9d0eba2ce6b6e41d74d1aa1f43ac926d44998d299eaed9461d4918b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b25c33943707a39c74ef04b10eb49e2107567d48c7caffada243b54e30f26571"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "3a7d2cce7454407147ccc186157aa8e01953bbc9984076eea43fd47e76eca738"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0e4763c9340dcca56ab1809a26928bcabaa7f98213d7e126419bac2062f71d4d"
-    sha256 cellar: :any_skip_relocation, ventura:        "9f8a4b368add249940454ae4ac481d66726aadbab08e91eb0ad2903eeab9868c"
-    sha256 cellar: :any_skip_relocation, monterey:       "5ecf3b80b02d19c62d678bf9559f3902fec58bead984cc77e348f5a69708ee67"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "37b4a78265f547051be47c1a55e31cf0f816d2b69c2671f97cd4a7eb07866982"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "914ff263326925c0aeffa103d0429f0ca536952a0eb2cb67df10fb8754ee8238"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9f1a770539479dda48289f4bb66e3256dba65d7ee94e49c8121b60e3536b1bf1"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "298cdc26302183335e4c7469c7360d352b445484db107c5e378b04e36ac8dd18"
+    sha256 cellar: :any_skip_relocation, sonoma:         "d908014d68ce36bd8867a0101f9100fad7548072fc31c70b8c50caf89bca18fc"
+    sha256 cellar: :any_skip_relocation, ventura:        "8066124dd646b5d629165a30ea6cdce65a8603d20e1a45ce207c7007e82f4f33"
+    sha256 cellar: :any_skip_relocation, monterey:       "cc472c92adc84d883059d20463dfc5fd82874f1fb13808f6dbb63398893d4722"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d801f3502f41111b88cb851ac284ec9151757a4cce6cbbd347b2eee802d91f00"
   end
 
   depends_on "go" => :build
   depends_on xcode: :build
 
   def install
-    system "make", "install", "INSTALL_PREFIX=#{prefix}"
+    ldflags = %W[
+      -s -w
+      -X main.Version=#{version}
+      -X main.Buildinfos=#{time.iso8601}
+      -X main.Tag=#{version}
+      -X main.CommitID=#{tap.user}
+    ]
+    system "go", "build", *std_go_args(ldflags:, output: bin/"aws-sso"), "./cmd/aws-sso"
   end
 
   test do
     assert_match "AWS SSO CLI Version #{version}", shell_output("#{bin}/aws-sso version")
-    assert_match "No AWS SSO providers have been configured.",
+    assert_match "no AWS SSO providers have been configured",
         shell_output("#{bin}/aws-sso --config /dev/null 2>&1", 1)
   end
 end

@@ -3,19 +3,19 @@ class Regipy < Formula
 
   desc "Offline registry hive parsing tool"
   homepage "https://github.com/mkorman90/regipy"
-  url "https://files.pythonhosted.org/packages/6a/23/0e77a9244d61360730b41b97b8e304d6729cbd2e35a5fddf82ef4c0efed4/regipy-4.1.1.tar.gz"
-  sha256 "532014352610c0cce9de2d6b5e43a5c80852eddca81edc3bfce55974c95d9a43"
+  url "https://files.pythonhosted.org/packages/b8/cc/9725b5fb54b7489cc3638fd50730a3076f66a1639964c3fd7dcb7fe32194/regipy-4.3.0.tar.gz"
+  sha256 "7438c2a4e01e831da994d9b63fd203bdb871798881a87c1f958315390d6fbf21"
   license "MIT"
   head "https://github.com/mkorman90/regipy.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "02de67bccffa2392f89bbfb93a5fa143c99b8667349807f2d2350ac10f0e56c7"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4f6d49932c9f2823b386951418c583988e9cdab6780f9bdb46d37f9ed0c34978"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4f44cad42bde8720c105fc56635674f3453bd991d9fae53c8c14c87012962a75"
-    sha256 cellar: :any_skip_relocation, sonoma:         "9fa34d39a1fcf60fc3ba6e01a45c0e41cdaf9451c2e27c109f57a36640b8f300"
-    sha256 cellar: :any_skip_relocation, ventura:        "4f1391b8ff1db7201e86da39f95f7fc18241427e69c9105f979d65de0ce5e72d"
-    sha256 cellar: :any_skip_relocation, monterey:       "872f7d94bcbf258289a413543b8894271590f9a895a07cbea208d9c953854f0a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "60822d54d9956a1465abd20419f01f2ca94422197f1690b85a17ec8cb71a1dec"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9b0d198634eda8d4b2841eb94a7ca7ab918f9d6279d542760c1dde7d2a795f28"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9b0d198634eda8d4b2841eb94a7ca7ab918f9d6279d542760c1dde7d2a795f28"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9b0d198634eda8d4b2841eb94a7ca7ab918f9d6279d542760c1dde7d2a795f28"
+    sha256 cellar: :any_skip_relocation, sonoma:         "e891a482a0087919e937ff0e2404ddaee413202d916c400f3f96ba2ce1f07abe"
+    sha256 cellar: :any_skip_relocation, ventura:        "e891a482a0087919e937ff0e2404ddaee413202d916c400f3f96ba2ce1f07abe"
+    sha256 cellar: :any_skip_relocation, monterey:       "e891a482a0087919e937ff0e2404ddaee413202d916c400f3f96ba2ce1f07abe"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "60064c91690f12be5c80dfb8b952b2527978a82ebc8470235509e932ade961be"
   end
 
   depends_on "python@3.12"

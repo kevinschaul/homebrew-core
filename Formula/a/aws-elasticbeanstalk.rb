@@ -6,21 +6,22 @@ class AwsElasticbeanstalk < Formula
   url "https://files.pythonhosted.org/packages/ec/5e/96dbeec0f796ac7928f52ed61c6b3a44764ae4113185bb1e08fc4d758ba7/awsebcli-3.20.10.tar.gz"
   sha256 "8599d0e2ca70e42ee55948e6f58f65ea06596143c556925572fbf80ce705548d"
   license "Apache-2.0"
-  revision 2
+  revision 4
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "e30643c64d6c9bba31c863ad9a4d9816d5f1392980360db91789636cef9135bb"
-    sha256 cellar: :any,                 arm64_ventura:  "c6ecaa5eb819fbc2ee20dcc820fe966539fa0fff3e3d119399dc07f32b1cef0b"
-    sha256 cellar: :any,                 arm64_monterey: "dc7823c901b396a32f408fbd0dd7a094e47a138108d2ddbdabfbcbb0429858ed"
-    sha256 cellar: :any,                 sonoma:         "12356f4e18a84be0b791fdfab26eefdb41b678dabbcffe15699b8aad820c54b5"
-    sha256 cellar: :any,                 ventura:        "c3f92cbf028441b2721bc05b6f850441d61fdcba25cccec954c1d2a1715d6072"
-    sha256 cellar: :any,                 monterey:       "9daaf7c0534128fe3a2a1e70f0aa17fcb534a87423db9f4c96c01961f8b68907"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "78d5a3b3b5bf78c18319c50938481d1561cdcda7b6eefd7b34841bb879383c55"
+    rebuild 1
+    sha256 cellar: :any,                 arm64_sonoma:   "34e16f047678291e22e5b91c1f9e36b4847b77cb28788680c0703e946e9c2510"
+    sha256 cellar: :any,                 arm64_ventura:  "96dfbeb8db7d3e148f7197fa689ab1a6e29ca6517056ac115fc7a8bd5fb663b4"
+    sha256 cellar: :any,                 arm64_monterey: "8f49e65f7d0bad658c864d78f98058fc5bce9848d11347e057f48fef72330e99"
+    sha256 cellar: :any,                 sonoma:         "07fe0035673d0e774934c1eb4346dc1483c2f9c2dccc82e173caae18f8f6cf56"
+    sha256 cellar: :any,                 ventura:        "f38e61ddc290bb059c03f92c69f2a68b96d1e9c5179e222769d0499565117565"
+    sha256 cellar: :any,                 monterey:       "ad509c276bcdfb4e59d4862483372c2319fcfb0b5cb1d9a8c339880b3af39ca2"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cfd1d1f17dcde2c0ff680dfaa9da38498ac347bcb8adf31f7bc63f4f0542616a"
   end
 
   depends_on "certifi"
   depends_on "libyaml"
-  depends_on "python@3.11" # Python 3.12 needs https://github.com/aws/aws-elastic-beanstalk-cli/pull/512
+  depends_on "python@3.12"
 
   uses_from_macos "libffi"
 
@@ -35,8 +36,8 @@ class AwsElasticbeanstalk < Formula
   end
 
   resource "cement" do
-    url "https://files.pythonhosted.org/packages/70/60/608f0b8975f4ee7deaaaa7052210d095e0b96e7cd3becdeede9bd13674a1/cement-2.8.2.tar.gz"
-    sha256 "8765ed052c061d74e4d0189addc33d268de544ca219b259d797741f725e422d2"
+    url "https://files.pythonhosted.org/packages/49/a9/94696dcf1483eac1c25f278d79d67c408a170414daa1f7522b96b8afd01d/cement-2.10.14.tar.gz"
+    sha256 "342e27db54a6616dd1892ed0bb3597a227cee33dc2d85560426df17fca907058"
   end
 
   resource "charset-normalizer" do
@@ -75,13 +76,18 @@ class AwsElasticbeanstalk < Formula
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/9d/be/10918a2eac4ae9f02f6cfe6414b7a155ccd8f7f9d4380d62fd5b955065c3/requests-2.31.0.tar.gz"
-    sha256 "942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1"
+    url "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz"
+    sha256 "55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760"
   end
 
   resource "semantic-version" do
     url "https://files.pythonhosted.org/packages/d4/52/3be868c7ed1f408cb822bc92ce17ffe4e97d11c42caafce0589f05844dd0/semantic_version-2.8.5.tar.gz"
     sha256 "d2cb2de0558762934679b9a104e82eca7af448c9f4974d1f3eeccff651df8a54"
+  end
+
+  resource "setuptools" do
+    url "https://files.pythonhosted.org/packages/5e/11/487b18cc768e2ae25a919f230417983c8d5afa1b6ee0abd8b6db0b89fa1d/setuptools-72.1.0.tar.gz"
+    sha256 "8d243eff56d095e5817f796ede6ae32941278f542e0f941867cc05ae52b162ec"
   end
 
   resource "six" do
@@ -95,8 +101,8 @@ class AwsElasticbeanstalk < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/0c/39/64487bf07df2ed854cc06078c27c0d0abc59bd27b32232876e403c333a08/urllib3-1.26.18.tar.gz"
-    sha256 "f8ecc1bba5667413457c529ab955bf8c67b45db799d159066261719e328580a0"
+    url "https://files.pythonhosted.org/packages/c8/93/65e479b023bbc46dab3e092bda6b0005424ea3217d711964ccdede3f9b1b/urllib3-1.26.19.tar.gz"
+    sha256 "3e3d753a8618b86d7de333b4223005f68720bcd6a7d2bcb9fbd2229ec7c1e429"
   end
 
   resource "wcwidth" do
@@ -105,6 +111,8 @@ class AwsElasticbeanstalk < Formula
   end
 
   def install
+    # Allow newer `cement` with 3.12 support: https://github.com/aws/aws-elastic-beanstalk-cli/pull/512
+    inreplace "requirements.txt", "cement==2.8.2", "cement<3"
     virtualenv_install_with_resources
   end
 

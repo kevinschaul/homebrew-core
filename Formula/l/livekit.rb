@@ -1,19 +1,27 @@
 class Livekit < Formula
   desc "Scalable, high-performance WebRTC server"
   homepage "https://livekit.io"
-  url "https://github.com/livekit/livekit/archive/refs/tags/v1.6.0.tar.gz"
-  sha256 "a590df9f2cea01ae08ee5a67844a9ac212908b0c8ed2feaa994b557e0a826f96"
+  url "https://github.com/livekit/livekit/archive/refs/tags/v1.7.2.tar.gz"
+  sha256 "8f8cae616a1bb35d8a83a050c90eff2b3158190bb9f352478f21745c917df869"
   license "Apache-2.0"
   head "https://github.com/livekit/livekit.git", branch: "master"
 
+  # Upstream creates releases that use a stable tag (e.g., `v1.2.3`) but are
+  # labeled as "pre-release" on GitHub before the version is released, so it's
+  # necessary to use the `GithubLatest` strategy.
+  livecheck do
+    url :stable
+    strategy :github_latest
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5f6df29afc1dd612f52ae692c1a1db8c31ed5b809f146d4ccd2a74b8caf7eac0"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cfe6eb9423a7fa32b173e50724ebf65fee302c03d20071040f3bcc23f9e229d1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "4915add32ec07f657738c2ed0bd9a64fba2877044ad93389ad475a225244df90"
-    sha256 cellar: :any_skip_relocation, sonoma:         "27a8a8ab8ff48e9ecd1178240a9a49b1adca5578a0a3e75a76c25b898c90ddae"
-    sha256 cellar: :any_skip_relocation, ventura:        "41391904238114a0a8cc523805ba52e2be3f2d14397e0eb8ba52b2cc643aff70"
-    sha256 cellar: :any_skip_relocation, monterey:       "b25a56c12f75a7e6601381decc70b27ea2157f11a2993230e671abc095743d1a"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a02162e054197f137117b6a2bbaa25ce62c8ef3b03b2e6c19d399a9145aaf496"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2cc5c072e54c0254ed2945390a750e0b2c7d0d465af943486262d95764f8a1f8"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bfc953fc7261c5354cddecd5937e08a36f7587f99c17554de72bd3a7701bbc03"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "9c4f3a86f5ebcecd4dca7c0320fa2ee87be0a20fa881f8b131c5ff8e7209ac91"
+    sha256 cellar: :any_skip_relocation, sonoma:         "79f8cd64c8e20cc0a97085b3d372502820cf58b5de3a9fde6463ac97b962dcac"
+    sha256 cellar: :any_skip_relocation, ventura:        "554087b3871473fbac9d99d7bee58716c2da5392bf667ec517961c4e04314829"
+    sha256 cellar: :any_skip_relocation, monterey:       "334dfb67a819d8ec455b5133087b81b43db133560e576057e7b3b07fcc6199a8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e5ffd1ce70d3d1414f12383678b48667b4a3be57a21d1b77bf6eec17cbf44bc9"
   end
 
   depends_on "go" => :build

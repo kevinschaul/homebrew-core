@@ -1,30 +1,27 @@
 class Xplr < Formula
   desc "Hackable, minimal, fast TUI file explorer"
   homepage "https://github.com/sayanarijit/xplr"
-  url "https://github.com/sayanarijit/xplr/archive/refs/tags/v0.21.7.tar.gz"
-  sha256 "d38f94cc46044dac3cfc96d89dec81989b69a66a98c2f960ea3abe44313675a6"
+  url "https://github.com/sayanarijit/xplr/archive/refs/tags/v0.21.9.tar.gz"
+  sha256 "345400c2fb7046963b2e0fcca8802b6e523e0fb742d0d893cb7fd42f10072a55"
   license "MIT"
   head "https://github.com/sayanarijit/xplr.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "f3666a6f4117fa680ac7424d3c6b3f6cf7a92bf96cf884c1490fd627010c0df1"
-    sha256 cellar: :any,                 arm64_ventura:  "c645f6c3d7ff3e6ca29837e7e6b57a5d222f5fe77e2b4094d3c7670fc1342440"
-    sha256 cellar: :any,                 arm64_monterey: "d0b55b103b10a774b46448ac996be574b0fc4a530522aab9d122016014ffd7dc"
-    sha256 cellar: :any,                 sonoma:         "a1b71054003b61f1fbd94dd58df36745ba0c5a492a4f3dae35ed854682f966a4"
-    sha256 cellar: :any,                 ventura:        "99f8987aab4128368ed62b733a35e0f296d1cca3e0f8309cc484ecef9e6010e7"
-    sha256 cellar: :any,                 monterey:       "c3025a4aa9607069ba5f7c464a352f8adc9450efcd3f7cfb16112c1e50286bec"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b76fe0e71bd844dcd6a6943d0841bb77b71480d47948f26ed584d89ff159872e"
+    sha256 cellar: :any,                 arm64_sonoma:   "e12c3daf98f01ef65c0712449f17b2e44941ae864468139028df465b5e6714f9"
+    sha256 cellar: :any,                 arm64_ventura:  "a5e3d5b13f3fae8554777905d97a8a5b5de096de7218f541d34059304b5f7dd1"
+    sha256 cellar: :any,                 arm64_monterey: "4fead8b01327480386b45f7165f05c47dce16e3f575e15f74128739dca1f23ab"
+    sha256 cellar: :any,                 sonoma:         "251c75b3051e9e98a746ee31735042c7067e2269bd31e38aea2b7c1421d1c3aa"
+    sha256 cellar: :any,                 ventura:        "3293d23dcbd6c3b440b053c439eb662234ea9b9beb5f5a71365fb949e2354a40"
+    sha256 cellar: :any,                 monterey:       "bf794adee15ca2eabac6aa3d5ac1cab694a76bd2b787cbd15915b486b02485ca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a2e5fd49885a71195c2c9e6087e3b8d2f1b6b9c4a866be343db5fd1e067d5915"
   end
 
   depends_on "pkg-config" => :build
   depends_on "rust" => :build
   depends_on "luajit"
 
-  # Avoid vendoring `luajit`.
-  patch :DATA
-
   def install
-    system "cargo", "install", *std_cargo_args
+    system "cargo", "install", "--no-default-features", *std_cargo_args
   end
 
   def check_binary_linkage(binary, library)
@@ -53,18 +50,3 @@ class Xplr < Formula
            "No linkage with libluajit! Cargo is likely using a vendored version."
   end
 end
-
-__END__
-diff --git a/Cargo.toml b/Cargo.toml
-index 6c50de0..953d578 100644
---- a/Cargo.toml
-+++ b/Cargo.toml
-@@ -73,7 +73,7 @@ features = ['serde']
- 
- [dependencies.mlua]
- version = "0.9.6"
--features = ['luajit', 'vendored', 'serialize', 'send']
-+features = ['luajit', 'serialize', 'send']
- 
- [dependencies.tui-input]
- version = "0.8.0"

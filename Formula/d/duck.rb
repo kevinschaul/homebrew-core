@@ -1,8 +1,8 @@
 class Duck < Formula
   desc "Command-line interface for Cyberduck (a multi-protocol file transfer tool)"
   homepage "https://duck.sh/"
-  url "https://dist.duck.sh/duck-src-8.8.2.41344.tar.gz"
-  sha256 "053bd18a155e30bfeb5d71683af72479aaa678d9e65567f204e192d3fe94691c"
+  url "https://dist.duck.sh/duck-src-9.0.1.41941.tar.gz"
+  sha256 "265c6bfef4a500336417c6d674f224f64f1cd53ef91b308be88c15367f233cca"
   license "GPL-3.0-only"
   head "https://github.com/iterate-ch/cyberduck.git", branch: "master"
 
@@ -12,13 +12,13 @@ class Duck < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "877618e89b12fefdc28658d1625e6645ed2afb02ddee3306cef4ffc8a8fbd0ba"
-    sha256 cellar: :any, arm64_ventura:  "a5c01cc333cdca455d451ea8fa21b516c9ff4bedd8949d3f974e0640ed899ef8"
-    sha256 cellar: :any, arm64_monterey: "e24ab67903ae7b6501e6688b38fb308535c69b255173c98c22e2376d8e164a4b"
-    sha256 cellar: :any, sonoma:         "285e16e76a2d0ea15c91b130047aec51eac3fd4d41293e2617092685230718c0"
-    sha256 cellar: :any, ventura:        "7b839145093bc793448b84b6a0ea1118686e3885b7ad3df8ede02d4165892c0c"
-    sha256 cellar: :any, monterey:       "780cdea85bcb08f66ffee2b3fe2869ecd34d17efabc88c271eabaf35ac56a158"
-    sha256               x86_64_linux:   "913b8d3c73797e6265488805400ad5ee0e399c85c8abb4f8df5f81ce907b265a"
+    sha256 cellar: :any, arm64_sonoma:   "457e1c33bda569182b91cfd16cc1ea6f09641927bb4471576124c3d4915e9d35"
+    sha256 cellar: :any, arm64_ventura:  "1c27967ffea11eb260a0823dc8e7257b6d4ae9888fff196c539e82a51cb6fd3b"
+    sha256 cellar: :any, arm64_monterey: "44cc4aaeb7b62ba2ca21c66f8a1da2a660cede322b86b6153ec1dd351c8e4313"
+    sha256 cellar: :any, sonoma:         "11f8c41aa10107581b5eed23af2a9b02be4464ab0e0420bafb06394bc18a8689"
+    sha256 cellar: :any, ventura:        "fc3878115f65558dc213b2cf01f963c1c0bf823e1cbd9a8ec2c4371217dd9d7e"
+    sha256 cellar: :any, monterey:       "9b8e1431cb1964ce332d832a7f580ed417ef2509734f6170b00f7d3cc9ae6a82"
+    sha256               x86_64_linux:   "bcd0411a1f962cca75784cb6341b403e2d38f802311bb80f7cb0b0dab4eb6c1e"
   end
 
   depends_on "ant" => :build
@@ -33,16 +33,23 @@ class Duck < Formula
   on_linux do
     depends_on "alsa-lib"
     depends_on "freetype"
+    depends_on "giflib"
+    depends_on "harfbuzz"
+    depends_on "jpeg-turbo"
+    depends_on "libpng"
     depends_on "libx11"
     depends_on "libxext"
     depends_on "libxi"
     depends_on "libxrender"
     depends_on "libxtst"
+    depends_on "little-cms2"
   end
 
+  conflicts_with "duckscript", because: "both install `duck` binaries"
+
   resource "jna" do
-    url "https://github.com/java-native-access/jna/archive/refs/tags/5.13.0.tar.gz"
-    sha256 "526bff8ffcbc2067a7403f55b01ad8d7a781c098abca79c4ea6c9e80198bb5fd"
+    url "https://github.com/java-native-access/jna/archive/refs/tags/5.14.0.tar.gz"
+    sha256 "b8a51f4c97708171fc487304f98832ce954b6c02e85780de71d18888fddc69e3"
   end
 
   resource "rococoa" do
@@ -156,7 +163,7 @@ class Duck < Formula
 
       # Remove the `*.tbd` files. They're not needed, and they cause codesigning issues.
       buildpath.glob("JavaNativeFoundation.framework/**/JavaNativeFoundation.tbd").map(&:unlink)
-      rm_rf libdir/"JavaNativeFoundation.framework"
+      rm_r(libdir/"JavaNativeFoundation.framework")
       libdir.install buildpath/"JavaNativeFoundation.framework"
 
       rm libdir/shared_library("librococoa")
@@ -175,7 +182,7 @@ class Duck < Formula
   end
 
   test do
-    system "#{bin}/duck", "--download", "https://ftp.gnu.org/gnu/wget/wget-1.19.4.tar.gz", testpath/"test"
+    system bin/"duck", "--download", "https://ftp.gnu.org/gnu/wget/wget-1.19.4.tar.gz", testpath/"test"
     assert_equal (testpath/"test").sha256, "93fb96b0f48a20ff5be0d9d9d3c4a986b469cb853131f9d5fe4cc9cecbc8b5b5"
   end
 end

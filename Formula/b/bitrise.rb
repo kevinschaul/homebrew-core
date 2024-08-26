@@ -1,8 +1,8 @@
 class Bitrise < Formula
   desc "Command-line automation tool"
   homepage "https://github.com/bitrise-io/bitrise"
-  url "https://github.com/bitrise-io/bitrise/archive/refs/tags/2.12.0.tar.gz"
-  sha256 "cdf3ed2fed7ec777e4a275804ddc6a3a4f372c6edd5ee216a8b63b8f3263d1a3"
+  url "https://github.com/bitrise-io/bitrise/archive/refs/tags/2.20.0.tar.gz"
+  sha256 "543997ef7100b0913f52f77b40b3441f82a6260065eaf8c06eb534792288ab29"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,13 @@ class Bitrise < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "edeee17a08d64b4150e4991543adc2087c36622d248fecb5fce705a05a95d31c"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e62b91032d10cb8fd96e567c9998bf9fc5d04275e51421723bf7765a44b2be6f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "60d88589c374b98563a32c2929d82815d6b21da6c15c80569bf0edde03549160"
-    sha256 cellar: :any_skip_relocation, sonoma:         "482d9736a00dbd62553ab933fd52dc6874e9698032a996459425a470f6971e45"
-    sha256 cellar: :any_skip_relocation, ventura:        "2824cf20723383a455128f6796874a4934351a515b9eb6bfab6c1e95274c0a74"
-    sha256 cellar: :any_skip_relocation, monterey:       "4295269321df2dbddf157b146c8861b678d413fec9f29ee8ae349195f78cd94b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d2f96239fcd8c7eaffad961ad43fe86510656634919d218d481bcfceef8c1be4"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1381d6791849396b8ac75aa162075d3626bba9ccaf320a226980e29a25fef576"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b4288b04c6283a346921cdbac38067fc2c469440bde23b2f0bdf9fcb17f44f5d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "608d55e621f4bc7a8214fabdc94546b9488b08b589dad003558da3067af5f7c1"
+    sha256 cellar: :any_skip_relocation, sonoma:         "f940b6ce34c3ea20d5ae07905175bcefc7b292f3749117b76511792144948f72"
+    sha256 cellar: :any_skip_relocation, ventura:        "15e3e12478185f88c7ef4c29e6063e31fa1d1ad0f349c480a9c9fb9fcadacafb"
+    sha256 cellar: :any_skip_relocation, monterey:       "1296047aafab98b51423cd337449fe4306af4d7166725c2134373507956676c4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "584ceb0440f49938ddce8c8fdaa478e1e84961510b9ea6493151ce76606c99df"
   end
 
   depends_on "go" => :build
@@ -45,8 +45,8 @@ class Bitrise < Formula
               - content: printf 'Test - OK' > brew.test.file
     EOS
 
-    system "#{bin}/bitrise", "setup"
-    system "#{bin}/bitrise", "run", "test_wf"
+    system bin/"bitrise", "setup"
+    system bin/"bitrise", "run", "test_wf"
     assert_equal "Test - OK", (testpath/"brew.test.file").read.chomp
   end
 end

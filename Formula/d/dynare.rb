@@ -1,10 +1,10 @@
 class Dynare < Formula
   desc "Platform for economic models, particularly DSGE and OLG models"
   homepage "https://www.dynare.org/"
-  url "https://www.dynare.org/release/source/dynare-6.0.tar.xz"
-  sha256 "52460046d44776d936986f52649f9e48966b07e414a864d83531d43e568ab682"
+  url "https://www.dynare.org/release/source/dynare-6.1.tar.xz"
+  sha256 "fe887a570d13c1ae2fb45fb2978eee59cdf0f3915120fdde5bc3614e584d0693"
   license "GPL-3.0-or-later"
-  revision 1
+  revision 2
   head "https://git.dynare.org/Dynare/dynare.git", branch: "master"
 
   livecheck do
@@ -13,13 +13,13 @@ class Dynare < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "735082a3de132613ae2e5f7f9542fa975cb803c76bd4a9b68f9ccb751f5704ba"
-    sha256 cellar: :any, arm64_ventura:  "fb562b6f3876ca77cbd36dd54726ff38611a790ef6a78688ed5b30af11877440"
-    sha256 cellar: :any, arm64_monterey: "b81c27f5924f1c290e8d8cc5313eda11a0896d80b816188ae14f1f5b7de0a6e8"
-    sha256 cellar: :any, sonoma:         "f8bc049be241b5383e8656dc2bcf34026ad340ab448db335d4279407343d90cc"
-    sha256 cellar: :any, ventura:        "48db2ccf885cb0af1504ebab996c89f901f7a2dabbbf03238e401df44e9ef60b"
-    sha256 cellar: :any, monterey:       "0e2108b2f154027e78bb246d64b48cea7225a770dc8dc3d6167ff8e905062a7f"
-    sha256               x86_64_linux:   "c19a7ece62c121e7b91637b553dd5661e7594cb25dfdd07395890c0fc907f1c2"
+    sha256 cellar: :any, arm64_sonoma:   "70f8cf68021e3f69276dc69264bbad893a9a2182475362ee8a84c2d6b40241b7"
+    sha256 cellar: :any, arm64_ventura:  "587bdf440ac8bad134b0e74c2dbf7825249df627ce2dcd6725fce874f0d5a0f4"
+    sha256 cellar: :any, arm64_monterey: "c582cd01711e9e06d74f2a447f55cfe18935beef80631943ec69daa9987b3d7b"
+    sha256 cellar: :any, sonoma:         "1d6f404f4b3749a04bc62ae1d8bbfdf12f10ed3ed7b7e7a67c47836a3317dfa4"
+    sha256 cellar: :any, ventura:        "77ec57507f9707240995297f58b320ba55ec86b21b6d1f90df4ef48e3f71c9ed"
+    sha256 cellar: :any, monterey:       "0bdd6c0a38b347fbf70dc5ac1bc445c7c1f0e12618e967570304a20721271f23"
+    sha256               x86_64_linux:   "44c2d406621d9ca5bd64ecca6775aaabdfafd2b34368bafc712ef148cfc7db3b"
   end
 
   depends_on "bison" => :build

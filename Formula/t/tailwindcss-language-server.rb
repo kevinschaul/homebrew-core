@@ -1,26 +1,24 @@
-require "language/node"
-
 class TailwindcssLanguageServer < Formula
   desc "LSP for TailwindCSS"
-  homepage "https://github.com/tailwindlabs/tailwindcss-intellisense/tree/HEAD/packages/tailwindcss-language-server#readme"
-  url "https://registry.npmjs.org/@tailwindcss/language-server/-/language-server-0.0.16.tgz"
-  sha256 "338e1ba6dec23fd941a8b6e0b6328c7dfe77e686f0ed1eff070f63ec36d113d8"
+  homepage "https://github.com/tailwindlabs/tailwindcss-intellisense/tree/HEAD/packages/tailwindcss-language-server"
+  url "https://registry.npmjs.org/@tailwindcss/language-server/-/language-server-0.0.23.tgz"
+  sha256 "ee81c05260e29343215d333b0a32f60c6bae2b4a4025e0f4466550a786f523ca"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "26ae967f5162607e7e5da363720533878ab53e45aac157a3a48ab5a81acc6d8f"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "26ae967f5162607e7e5da363720533878ab53e45aac157a3a48ab5a81acc6d8f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "26ae967f5162607e7e5da363720533878ab53e45aac157a3a48ab5a81acc6d8f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "619f3b52323277d6ab4261c282fc99c6864f6dfefdae0f116fcf2aa920614ea1"
-    sha256 cellar: :any_skip_relocation, ventura:        "619f3b52323277d6ab4261c282fc99c6864f6dfefdae0f116fcf2aa920614ea1"
-    sha256 cellar: :any_skip_relocation, monterey:       "619f3b52323277d6ab4261c282fc99c6864f6dfefdae0f116fcf2aa920614ea1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c4a43089ff4492d021c63a6537243c0e2d05f55ad2bf6cd3a725430c7db3494b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "61e17590ca5ad2b1f132773e56dceed0f7e30bccf240f452c81f81f788aae18b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "61e17590ca5ad2b1f132773e56dceed0f7e30bccf240f452c81f81f788aae18b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "61e17590ca5ad2b1f132773e56dceed0f7e30bccf240f452c81f81f788aae18b"
+    sha256 cellar: :any_skip_relocation, sonoma:         "80179d46d6092738668c98f416626147d4733aee9210481645efd121aa81a77d"
+    sha256 cellar: :any_skip_relocation, ventura:        "80179d46d6092738668c98f416626147d4733aee9210481645efd121aa81a77d"
+    sha256 cellar: :any_skip_relocation, monterey:       "80179d46d6092738668c98f416626147d4733aee9210481645efd121aa81a77d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "95b38c618c90a8a395bb8c5b767588e4f878b0db923a66b3b48a36c8b4544c80"
   end
 
   depends_on "node"
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
 
     # Replace universal binaries with their native slices
@@ -51,7 +49,7 @@ class TailwindcssLanguageServer < Formula
       }
     JSON
 
-    Open3.popen3("#{bin}/tailwindcss-language-server", "--stdio") do |stdin, stdout|
+    Open3.popen3(bin/"tailwindcss-language-server", "--stdio") do |stdin, stdout|
       stdin.write "Content-Length: #{json.size}\r\n\r\n#{json}"
       sleep 3
       assert_match(/^Content-Length: \d+/i, stdout.readline)

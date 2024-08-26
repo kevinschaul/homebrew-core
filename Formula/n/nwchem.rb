@@ -24,6 +24,7 @@ class Nwchem < Formula
   end
 
   depends_on "gcc" # for gfortran
+  depends_on "hwloc"
   depends_on "libxc"
   depends_on "open-mpi"
   depends_on "openblas"
@@ -72,7 +73,7 @@ class Nwchem < Formula
         charmm_x #{pkgshare}/charmm_x/
       EOS
 
-      inreplace "util/util_nwchemrc.F", "/etc/nwchemrc", "#{etc}/nwchemrc"
+      inreplace "util/util_nwchemrc.F", "/etc/nwchemrc", etc/"nwchemrc"
 
       # needed to use python 3.X to skip using default python2
       ENV["PYTHONVERSION"] = Language::Python.major_minor_version "python3.12"
@@ -111,7 +112,7 @@ class Nwchem < Formula
       ENV["OMP_NUM_THREADS"] = "1"
       ENV["NWCHEM_TOP"] = testpath
       ENV["NWCHEM_TARGET"] = OS.mac? ? "MACX64" : "LINUX64"
-      ENV["NWCHEM_EXECUTABLE"] = "#{bin}/nwchem"
+      ENV["NWCHEM_EXECUTABLE"] = bin/"nwchem"
       system "./runtests.mpi.unix", "procs", "0", "dft_he2+", "pyqa3", "prop_mep_gcube", "pspw", "tddft_h2o", "tce_n2"
     end
   end

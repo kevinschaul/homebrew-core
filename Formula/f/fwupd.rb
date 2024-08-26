@@ -3,19 +3,19 @@ class Fwupd < Formula
 
   desc "Firmware update daemon"
   homepage "https://github.com/fwupd/fwupd"
-  url "https://github.com/fwupd/fwupd/releases/download/1.9.16/fwupd-1.9.16.tar.xz"
-  sha256 "adcafc8697bbf6ccc742fa3ce62457d3ed76b5807c068d5ea688f1ab698927f7"
+  url "https://github.com/fwupd/fwupd/releases/download/1.9.24/fwupd-1.9.24.tar.xz"
+  sha256 "12f560b35dbed981fde8cf774c6d1f2e658a157d3a63d6c439bf418dbcc44b4c"
   license "LGPL-2.1-or-later"
   head "https://github.com/fwupd/fwupd.git", branch: "main"
 
   bottle do
-    sha256 arm64_sonoma:   "9436b664d0350755bfdf5b17ba73b4444887affe8022a656b0b1c2e0cd525cad"
-    sha256 arm64_ventura:  "f311aa0fef69bb84d281bba00b75c40c805a0c0de8a8b4085c552353dd6cf4ae"
-    sha256 arm64_monterey: "12e32f213634259c9399e5ad85fba093f2cb3fe559e639424e0374cd80978f13"
-    sha256 sonoma:         "3fd0b137d34e0d15e2b7fbf3eaad34295576ad0c445bcb7821aaa943e72753fe"
-    sha256 ventura:        "4948dce2f29254008f4e55f37ddd200cb0bde49fa6c633a5d008d20d62759369"
-    sha256 monterey:       "8cab6cbd81a603670fb4cb0bafffc223eaede54761fe6ad481efde64628dc5a2"
-    sha256 x86_64_linux:   "407676e83bbe22534dcf328b38262de3ef47519782c4d7f69f5018aceccccf06"
+    sha256 arm64_sonoma:   "3098aa5f6ba05f9ac84c27fbdde0d829af379fb8f2ba1b05bc69a2786c9f58ef"
+    sha256 arm64_ventura:  "c75324e3034e466d04900c38fead2eb9f18567f93b3cb6b2d67c29c0c5b54dc4"
+    sha256 arm64_monterey: "efc0c6f7f49432e87b2a907b81681c3d299789c4509b814ac21031eb70b17b95"
+    sha256 sonoma:         "a105fd3b81aebf55e0a80cb810d2560c274fb0d7c052f4e485517c4dff387b2c"
+    sha256 ventura:        "b0fdce27ba07974bc08402260f381bf9796ea9ecf2f584f8dd92dc4538e4521f"
+    sha256 monterey:       "bd5fdcf2e6dfa058306f59ed52d7f78d686a947dfd1265b3bea66d7d076eefc9"
+    sha256 x86_64_linux:   "ce89989817d8a5004134e11ecf44ce75fa74e266a0191224fca27fedc930d4ff"
   end
 
   depends_on "gi-docgen" => :build
@@ -36,13 +36,15 @@ class Fwupd < Formula
   depends_on "libjcat"
   depends_on "libxmlb"
   depends_on "protobuf-c"
+  depends_on "sqlite"
+  depends_on "xz"
 
   uses_from_macos "curl"
-  uses_from_macos "sqlite"
+  uses_from_macos "zlib"
 
   resource "jinja2" do
-    url "https://files.pythonhosted.org/packages/b2/5e/3a21abf3cd467d7876045335e681d276ac32492febe6d98ad89562d1a7e1/Jinja2-3.1.3.tar.gz"
-    sha256 "ac8bd6544d4bb2c9792bf3a159e80bba8fda7f07e81bc3aed565432d5925ba90"
+    url "https://files.pythonhosted.org/packages/ed/55/39036716d19cab0747a5020fc7e907f362fbf48c984b14e62127f7e68e5d/jinja2-3.1.4.tar.gz"
+    sha256 "4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369"
   end
 
   resource "markupsafe" do
@@ -108,6 +110,6 @@ class Fwupd < Formula
     system "./test"
 
     # this is a lame test, but fwupdtool requires root access to do anything much interesting
-    system "#{bin}/fwupdtool", "-h"
+    system bin/"fwupdtool", "-h"
   end
 end

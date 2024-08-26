@@ -4,8 +4,8 @@
 class Mu < Formula
   desc "Tool for searching e-mail messages stored in the maildir-format"
   homepage "https://www.djcbsoftware.nl/code/mu/"
-  url "https://github.com/djcb/mu/releases/download/v1.12.3/mu-1.12.3.tar.xz"
-  sha256 "ce6edd5661ffe3de4c9e17a6c8cdaf233b3cd5e85c82ed876d87c064e6e7b7e0"
+  url "https://github.com/djcb/mu/releases/download/v1.12.6/mu-1.12.6.tar.xz"
+  sha256 "f8a539b687c999678fd7cd37cc4ab15ee5e87801027d982ba195b3a9cb53b761"
   license "GPL-3.0-or-later"
   head "https://github.com/djcb/mu.git", branch: "master"
 
@@ -18,13 +18,13 @@ class Mu < Formula
   end
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "4e2f8f1db0c88a6a83d16d6e1742426ab7b4132e3a3a6e77e4ad630fec7e2a07"
-    sha256 cellar: :any, arm64_ventura:  "4f0c4135ac69d9ede92749bdbdb5137e1609a3563c51b99b82c8f7e10e9eb334"
-    sha256 cellar: :any, arm64_monterey: "c9a742a395121cda6c42f48d42bca4a00c3ebbe030a62fdcda8c3a7a1974eb00"
-    sha256 cellar: :any, sonoma:         "f68b69277e8e5cf8eb58d74537bc724a6a3583556ff45d1871c96c939c8bd0b6"
-    sha256 cellar: :any, ventura:        "7f1d2bec30ad77e3cdb6bd50fa1f978689ec204888a87fc137b24529cd5443f6"
-    sha256 cellar: :any, monterey:       "5d0b5c974de44382d5e78b3ac52b57d6bb78afea04bc7895f8ba072afe299a4a"
-    sha256               x86_64_linux:   "88eb0dbbc5f2d44898e4ea309337aecf3d4a4ce56f28ad5695e0cbd0261041e0"
+    sha256 cellar: :any, arm64_sonoma:   "ed4d895407f56e18649323d631f1ac9a2b0829e3c4760c94a0dedd4ac276e848"
+    sha256 cellar: :any, arm64_ventura:  "744f9257dffb1fb1b91830f196053277eaf21fdd3c64c2bbd5276b047e73af51"
+    sha256 cellar: :any, arm64_monterey: "b1fd957c5632c2be1fbd11e8c80c0515f238bba508e153780c374df692fdd00d"
+    sha256 cellar: :any, sonoma:         "7f6de42add1b3fcf5ab61834f8a711704d620de2f591a6be47bd37e7814f1cb0"
+    sha256 cellar: :any, ventura:        "08646f67ee4e951b576fd509ad1674271df6a1f4f401bf742720e44e4da349a7"
+    sha256 cellar: :any, monterey:       "40b5c936a5ec11df7713ec71d6e294bfb9ae1277a498ee03b6d841d68fb02fbd"
+    sha256               x86_64_linux:   "e6a5eba6771253822c8b167942045bb04c99e90074d28144c3fb88faae8cefb2"
   end
 
   depends_on "emacs" => :build
@@ -75,8 +75,8 @@ class Mu < Formula
       This used to happen outdoors. It was more fun then.
     EOS
 
-    system "#{bin}/mu", "init", "--muhome=#{testpath}", "--maildir=#{testpath}"
-    system "#{bin}/mu", "index", "--muhome=#{testpath}"
+    system bin/"mu", "init", "--muhome=#{testpath}", "--maildir=#{testpath}"
+    system bin/"mu", "index", "--muhome=#{testpath}"
 
     mu_find = "#{bin}/mu find --muhome=#{testpath} "
     find_message = "#{mu_find} msgid:2222222222@example.com"

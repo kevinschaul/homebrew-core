@@ -1,18 +1,18 @@
 class Primesieve < Formula
   desc "Fast C/C++ prime number generator"
   homepage "https://github.com/kimwalisch/primesieve"
-  url "https://github.com/kimwalisch/primesieve/archive/refs/tags/v12.1.tar.gz"
-  sha256 "64e7f5d3ce680262b865c7aec1381ffb13d13f75dd985b964ce33806e1bbf386"
+  url "https://github.com/kimwalisch/primesieve/archive/refs/tags/v12.4.tar.gz"
+  sha256 "eb7081adebe8030e93b3675c74ac603438d10a36792246b274c79f11d8a987ce"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "d0a2bc5684a209029fd4cf0f597f351add96110a453b1db1c18773bfe6537f89"
-    sha256 cellar: :any,                 arm64_ventura:  "9bab8dce016fc005cd2fe823b5ea772205da5158ef55e4123dc367f932b384f2"
-    sha256 cellar: :any,                 arm64_monterey: "02c488e6d3bb6c746f35b61e0ffc9c5e5fed8ccc60c0dd491f3beb68bdd2c540"
-    sha256 cellar: :any,                 sonoma:         "726329c7b1ff868bd35fe3c01ef593b8f29c790f4da30f2953beb9dfb8bbff8a"
-    sha256 cellar: :any,                 ventura:        "a5ff1332a0362c7c649282a4f14f0f0b41e0428ef1a5c79d146fc81e25aae7b9"
-    sha256 cellar: :any,                 monterey:       "ea94ba935bbc9cb9795062c48c8da7875398f5782c1077611eac8e197d49e514"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2a5b6f4f46c560f873545f412daee09b5b829b9dcf9be3d869591fbb318c6ec8"
+    sha256 cellar: :any,                 arm64_sonoma:   "fa02e41a21f214425987866dad0ce74d252b5e3e7ad0f9b1f4d75ffe7dd1a1e8"
+    sha256 cellar: :any,                 arm64_ventura:  "228d0bfe7758cd12500784ff76c44b9fa243fd1b86a8c747ad34d3188a9a36fb"
+    sha256 cellar: :any,                 arm64_monterey: "9be7d308ad56ac5abdba3c3c730413167219b62f8158dfd0d52c061848279d24"
+    sha256 cellar: :any,                 sonoma:         "8a41c7174b2d073959b6aebdd388a9522f96f2efaf358538c7fdeca6e9899858"
+    sha256 cellar: :any,                 ventura:        "59e89c63d85b741b06b4892455fa9d26fd7ff32db4fa8e494b8073a5b7c35b8b"
+    sha256 cellar: :any,                 monterey:       "f829ed656bf7d0e80741222928416aaaac7a6047cd30178d8f4a7d6bac88493f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fc72e05d67e8afb3f01cda0808fadb937d5d607d4fc1e094c8b8f0724665bd28"
   end
 
   depends_on "cmake" => :build
@@ -24,6 +24,6 @@ class Primesieve < Formula
   end
 
   test do
-    system "#{bin}/primesieve", "100", "--count", "--print"
+    system bin/"primesieve", "100", "--count", "--print"
   end
 end

@@ -31,7 +31,10 @@ class Netcdf < Formula
   uses_from_macos "bzip2"
   uses_from_macos "curl"
   uses_from_macos "libxml2"
-  uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "zstd"
+  end
 
   def install
     args = %w[-DENABLE_TESTS=OFF -DENABLE_NETCDF_4=ON -DENABLE_DOXYGEN=OFF]
@@ -62,10 +65,6 @@ class Netcdf < Formula
     EOS
     system ENV.cc, "test.c", "-L#{lib}", "-I#{include}", "-lnetcdf",
                    "-o", "test"
-    if head?
-      assert_match(/^\d+(?:\.\d+)+/, `./test`)
-    else
-      assert_equal version.to_s, `./test`
-    end
+    assert_equal version.to_s, `./test`
   end
 end

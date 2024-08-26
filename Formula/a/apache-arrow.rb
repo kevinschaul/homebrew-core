@@ -1,29 +1,31 @@
 class ApacheArrow < Formula
   desc "Columnar in-memory analytics layer designed to accelerate big data"
   homepage "https://arrow.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-15.0.2/apache-arrow-15.0.2.tar.gz"
-  mirror "https://archive.apache.org/dist/arrow/arrow-15.0.2/apache-arrow-15.0.2.tar.gz"
-  sha256 "abbf97176db6a9e8186fe005e93320dac27c64562755c77de50a882eb6179ac6"
+  url "https://www.apache.org/dyn/closer.lua?path=arrow/arrow-17.0.0/apache-arrow-17.0.0.tar.gz"
+  mirror "https://archive.apache.org/dist/arrow/arrow-17.0.0/apache-arrow-17.0.0.tar.gz"
+  sha256 "9d280d8042e7cf526f8c28d170d93bfab65e50f94569f6a790982a878d8d898d"
   license "Apache-2.0"
-  revision 1
+  revision 2
   head "https://github.com/apache/arrow.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "9c49a17003ea2d729e79b59757d134e90dff4082519912a1c5ac57510234ff61"
-    sha256 cellar: :any, arm64_ventura:  "7bc5890caee2490173f433c4cbceff16f265bdcf8ec871ea17fbb2ebaca14bcb"
-    sha256 cellar: :any, arm64_monterey: "37b3260f0dc24ce3ccdf6de8258f71dcec27db9e21b508298fa0af736e53fb47"
-    sha256 cellar: :any, sonoma:         "1e7548a9076296e3a569551a910f015a6906853d0535702de3e4ea50b01c7a37"
-    sha256 cellar: :any, ventura:        "c6829a738a314ac87fb0bf91945e64f33475ce8cb249f9cdc4bd777ad348eb66"
-    sha256 cellar: :any, monterey:       "511e0aff3de8267b37070d7f0329faa7f4d47865b930c3e62329f7974b21f847"
-    sha256               x86_64_linux:   "31df81a5807657b4b66c7d3609aeaf7c1526b3def94a53f25076563beea0cb97"
+    sha256 cellar: :any,                 arm64_sonoma:   "45224340c35fc9c9dd805fbf873f832c7f7a1df8ca9f80e2dcd9e26bb758c5af"
+    sha256 cellar: :any,                 arm64_ventura:  "7f8945b88f024eb7568d32c50bd707bd81dfa80a0107e821ca0962d534d09a74"
+    sha256 cellar: :any,                 arm64_monterey: "3178e82de784db940047746ebaa2f4f93c2b42e4f5ee28cfb0c67e53b6bfdc48"
+    sha256 cellar: :any,                 sonoma:         "d57704b06f0f808398e230f086c7559dd5d8082ba50bffa52beaa132832e3c4d"
+    sha256 cellar: :any,                 ventura:        "9a142e24a8f98dcec4a5c3584ff2b45f04c68c5c14b45499009cb5ce9cee2a63"
+    sha256 cellar: :any,                 monterey:       "1143c182d6cda6839b78e97ecaa7c83cdb975b0a9ed4c653e814f1e96b81e2da"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "958f8228ef0e79d917575563f9f76afb46c44e64017cbb91cd142f91927e7086"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
   depends_on "ninja" => :build
+  depends_on "abseil"
   depends_on "aws-sdk-cpp"
   depends_on "brotli"
   depends_on "bzip2"
+  depends_on "c-ares"
   depends_on "glog"
   depends_on "grpc"
   depends_on "llvm"
@@ -36,17 +38,22 @@ class ApacheArrow < Formula
   depends_on "thrift"
   depends_on "utf8proc"
   depends_on "zstd"
+
   uses_from_macos "python" => :build
+  uses_from_macos "zlib"
 
   fails_with gcc: "5"
 
   def install
     # Work around an Xcode 15 linker issue which causes linkage against LLVM's
     # libunwind due to it being present in a library search path.
-    ENV.remove "HOMEBREW_LIBRARY_PATHS", Formula["llvm"].opt_lib if DevelopmentTools.clang_build_version >= 1500
+    llvm = Formula["llvm"]
+    ENV.remove "HOMEBREW_LIBRARY_PATHS", llvm.opt_lib if DevelopmentTools.clang_build_version >= 1500
 
+    # We set `ARROW_ORC=OFF` because it fails to build with Protobuf 27.0
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
+      -DLLVM_ROOT=#{llvm.opt_prefix}
       -DARROW_ACERO=ON
       -DARROW_COMPUTE=ON
       -DARROW_CSV=ON
@@ -57,7 +64,7 @@ class ApacheArrow < Formula
       -DARROW_GANDIVA=ON
       -DARROW_HDFS=ON
       -DARROW_JSON=ON
-      -DARROW_ORC=ON
+      -DARROW_ORC=OFF
       -DARROW_PARQUET=ON
       -DARROW_PROTOBUF_USE_SHARED=ON
       -DARROW_S3=ON

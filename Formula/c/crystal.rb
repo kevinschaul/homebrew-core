@@ -4,8 +4,8 @@ class Crystal < Formula
   license "Apache-2.0"
 
   stable do
-    url "https://github.com/crystal-lang/crystal/archive/refs/tags/1.12.1.tar.gz"
-    sha256 "8f464ec302696c6a60410c4234569989c10bcd5004f1563b8047c5e3e1c8ba1f"
+    url "https://github.com/crystal-lang/crystal/archive/refs/tags/1.13.2.tar.gz"
+    sha256 "c537336c10ff0d9cd3673e195165667e478be92e0a8cc6664bdec5b960745c4b"
 
     resource "shards" do
       url "https://github.com/crystal-lang/shards/archive/refs/tags/v0.18.0.tar.gz"
@@ -19,19 +19,17 @@ class Crystal < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "0a55befb76eb4015ee821994f57b3f7b13ac12ddae3ed4d0f4bfdee9e8e33920"
-    sha256 cellar: :any,                 arm64_ventura:  "9a64335a9d4682ba2f277481e4a0157fcd05def044e7a000bd01abebcdadcd9e"
-    sha256 cellar: :any,                 arm64_monterey: "ef255a0af4a8b3bcb0cccba67774bbe39f8a25d2e592f01a35ea7558521e8d95"
-    sha256 cellar: :any,                 sonoma:         "4ad46ef067f71ecc0b89020e191d127b8d31a0da2e30ae89c9a5ef9c34829d91"
-    sha256 cellar: :any,                 ventura:        "4570e816f19e7a84c947cf51a0739336f5905faa22757082792eff84fba85634"
-    sha256 cellar: :any,                 monterey:       "fc29b7a64b8f1f438d15fb2cc882aa19bd4a36af28abeb09b962a7e63393e4ea"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fb589f56ffc5c26c2c287b8440ea3348b224710db7dea778f3e26a49cc2478b2"
+    sha256 cellar: :any,                 arm64_sonoma:   "4317db5e0ade574b4cee637bac668e8094670689c03931f80acd1190355f00cb"
+    sha256 cellar: :any,                 arm64_ventura:  "91a62195664af3bdde8e7fa0906cf870a3d0cc5a5074396b5d93bb5d0e2c0587"
+    sha256 cellar: :any,                 arm64_monterey: "8ae41fb343b76f0aae3bb2b6f71954b07b9761d4ed9fbd76f90be5711e69bb84"
+    sha256 cellar: :any,                 sonoma:         "d45f982ce8ac7caf57876f8ace5594bedc509c3ac82b86fe46e1b83b1b76d251"
+    sha256 cellar: :any,                 ventura:        "236de74af113d9604d9d72ab0c8cdba4fc0ad9a2264aab3ddd7f720d2513f275"
+    sha256 cellar: :any,                 monterey:       "e95230bde23f11f8c0a63e572c299b35393343494a6789a88a88834ad8622b8c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0b693aa5eef977ce6e3eeb1520ed082b03567df4e63290df98603e655b04f8a0"
   end
 
   head do
     url "https://github.com/crystal-lang/crystal.git", branch: "master"
-
-    uses_from_macos "libffi" # for the interpreter
 
     resource "shards" do
       url "https://github.com/crystal-lang/shards.git", branch: "master"
@@ -46,6 +44,8 @@ class Crystal < Formula
   depends_on "openssl@3" # std uses it but it's not linked
   depends_on "pcre2"
   depends_on "pkg-config" # @[Link] will use pkg-config if available
+
+  uses_from_macos "libffi" # for the interpreter
 
   fails_with gcc: "5"
 

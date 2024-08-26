@@ -1,8 +1,8 @@
 class Mcap < Formula
   desc "Serialization-agnostic container file format for pub/sub messages"
   homepage "https://mcap.dev"
-  url "https://github.com/foxglove/mcap/archive/refs/tags/releases/mcap-cli/v0.0.43.tar.gz"
-  sha256 "dd2f07f1c03af2501afef7a8e85183e98e316041ba33f451898eb04d4f832f53"
+  url "https://github.com/foxglove/mcap/archive/refs/tags/releases/mcap-cli/v0.0.47.tar.gz"
+  sha256 "d02fa12d0179cf1601c47cab8beb38c4920b1f6f6cef1d0958b1e08cd710c0d0"
   license "MIT"
   head "https://github.com/foxglove/mcap.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Mcap < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "658f02a6448d4a198b02ac575d27988287d8a7c0a477a3ea0afd4bd3b1f94c7b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fc235d08b3dc61654f6ca87db0bff1b74e7c04d5d2eee7e26abaa22b147b06d1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "07694128ed7e9d469f83d70c56086f23d95e93d9cee9e944956e033e3fda2645"
-    sha256 cellar: :any_skip_relocation, sonoma:         "55bb622c5f5469a843fbc4092ee855594a71cfbb1e91325a7bc5bff3e652b627"
-    sha256 cellar: :any_skip_relocation, ventura:        "609da88424de31291239ac5c40a455c7bfc2d3981718daf51dbcaf014d1b067a"
-    sha256 cellar: :any_skip_relocation, monterey:       "199a6bee05563090df3701dacc3d9a3c95cbceab18ea4971700095d58397da45"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b8192f4ffc7bf6fad6f5800fe67420263f9c2a74f59a2528cecc2cb8a8c118dc"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "0ba404146515882a26de3205c3317aaf139bbbc18c1302d5b197afd2c836af8b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "999217e45aa391ad0bedb2ba806dabe43aa9c1e82fa2344b038e9d00060f349f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "86e07014ef69a402c11f4890f41d27026e0c67f2c8a220943c015b958fe7bd41"
+    sha256 cellar: :any_skip_relocation, sonoma:         "6cab7ebb1621053644502bdbe7fd921017a605948e1e56a6fac11a6f7148da6b"
+    sha256 cellar: :any_skip_relocation, ventura:        "7bcc8b03bac6ad230818cc8fcfa2527626561efc18f43e43131e61dbce472176"
+    sha256 cellar: :any_skip_relocation, monterey:       "cd7e22cb634076fa259991e7bf5b65249f5cbc81c4afa1a59cefbe594daed723"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cc2c2740ccaa0369306743eb84c6f0c2b1d531e78345712969bb602315851249"
   end
 
   depends_on "go" => :build

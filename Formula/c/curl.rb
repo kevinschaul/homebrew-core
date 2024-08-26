@@ -2,11 +2,11 @@ class Curl < Formula
   desc "Get a file from an HTTP, HTTPS or FTP server"
   homepage "https://curl.se"
   # Don't forget to update both instances of the version in the GitHub mirror URL.
-  url "https://curl.se/download/curl-8.7.1.tar.bz2"
-  mirror "https://github.com/curl/curl/releases/download/curl-8_7_1/curl-8.7.1.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/curl-8.7.1.tar.bz2"
-  mirror "http://fresh-center.net/linux/www/legacy/curl-8.7.1.tar.bz2"
-  sha256 "05bbd2b698e9cfbab477c33aa5e99b4975501835a41b7ca6ca71de03d8849e76"
+  url "https://curl.se/download/curl-8.9.1.tar.bz2"
+  mirror "https://github.com/curl/curl/releases/download/curl-8_9_1/curl-8.9.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/curl-8.9.1.tar.bz2"
+  mirror "http://fresh-center.net/linux/www/legacy/curl-8.9.1.tar.bz2"
+  sha256 "b57285d9e18bf12a5f2309fc45244f6cf9cb14734e7454121099dd0a83d669a3"
   license "curl"
 
   livecheck do
@@ -15,14 +15,13 @@ class Curl < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sonoma:   "f109fe367f5761d5fd5b1800e538330e1e40627c2b1cfc8b684406853ed7f78d"
-    sha256 cellar: :any,                 arm64_ventura:  "34e96a963efa6b850d216b40c27c1cdd02ebe9a39a2d7c28fc180d004a68028b"
-    sha256 cellar: :any,                 arm64_monterey: "22d7372b0c62c46c13b346c5bafdd0d4fb9b48a4bec387d1573c3083e80e6a3f"
-    sha256 cellar: :any,                 sonoma:         "cabdbf0618f62f936c5480736adf309fe08746d644cfaab2fdad17b68ba5cf47"
-    sha256 cellar: :any,                 ventura:        "7924233ec09083c8ea9cbcaae0058274cbd4bd384ac99f0bcaca7cf3d1cb1a24"
-    sha256 cellar: :any,                 monterey:       "60707c9053cd1b81b59e179238cd3fdd1c7df0ba83876688e04f712ba1185543"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ed5fe25460d3df70e6819aedba6870e44176a8cef633fc365ecf828bb3d5f71f"
+    sha256 cellar: :any,                 arm64_sonoma:   "4d0bc66626fc78a034e365084de6f3eeee218cf57b1b184248b1c5e5e5b8785f"
+    sha256 cellar: :any,                 arm64_ventura:  "2cfa6df78dd8930d3325fa3261137b98e7c3203101eda4663547ed35ed4bf1c6"
+    sha256 cellar: :any,                 arm64_monterey: "e39baf7b3ab1c3fe02f3c1dfcd496f19b6cfa5bdab9938785449589592d737df"
+    sha256 cellar: :any,                 sonoma:         "a4869433de9e2a0cd1f62ca9adac05b2556875b232cae3c57fe9f5270102f3a2"
+    sha256 cellar: :any,                 ventura:        "fb8d735358f2a294c47ac76615c930b197cacefc92737b20a0c684d730e27a4c"
+    sha256 cellar: :any,                 monterey:       "cad6d2e6ed9918454c9986c1299c01409cc71212b23c334851b18494aa67e558"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "07004c1e8957c22da26a29908759d13ed9a2c11d5b08387ad24b9e599123d97a"
   end
 
   head do
@@ -40,20 +39,13 @@ class Curl < Formula
   depends_on "libidn2"
   depends_on "libnghttp2"
   depends_on "libssh2"
-  depends_on "openldap"
   depends_on "openssl@3"
   depends_on "rtmpdump"
   depends_on "zstd"
 
   uses_from_macos "krb5"
+  uses_from_macos "openldap"
   uses_from_macos "zlib"
-
-  # Fixes `curl: (23) Failed writing received data to disk/application`
-  # Remove in next release
-  patch do
-    url "https://github.com/curl/curl/commit/b30d694a027eb771c02a3db0dee0ca03ccab7377.patch?full_index=1"
-    sha256 "da4ae2efdf05169938c2631ba6e7bca45376f1d67abc305cf8b6a982c618df4d"
-  end
 
   def install
     tag_name = "curl-#{version.to_s.tr(".", "_")}"
@@ -65,10 +57,7 @@ class Curl < Formula
     system "./buildconf" if build.head?
 
     args = %W[
-      --disable-debug
-      --disable-dependency-tracking
       --disable-silent-rules
-      --prefix=#{prefix}
       --with-ssl=#{Formula["openssl@3"].opt_prefix}
       --without-ca-bundle
       --without-ca-path
@@ -79,6 +68,8 @@ class Curl < Formula
       --with-librtmp
       --with-libssh2
       --without-libpsl
+      --with-zsh-functions-dir=#{zsh_completion}
+      --with-fish-functions-dir=#{fish_completion}
     ]
 
     args << if OS.mac?
@@ -87,7 +78,7 @@ class Curl < Formula
       "--with-gssapi=#{Formula["krb5"].opt_prefix}"
     end
 
-    system "./configure", *args
+    system "./configure", *args, *std_configure_args
     system "make", "install"
     system "make", "install", "-C", "scripts"
     libexec.install "scripts/mk-ca-bundle.pl"
@@ -97,7 +88,7 @@ class Curl < Formula
     # Fetch the curl tarball and see that the checksum matches.
     # This requires a network connection, but so does Homebrew in general.
     filename = (testpath/"test.tar.gz")
-    system "#{bin}/curl", "-L", stable.url, "-o", filename
+    system bin/"curl", "-L", stable.url, "-o", filename
     filename.verify_checksum stable.checksum
 
     system libexec/"mk-ca-bundle.pl", "test.pem"

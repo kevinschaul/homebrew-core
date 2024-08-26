@@ -3,18 +3,18 @@ class Cekit < Formula
 
   desc "Container Evolution Kit"
   homepage "https://cekit.io"
-  url "https://files.pythonhosted.org/packages/2b/e8/f6f756156e26ee85221306123f60b2f1162a0d988a0e59f195d0631ed21f/cekit-4.11.0.tar.gz"
-  sha256 "5dc7ce15f903c2de20b119a18086c042a28ed0c72ef7f1d5956fa20cef2cfc32"
+  url "https://files.pythonhosted.org/packages/98/cf/091d054e0bee657f4ed0e26a2f3384007c66a9eb57b009375ed1c0848f06/cekit-4.12.0.tar.gz"
+  sha256 "797d28ac17a991643d851774a2564d02c788ca9b304517c375142374be8e17f8"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "bded464bf731194819a08509a29533a9842a1e442f1edbc2cfa3bca49d6e9192"
-    sha256 cellar: :any,                 arm64_ventura:  "eabe5f30826ff2709e40c9c0b366075e3ec87ed97a4ff306ee4a3508730ada8b"
-    sha256 cellar: :any,                 arm64_monterey: "053a66475fbfdf1e1de7bf5bd5da1c71c3876f585d2de6c5a82102964e6c9e7a"
-    sha256 cellar: :any,                 sonoma:         "3ef58b8154ee270521c4bb1cf45bdc99303c508e265adfc854cbd4dc20ce030f"
-    sha256 cellar: :any,                 ventura:        "c45cfaae966ca4ecfb93680f18e9a43bee8c611b43dc718f20960b8102bc7f93"
-    sha256 cellar: :any,                 monterey:       "aa4f335a5e63d7da8e2f64bfeb9bbf083c6a159faf0b8593a5aa4f822929e09c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e3ba17894609c5da36c7f88adbcdde0f519dd64517a0c851c4fd8e3e09935adb"
+    sha256 cellar: :any,                 arm64_sonoma:   "142a2fade6ffe2936932afda28102953c94087060814f0cdb1c59fefd40f934c"
+    sha256 cellar: :any,                 arm64_ventura:  "70c98ab2a06446d7d060ccd139c1f7cb76adbfee70cc87464448d0f8590b3af9"
+    sha256 cellar: :any,                 arm64_monterey: "da1ea7dfb5ed6ef62bcde6e78d95d63285f0cfdcf3f4df285075de83240d0b11"
+    sha256 cellar: :any,                 sonoma:         "84ab2e65708925d76f7a9728ce947fbb8e7fdcc5168e8dc5e63ade19931f256f"
+    sha256 cellar: :any,                 ventura:        "94bad49481453179b1370bb3b6eace416eda2bc950dba5b63ff7d0a6ccc086db"
+    sha256 cellar: :any,                 monterey:       "74721fe4d7f7cbbbcdeea2cac13cfd8e5af5ee7a0a90b1c1d13e75be3aed695f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c2710a194fd415900ebb6c822caf100acdf3506fbdc35a115f7872abb25626fe"
   end
 
   depends_on "libyaml"
@@ -36,8 +36,8 @@ class Cekit < Formula
   end
 
   resource "jinja2" do
-    url "https://files.pythonhosted.org/packages/b2/5e/3a21abf3cd467d7876045335e681d276ac32492febe6d98ad89562d1a7e1/Jinja2-3.1.3.tar.gz"
-    sha256 "ac8bd6544d4bb2c9792bf3a159e80bba8fda7f07e81bc3aed565432d5925ba90"
+    url "https://files.pythonhosted.org/packages/ed/55/39036716d19cab0747a5020fc7e907f362fbf48c984b14e62127f7e68e5d/jinja2-3.1.4.tar.gz"
+    sha256 "4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369"
   end
 
   resource "markupsafe" do
@@ -46,8 +46,8 @@ class Cekit < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/fb/2b/9b9c33ffed44ee921d0967086d653047286054117d584f1b1a7c22ceaf7b/packaging-23.2.tar.gz"
-    sha256 "048fb0e9405036518eaaf48a55953c750c11e1a1b68e0dd1a9d62ed0c092cfc5"
+    url "https://files.pythonhosted.org/packages/ee/b5/b43a27ac7472e1818c4bafd44430e69605baefe1f34440593e0332ec8b4d/packaging-24.0.tar.gz"
+    sha256 "eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"
   end
 
   resource "pykwalify" do
@@ -101,7 +101,7 @@ class Cekit < Formula
     EOS
     assert_match "INFO  Finished!",
 shell_output("#{bin}/cekit --descriptor #{testpath}/test.yml build --dry-run docker 2>&1")
-    system "#{bin}/cekit", "--descriptor", "#{testpath}/test.yml", "build", "--dry-run", "docker"
+    system bin/"cekit", "--descriptor", "#{testpath}/test.yml", "build", "--dry-run", "docker"
     assert_predicate testpath/"target/image/Dockerfile", :exist?
     assert_match "FROM scratch", File.read(testpath/"target/image/Dockerfile")
   end

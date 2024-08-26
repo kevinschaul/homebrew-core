@@ -3,6 +3,7 @@ class Lrzsz < Formula
   homepage "https://www.ohse.de/uwe/software/lrzsz.html"
   url "https://www.ohse.de/uwe/releases/lrzsz-0.12.20.tar.gz"
   sha256 "c28b36b14bddb014d9e9c97c52459852f97bd405f89113f30bee45ed92728ff1"
+  license "GPL-2.0-or-later"
   revision 1
 
   livecheck do
@@ -26,6 +27,8 @@ class Lrzsz < Formula
     sha256 cellar: :any_skip_relocation, el_capitan:     "1d6517842b64582f629f36e469b61ee91563e1ef1a1b1841a8a4634759dcb0f1"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "9f5db00a0b2cdc4920a809f4aa1f352eb6962980270d15e65dd418a99ac61ab2"
   end
+
+  conflicts_with "lrzip", because: "both install `lrz` binaries"
 
   patch :p0 do
     url "https://raw.githubusercontent.com/macports/macports-ports/2319730/comms/lrzsz/files/patch-man-lsz.diff"

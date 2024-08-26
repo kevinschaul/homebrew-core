@@ -8,13 +8,6 @@ class Tcptrace < Formula
   sha256 "63380a4051933ca08979476a9dfc6f959308bc9f60d45255202e388eb56910bd"
   license "GPL-2.0-or-later"
 
-  # tcptrace.org has a history of going down for periods of time, which is why
-  # the formula uses mirrors. As of writing, the site has been down for months.
-  # There hasn't been a new tcptrace version in years, so we simply skip it.
-  livecheck do
-    skip "Not maintained and tcptrace.org is frequently inaccessible"
-  end
-
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5391990c5db4c21d094d243368443f039990ed44da3d07e0a52b2f0922a3a6a5"
     sha256 cellar: :any_skip_relocation, arm64_ventura:  "5a61be1025abf1a097a9353517bc3e3f861a3b443f42350937ca345a0befe648"
@@ -31,6 +24,8 @@ class Tcptrace < Formula
     sha256 cellar: :any_skip_relocation, el_capitan:     "e46775d7cc808b5b52a0a36a33142b824a9b2d8bce5b0557bc1041c2e55c5ffb"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "7516135879ddee3a7a4271980b8485ac12c3b1826cb99ba23e9f6f849fda4ceb"
   end
+
+  deprecate! date: "2024-04-18", because: :unmaintained
 
   uses_from_macos "libpcap"
 

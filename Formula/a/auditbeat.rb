@@ -2,19 +2,19 @@ class Auditbeat < Formula
   desc "Lightweight Shipper for Audit Data"
   homepage "https://www.elastic.co/products/beats/auditbeat"
   url "https://github.com/elastic/beats.git",
-      tag:      "v8.13.2",
-      revision: "d41b4978ea7b4d7c6020b47ffd8a3b8642531fe3"
+      tag:      "v8.15.0",
+      revision: "76f45fe41cbd4436fba79c36be495d2e1af08243"
   license "Apache-2.0"
   head "https://github.com/elastic/beats.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4344476596d60cf0c57f65b983c502b38b793220dc7ef777e8c79c4dd6dc6d26"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "db722c6244789ef916b5a07eff13716711039c6306b708dd4936d65a05500719"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "213b700b5fc159705ea7975a77bb5a9f3253158aa1ca9febfe2ab70b1e872aee"
-    sha256 cellar: :any_skip_relocation, sonoma:         "6a93b2c9aafa1bf15b57db85859bcd0309144502bafef5fd04df96e27e20999e"
-    sha256 cellar: :any_skip_relocation, ventura:        "c761698149215475c6e8e0ceb0a1a0e4997c9745926dc137b58618d0eacb3b5f"
-    sha256 cellar: :any_skip_relocation, monterey:       "db8129063962d39b23afde5161aa90b41746bf39644758fedb933a1cd7cba5a6"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "716463af303ba71298d9509c14a760a929b14e287a95f4e67b1763efa1d15961"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5bad2c9de29ccce77b9d42573e6482b132c037c7fbb9c5a29ed4e9843ae444e0"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "b5f597c7ed40f2f12df2e653b40fadfd82594d8ca22d7971e94f0ab0060f7dc7"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "48c067b5758e0f60e9cb37e91fc409ea4d51323f63344a2a7dcee6b49942de79"
+    sha256 cellar: :any_skip_relocation, sonoma:         "5aeba47f26a5b02a77a0fd8a474e75cfbc18da46da338037f502fa261a4e8a14"
+    sha256 cellar: :any_skip_relocation, ventura:        "7ace6ce8f224ab61ded2bbe5f207d21b2669951566428f8d84d4769ee3d8ae2f"
+    sha256 cellar: :any_skip_relocation, monterey:       "e93cbb1f8477038375db414346a20492e4a6b9528258a9f0365d04384caf913f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bde1f9f127774b75a166ba9c659ca521dd1a6c4e81e71859167b83c92140fe43"
   end
 
   depends_on "go" => :build
@@ -24,7 +24,7 @@ class Auditbeat < Formula
 
   def install
     # remove non open source files
-    rm_rf "x-pack"
+    rm_r("x-pack")
 
     cd "auditbeat" do
       # don't build docs because it would fail creating the combined OSS/x-pack
@@ -77,7 +77,7 @@ class Auditbeat < Formula
         filename: auditbeat
     EOS
     fork do
-      exec "#{bin}/auditbeat", "-path.config", testpath/"config", "-path.data", testpath/"data"
+      exec bin/"auditbeat", "-path.config", testpath/"config", "-path.data", testpath/"data"
     end
     sleep 5
     touch testpath/"files/touch"

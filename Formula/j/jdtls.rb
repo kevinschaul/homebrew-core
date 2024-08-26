@@ -3,9 +3,9 @@ class Jdtls < Formula
 
   desc "Java language specific implementation of the Language Server Protocol"
   homepage "https://github.com/eclipse-jdtls/eclipse.jdt.ls"
-  url "https://download.eclipse.org/jdtls/milestones/1.34.0/jdt-language-server-1.34.0-202404031240.tar.gz"
-  version "1.34.0"
-  sha256 "379a796856f2fef5f7eb4b41f2800ab6ee93b078a493327faba2d835142efdd3"
+  url "https://download.eclipse.org/jdtls/milestones/1.38.0/jdt-language-server-1.38.0-202408011337.tar.gz"
+  version "1.38.0"
+  sha256 "ba697788a19f2ba57b16302aba6b343c649928c95f76b0d170494ac12d17ac78"
   license "EPL-2.0"
   version_scheme 1
 
@@ -15,18 +15,14 @@ class Jdtls < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "05f6ee9d359c1e360064be759d9cdfdcf51feba3229b073a21089f668e9240a8"
+    sha256 cellar: :any_skip_relocation, all: "5836d754f19e15704dc14962ca4922413ca241450f99501ae846c05e1ddd4407"
   end
 
   depends_on "openjdk"
   depends_on "python@3.12"
 
   def install
-    libexec.install %w[
-      bin features plugins
-      config_mac config_mac_arm config_ss_mac config_ss_mac_arm
-      config_linux config_linux_arm config_ss_linux config_ss_linux_arm
-    ]
+    libexec.install buildpath.glob("*") - buildpath.glob("config*win*")
     rewrite_shebang detected_python_shebang, libexec/"bin/jdtls"
     (bin/"jdtls").write_env_script libexec/"bin/jdtls", Language::Java.overridable_java_home_env
   end
@@ -46,8 +42,7 @@ class Jdtls < Formula
       }
     JSON
 
-    Open3.popen3("#{bin}/jdtls", "-configuration", "#{testpath}/config", "-data",
-        "#{testpath}/data") do |stdin, stdout, _e, w|
+    Open3.popen3(bin/"jdtls", "-configuration", testpath/"config", "-data", testpath/"data") do |stdin, stdout, _e, w|
       stdin.write "Content-Length: #{json.size}\r\n\r\n#{json}"
       sleep 3
       assert_match(/^Content-Length: \d+/i, stdout.readline)

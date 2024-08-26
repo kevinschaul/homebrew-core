@@ -1,11 +1,10 @@
 class Octave < Formula
   desc "High-level interpreted language for numerical computing"
-  homepage "https://www.gnu.org/software/octave/index.html"
-  url "https://ftp.gnu.org/gnu/octave/octave-9.1.0.tar.xz"
-  mirror "https://ftpmirror.gnu.org/octave/octave-9.1.0.tar.xz"
-  sha256 "ed654b024aea56c44b26f131d31febc58b7cf6a82fad9f0b0bf6e3e9aa1a134b"
+  homepage "https://octave.org/index.html"
+  url "https://ftp.gnu.org/gnu/octave/octave-9.2.0.tar.xz"
+  mirror "https://ftpmirror.gnu.org/octave/octave-9.2.0.tar.xz"
+  sha256 "21417afb579105b035cac0bea09201522e384893ae90a781b8727efa32765807"
   license "GPL-3.0-or-later"
-  revision 2
 
   # New tarballs appear on https://ftp.gnu.org/gnu/octave/ before a release is
   # announced, so we check the octave.org download page instead.
@@ -15,13 +14,13 @@ class Octave < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "c0e3b1658deeb3be2605a127f76e570825a42a876b08b74a9c98e0bc60af459d"
-    sha256 arm64_ventura:  "2c5bbf702bf4eb17c76e37aa6e672579924350a2317a74b8b706beb0c496da09"
-    sha256 arm64_monterey: "f79169679d11f185d863c4356388acbe2d953323ac281416db5b1bf6b3fb2079"
-    sha256 sonoma:         "24df1e7892e1c2c7d0aa0949cb0f44fb9a831cd9af12e44a56b4c3a9b84a43a9"
-    sha256 ventura:        "065db32c758ca9cb33cb2362559c51e136d797962db8219f0f3d45e5c745e276"
-    sha256 monterey:       "633bb63c92d310ce88d56b9f9889bcdcf2fb4f44503af9d7af8fbbcfa50ecaa2"
-    sha256 x86_64_linux:   "348b047a1f7f1c5b77c9ba684256051a962cf152aa3c75608a4787af404e5466"
+    sha256 arm64_sonoma:   "02f7cc330a2375c96920796a281e93087399509754c41fdd25f83794f1396690"
+    sha256 arm64_ventura:  "f89bc978f60040fdc82e5d1f2fe16ff26c5ab94fe2795ad75bd0bd776f9772ff"
+    sha256 arm64_monterey: "4878ff0d0ff235453053b256207c625cfda8133440eb1edceacfbc5c4f2a8685"
+    sha256 sonoma:         "4fbbbdc08918039d20113559a8daaad2edeca34581784fc6c5c0ec93d379c28d"
+    sha256 ventura:        "e5ddc3cba4721722c34a319bb097b4c84c4c4e29a3318139af1513ff8a905612"
+    sha256 monterey:       "939a246d08b1bae6d6682700cbb8c361867544046dce81efeade8a544963a212"
+    sha256 x86_64_linux:   "6287c397454f4d4c2c6e1871d0cbcd92e363fbb26f605242f264572c1be4c7f6"
   end
 
   head do
@@ -67,7 +66,13 @@ class Octave < Formula
   depends_on "sundials"
   depends_on "texinfo"
 
+  uses_from_macos "bzip2"
   uses_from_macos "curl"
+  uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "little-cms2"
+  end
 
   on_linux do
     depends_on "autoconf"

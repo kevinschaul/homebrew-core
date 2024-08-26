@@ -1,8 +1,8 @@
 class Ki18n < Formula
   desc "KDE Gettext-based UI text internationalization"
   homepage "https://api.kde.org/frameworks/ki18n/html/index.html"
-  url "https://download.kde.org/stable/frameworks/6.0/ki18n-6.0.0.tar.xz"
-  sha256 "15cbfb73ef1d3954d6206755b6e6a9c86ea27be4b4db0c843d38494851bcc354"
+  url "https://download.kde.org/stable/frameworks/6.5/ki18n-6.5.0.tar.xz"
+  sha256 "7873d36a8ae452745d58100e7cda067eae632c787c1fc5a3c63a7072aacfa7fc"
   license all_of: [
     "BSD-3-Clause",
     "LGPL-2.0-or-later",
@@ -16,13 +16,13 @@ class Ki18n < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "3f6a65bf693cb3b22127995fee52f63bb99476b98ec159e86545588b0a100672"
-    sha256 arm64_ventura:  "19d81539d2d12d038cfa7a16fde677fd9f2d9f19734f3be05abd7001e895f064"
-    sha256 arm64_monterey: "90d08a0ff4b2997fa1f4779017f3acc0e4ac82ba718ea1f1261856f11d38261e"
-    sha256 sonoma:         "005807c4e4512af04b8ea2315175f46eca77ba200122fc482adcb525fdc27ed9"
-    sha256 ventura:        "20474c8832b0cf6052610e84eab889e9e20dfc41ba07fdc25791c3eedcd579ad"
-    sha256 monterey:       "7d97831a5dc3e5a66f9564f3e94e7d31fbb03aa148fb8c0b458cabaca6e8ac2c"
-    sha256 x86_64_linux:   "eb0ea37f0de37e40404400abd75a07e3863e322ebe4d8249cff3a3f552290513"
+    sha256 arm64_sonoma:   "9bbc33a8f85e2b1bd33e72e997bd47a55916798ecca6e70cf39c9fa149b6da6f"
+    sha256 arm64_ventura:  "936b9d9d9c8beac569ff14bd261ba63f21c681f80cbe33b5aa49c455b3276cc3"
+    sha256 arm64_monterey: "81f7e3143d94dec7b59a5c091bde182dbb709cc4a995309079a052c14b7eee3a"
+    sha256 sonoma:         "5975254338d1ad370fd4540ad47cba0e1a04eb42af235ad6053c8eda8e0b7ae0"
+    sha256 ventura:        "8ed8ac3ac359d9aaa78862a14abeed4a637a19c07913c75a57c36d17f18bee22"
+    sha256 monterey:       "8d2f25f9f76f687e6f2d311a68cca2d6927ce647f5486fb2a0d33c3c65211fee"
+    sha256 x86_64_linux:   "06a4dffcd3c79039ea5d7437274bba36403f652ae65a563dec46b3c0ced41492"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -59,7 +59,7 @@ class Ki18n < Formula
     (testpath/"CMakeLists.txt").write <<~EOS
       cmake_minimum_required(VERSION 3.5)
       include(FeatureSummary)
-      find_package(ECM #{version unless build.head?} NO_MODULE)
+      find_package(ECM #{version} NO_MODULE)
       set_package_properties(ECM PROPERTIES TYPE REQUIRED)
       set(CMAKE_MODULE_PATH ${ECM_MODULE_PATH} "#{pkgshare}/cmake")
       set(CMAKE_CXX_STANDARD 17)

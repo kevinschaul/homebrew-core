@@ -1,18 +1,18 @@
 class Gucharmap < Formula
   desc "GNOME Character Map, based on the Unicode Character Database"
   homepage "https://wiki.gnome.org/Apps/Gucharmap"
-  url "https://gitlab.gnome.org/GNOME/gucharmap/-/archive/15.1.3/gucharmap-15.1.3.tar.bz2"
-  sha256 "fb10d40cb990d4cd835a53a4874e39bb69146409db46a62d03543c1915eec984"
+  url "https://gitlab.gnome.org/GNOME/gucharmap/-/archive/15.1.5/gucharmap-15.1.5.tar.bz2"
+  sha256 "45c46e854a7de1a6491e6b3b0f3acd6363de1110208bdf5ba88d4e9460e9a897"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 arm64_sonoma:   "2070196886ef6c547122b63d378b6b1ea1ed849a22f8eb3f683ee3dd7a80af8f"
-    sha256 arm64_ventura:  "2e2b1d2636e3ba31521ea7f60952ee19e39e2cf475393cb221655034790e5879"
-    sha256 arm64_monterey: "1280d67990bec09743a336332f71604087e12a67c3cc06f4ad5c3da6bd264e1f"
-    sha256 sonoma:         "5d572fe48545bb93826a0ac7b3cd18967f9904070647a69c698b209b8ccf7a08"
-    sha256 ventura:        "8a5b29c7155d172a2717d74c05a2362b4f9830702ab9eee51f1d8304b0497d15"
-    sha256 monterey:       "a45718d5fe8f5841c53f63d73c2d3b3adb45ba1c3bc0214f7a6d5226f05b2525"
-    sha256 x86_64_linux:   "d615b7cc5176058ed8b2166b73f781b86060584f115c3eba3d4d10637b000efe"
+    sha256 arm64_sonoma:   "6181ec66a373136d5765f09efc5b5b687c5e5549b0294f2db6cc79e09a9d2a36"
+    sha256 arm64_ventura:  "82d10e4ed476e505ab8c1b9427bf81ce7170402f38056cf10d3b91ce0316221f"
+    sha256 arm64_monterey: "57d6bc5ff1cdc0668a3dbfae4a79c1d1c36eddaf8b5eb081a9915c4123de493f"
+    sha256 sonoma:         "fa4b6775364ca42b9b38a1f6f585eefe12ec7d9e46b741c50297b196494e2588"
+    sha256 ventura:        "174846632adfc2bf1c9454ae6a7b9cccbb895805494bb53e07e395975e1eb7ce"
+    sha256 monterey:       "7b1d2c6728fa21a5792c3ee9d539e3bf59ff315e9510777d0afa26ea2e05bebf"
+    sha256 x86_64_linux:   "d2855332956cb1366282c73fcc3517262981bc33fff198fa20e0ae4b6e6ced66"
   end
 
   depends_on "desktop-file-utils" => :build
@@ -23,7 +23,16 @@ class Gucharmap < Formula
   depends_on "ninja" => :build
   depends_on "pkg-config" => :build
   depends_on "vala" => :build
+  depends_on "at-spi2-core"
+  depends_on "cairo"
+  depends_on "glib"
   depends_on "gtk+3"
+  depends_on "pango"
+  depends_on "pcre2"
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   on_linux do
     depends_on "gettext" => :build
@@ -35,8 +44,8 @@ class Gucharmap < Formula
   end
 
   resource "unihan" do
-    url "https://www.unicode.org/Public/15.1.0/ucd/Unihan.zip", using: :nounzip
-    sha256 "a0226610e324bcf784ac380e11f4cbf533ee1e6b3d028b0991bf8c0dc3f85853"
+    url "https://www.unicode.org/Public/16.0.0/ucd/Unihan.zip", using: :nounzip
+    sha256 "faed0321cf85bbc18fd3edb5f03dbae9d7099ea712d75f08d1fb2f87dcc197e1"
   end
 
   def install
@@ -59,6 +68,6 @@ class Gucharmap < Formula
   end
 
   test do
-    system "#{bin}/gucharmap", "--version"
+    system bin/"gucharmap", "--version"
   end
 end

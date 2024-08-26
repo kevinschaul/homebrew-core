@@ -1,19 +1,19 @@
 class GitSync < Formula
   desc "Clones a git repository and keeps it synchronized with the upstream"
   homepage "https://github.com/kubernetes/git-sync"
-  url "https://github.com/kubernetes/git-sync/archive/refs/tags/v4.2.1.tar.gz"
-  sha256 "ff3cdbfa3116f8d1369bf53aa17dbf93c1c83be9fed315f7cd393e756c2d3d96"
+  url "https://github.com/kubernetes/git-sync/archive/refs/tags/v4.2.4.tar.gz"
+  sha256 "866b7460984d0badc4ed150bdba64abdfc9e5a51fa0680884da2d22f328db8dc"
   license "Apache-2.0"
   head "https://github.com/kubernetes/git-sync.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bd61e6637363b675cc688c62c13184ae6088341bba33aaa6caacbb2b3fc9dab9"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "af7aed521da7ab1712a9b2ad5881fc6dad900132543327c2eb377da2b6489d5c"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bb820a35218d92b6a65bad71e7b4e0548d77bc7ca4b334c94bdaa736a4d315b9"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8ca7b42dcbf5cb2beb9a156fd54b1b7fa43690184dc90837e4d96492ce056762"
-    sha256 cellar: :any_skip_relocation, ventura:        "9ec20625f11c10e80fc46ad4b6f80d25dc0f6e027dc2214008a13b84c66ae1b6"
-    sha256 cellar: :any_skip_relocation, monterey:       "0f0dda80f65c2cc35171682e0985b7d5b77f08cdffe16385496c83664360ea2d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "058cb7616e743dabe0e32b64877fe5959fb1f42bbaedb4daaa83b66f670b6bb0"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a615a47006be2b012ed1c6422dd1c3baf368f4116295c9fa98df360dae01a057"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5ce5d9a6df47820cfb3df008180d243019967095689fca4b0be99be661f24f04"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "7c78f89766f54d096d0942712890910f818541fb6ac9bfbaf583684a7fa6fb45"
+    sha256 cellar: :any_skip_relocation, sonoma:         "973bbb32f928b73d35ddb92d31f4443e750293d342b40e94e0b57f8aa087b1ea"
+    sha256 cellar: :any_skip_relocation, ventura:        "9b37fcc62cefd1f0d78c37399aca63b9ae4735de69f40a8003653dbb5d84061a"
+    sha256 cellar: :any_skip_relocation, monterey:       "36bec0ce10c5b628e411b0bff7adb3db580113638d92aff5145725198a91cdca"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "38b500902f7fa35c2cdf91550f767f312b15da34baa428966f1567acaff45258"
   end
 
   depends_on "go" => :build

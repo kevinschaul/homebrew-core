@@ -1,8 +1,9 @@
 class Duff < Formula
   desc "Quickly find duplicates in a set of files from the command-line"
-  homepage "https://duff.sourceforge.net/"
+  homepage "https://github.com/elmindreda/duff"
   url "https://downloads.sourceforge.net/project/duff/duff/0.5.2/duff-0.5.2.tar.gz"
   sha256 "15b721f7e0ea43eba3fd6afb41dbd1be63c678952bf3d80350130a0e710c542e"
+  license "Zlib"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bd400550da914ee690f2ff0798da5a8438afcbc68dd337da29b85f694724bdb6"

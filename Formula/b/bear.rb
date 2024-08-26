@@ -1,36 +1,29 @@
 class Bear < Formula
   desc "Generate compilation database for clang tooling"
   homepage "https://github.com/rizsotto/Bear"
+  url "https://github.com/rizsotto/Bear/archive/refs/tags/3.1.4.tar.gz"
+  sha256 "a1105023795b3e1b9abc29c088cdec5464cc9f3b640b5078dc90a505498da5ff"
   license "GPL-3.0-or-later"
-  revision 17
+  revision 5
   head "https://github.com/rizsotto/Bear.git", branch: "master"
 
-  stable do
-    url "https://github.com/rizsotto/Bear/archive/refs/tags/3.1.3.tar.gz"
-    sha256 "8314438428069ffeca15e2644eaa51284f884b7a1b2ddfdafe12152581b13398"
-
-    # Backport fix for Protobuf 26
-    patch do
-      url "https://github.com/rizsotto/Bear/commit/4d9d4525cd3d1ad11761c79ca71645946f48e07c.patch?full_index=1"
-      sha256 "be8ffbcb8f7562d70e16f724d2a91cffbd7e0b28b564dcafe46510a4b248bdea"
-    end
-  end
-
   bottle do
-    sha256 arm64_sonoma:   "1a78bff5e557ce160afa533464a19a092581a75d95ec989d55787a92de5537ea"
-    sha256 arm64_ventura:  "842cb5b766ac3539e6023fc55583371b7fc727794a9be205be7750d3fb7823df"
-    sha256 arm64_monterey: "2fbf1ef2a61d14ee72e112a68f04c203b3a71e347a2cb773193cbf1169e07e41"
-    sha256 sonoma:         "2b62ffa223000525ece13d0de4e5f590309a810d3da183f6065cbcd0af4b7ae8"
-    sha256 ventura:        "11a3b09160b6c7d6d21aa34d563755d0cae1e0c3e36ac2b42abdbe5bf7afc66a"
-    sha256 monterey:       "e7a3927e5a6215a52adf488755b25ef091b8031174ab309d8e42cf430251b362"
-    sha256 x86_64_linux:   "9e2728f567277a7b2cf0753be737efb998888b3755ca4dfb64a918e41f1f9f41"
+    sha256 arm64_sonoma:   "bb4befd4df6dc4ad4d819f69cc85bb6a96706843e39cb7dc4147355d912bcf88"
+    sha256 arm64_ventura:  "9ffad55aa43465cba0dac9a568920d0120070168f46e348044edb5a896aac231"
+    sha256 arm64_monterey: "f00813d3480fb5521570a3197936b4890656be015792e28558d11cc62dc67110"
+    sha256 sonoma:         "0e14c26a251ec340ab8b4bc38f4311d0408640f09a281b3262ad75f1cdec3e13"
+    sha256 ventura:        "8a55ced3f5ec87cbc23dfd769077db8eb4b78d5c5bcbabbe71de6e9966995a9f"
+    sha256 monterey:       "94da31ef2bb39d347f181d86385032b7168d80a4c33afe5844729541e9a7439d"
+    sha256 x86_64_linux:   "77e181d744a4f6f0714747a8ef174cf4be09b2df001eb8fbf0278f0cfa18824c"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
+  depends_on "abseil"
   depends_on "fmt"
   depends_on "grpc"
   depends_on "nlohmann-json"
+  depends_on "protobuf"
   depends_on "spdlog"
 
   uses_from_macos "llvm" => :test

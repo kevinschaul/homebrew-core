@@ -1,19 +1,19 @@
 class Terrascan < Formula
   desc "Detect compliance and security violations across Infrastructure as Code"
-  homepage "https://github.com/tenable/terrascan"
-  url "https://github.com/tenable/terrascan/archive/refs/tags/v1.19.1.tar.gz"
-  sha256 "e3ebce8fb568cd1e95dc0d65efaedd494395f38f24a992c0d7b2992ad5aa4710"
+  homepage "https://runterrascan.io/"
+  url "https://github.com/tenable/terrascan/archive/refs/tags/v1.19.3.tar.gz"
+  sha256 "426c37bfc70996b80cd708bd473ec46673c47ed4a6ad8bf1bc5355a53170d461"
   license "Apache-2.0"
   head "https://github.com/tenable/terrascan.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "eea2023b14d5c5687e0378391bfed26f0c4cd614d132252068180cab7aab2810"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "af895d9a429bc0ce51103a0d7cc5453030d8b5170e9796cead549545da3327ca"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c790d8e14b57c390fc8d4eb7428ca36316e1fb3955a243ed37ddfb1fb2d2026e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "2cc050d0a9a7baf735e4160e4dd24a7d2cb2c16ccafc5dfc58fba9aa05b75cb4"
-    sha256 cellar: :any_skip_relocation, ventura:        "4309e1acab8e088bb14b03cfdca25dbd7047d2ed0d22315d762706083a6d5626"
-    sha256 cellar: :any_skip_relocation, monterey:       "2b2acfe57c14b214dbd7934d59ed70d2da26380efcc2f1d021b0d67528262fa9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0306e0c03d6fae4bba96741a48a2ac3a4ffa105e380deaef74cc800571279c75"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "37253ef3f12ce16d4ce7ecc1a5d86816764a553992e3af454c8a978737fe6216"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "266099d7586400962e11dff7e25523c3f01e007cc76fda855633ef840e03ae47"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "fa9e1fca9c1e9afe9ac5e05bc0e8a7d416a7a17e597effd19f7f88982d6e1a31"
+    sha256 cellar: :any_skip_relocation, sonoma:         "5295a9f6250958e829e68b8674aa9e4e628b6254a8469dce5dd676dadd5a09e3"
+    sha256 cellar: :any_skip_relocation, ventura:        "13481a79824311fc33cbc679100df60180f336310f19fcf30ac0a272f186b324"
+    sha256 cellar: :any_skip_relocation, monterey:       "834621abc71598233c2072736e1a07f12279d0b80599c9f072dd980effa297ad"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "894012e79d326e78e425c052d985cfaf90d14bb0faf44808d0e6349b6a4d2130"
   end
 
   depends_on "go" => :build

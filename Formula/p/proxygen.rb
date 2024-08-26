@@ -1,19 +1,19 @@
 class Proxygen < Formula
   desc "Collection of C++ HTTP libraries"
   homepage "https://github.com/facebook/proxygen"
-  url "https://github.com/facebook/proxygen/releases/download/v2024.04.08.00/proxygen-v2024.04.08.00.tar.gz"
-  sha256 "5e2459cd7e65d1ce238f536ac703544ffa3b8d7f41275c0fb782c5f43d182309"
+  url "https://github.com/facebook/proxygen/releases/download/v2024.08.19.00/proxygen-v2024.08.19.00.tar.gz"
+  sha256 "167f90ef3dee232888a03f60945cab35f1e535aacc6fa844b13e37ba742ade27"
   license "BSD-3-Clause"
   head "https://github.com/facebook/proxygen.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "3e84e5b9e91e9564cf67acac0d338cdcb4c06bde374902d726dfc73de35ea27e"
-    sha256 cellar: :any,                 arm64_ventura:  "4711660ea6a407c3715d1d99840e7d88d310dba30ef3b9c07a0bee0e78663767"
-    sha256 cellar: :any,                 arm64_monterey: "8c078e4febcfff8af3a81f0c4a2601ce2278a04ebb008a39b58f4486df14bfd6"
-    sha256 cellar: :any,                 sonoma:         "e1f1fd7d11c10de3d00a73313e0d000bb75dcf54232e77af0791e7bfc9714864"
-    sha256 cellar: :any,                 ventura:        "28c0680aaf63cd01d0cb0c88fa7b23f79e0d6d63b3913fdca8073008f3109834"
-    sha256 cellar: :any,                 monterey:       "f99f18fac3ccb8fe757867af88b27e324bc15a7732c575de2b207f1e09923511"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "35cb00ca8c1446a506e3d38d5bd9b49f3c74dd21191f44f4dd1a7d8a5ceacf06"
+    sha256 cellar: :any,                 arm64_sonoma:   "70817e279aacf7ef2216d9a70ae18eb4c0a00e96a98e57ad0955339a24ef1b46"
+    sha256 cellar: :any,                 arm64_ventura:  "a06fe300f83834a03b57211f49171d4dacdf95601c76d329733cd3540d125ede"
+    sha256 cellar: :any,                 arm64_monterey: "c4ae29414bdb2e2b1360c310950dd710568136c41ea9b278b594dfdca9a7788f"
+    sha256 cellar: :any,                 sonoma:         "bda3fa65da0426b59fc8743c65f6ada465bf0979cd85b6c33aefd960d367c990"
+    sha256 cellar: :any,                 ventura:        "884d8ddaca102b9cab0b2555da6c3122552e3eb97b080de597956283e60f7a93"
+    sha256 cellar: :any,                 monterey:       "18f87a4b061f10239e58b40c8aa3e8b2daaa9d59b19ec20f33960511e962ce66"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ecefa2a9c7474da81cc0eb6312fa30b7a9b38888f358de0897751d9bb3789ede"
   end
 
   depends_on "cmake" => :build
@@ -23,12 +23,15 @@ class Proxygen < Formula
   depends_on "folly"
   depends_on "gflags"
   depends_on "libsodium"
+  depends_on "mvfst"
   depends_on "openssl@3"
   depends_on "wangle"
   depends_on "zstd"
   uses_from_macos "gperf" => :build
   uses_from_macos "python" => :build
   uses_from_macos "zlib"
+
+  conflicts_with "hq", because: "both install `hq` binaries"
 
   def install
     system "cmake", "-S", ".", "-B", "build",
@@ -40,9 +43,10 @@ class Proxygen < Formula
   end
 
   test do
-    pid = spawn bin/"proxygen_echo"
-    sleep 10
-    system "curl", "-v", "http://localhost:11000"
+    port = free_port
+    pid = spawn(bin/"proxygen_echo", "--http_port", port.to_s)
+    sleep 30
+    system "curl", "-v", "http://localhost:#{port}"
   ensure
     Process.kill "TERM", pid
   end

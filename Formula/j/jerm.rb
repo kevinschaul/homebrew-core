@@ -5,6 +5,7 @@ class Jerm < Formula
   mirror "https://dotsrc.dl.osdn.net/osdn/fablib/62057/jerm-8096.tar.gz"
   version "0.8096"
   sha256 "8a63e34a2c6a95a67110a7a39db401f7af75c5c142d86d3ba300a7b19cbcf0e9"
+  license "BSD-2-Clause"
 
   bottle do
     sha256 cellar: :any_skip_relocation, arm64_sonoma:   "96b7c79c29b63fe4f2819bb547c97c77d870aedc601d90e5e92a6b6657d89b45"
@@ -22,6 +23,8 @@ class Jerm < Formula
     sha256 cellar: :any_skip_relocation, el_capitan:     "5c8409bfdeba7b55199659f4b82b8df9ec2ca8685435703bf1ddff29f9e027e5"
     sha256 cellar: :any_skip_relocation, x86_64_linux:   "2396a1d6257e20a5115a14f270c4c4039b91a3f9fd86fb8ad8437735bd98869d"
   end
+
+  deprecate! date: "2024-07-03", because: :repo_removed
 
   def install
     system "make", "all"

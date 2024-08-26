@@ -24,12 +24,14 @@ class Sleuthkit < Formula
   end
 
   depends_on "ant" => :build
+
   depends_on "afflib"
   depends_on "libewf"
   depends_on "libpq"
   depends_on "openjdk"
+  depends_on "sqlite"
 
-  uses_from_macos "sqlite"
+  uses_from_macos "zlib"
 
   conflicts_with "ffind", because: "both install a `ffind` executable"
 
@@ -50,6 +52,6 @@ class Sleuthkit < Formula
   end
 
   test do
-    system "#{bin}/tsk_loaddb", "-V"
+    system bin/"tsk_loaddb", "-V"
   end
 end

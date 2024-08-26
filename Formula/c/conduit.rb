@@ -1,8 +1,8 @@
 class Conduit < Formula
   desc "Streams data between data stores. Kafka Connect replacement. No JVM required"
   homepage "https://conduit.io/"
-  url "https://github.com/ConduitIO/conduit/archive/refs/tags/v0.9.1.tar.gz"
-  sha256 "48c05a3d59e274370005476e5205ec416f283ae8728b2ca28c3cdd49f4e0df34"
+  url "https://github.com/ConduitIO/conduit/archive/refs/tags/v0.11.1.tar.gz"
+  sha256 "da16e12823640869e388ebbce5e5f1fac73ba0d3b0e360a7205d87177ceaa795"
   license "Apache-2.0"
   head "https://github.com/ConduitIO/conduit.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Conduit < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "7c7ecf3d96ef50d37a291a508f693ca5fa8c6cb82013079cc854cdbf69343936"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "abf7164acc4759d0a87696aaccf4a2aa43730a03552e9ef1e19f57da06196cd0"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "6a9208d2bfa759257eaf791bf0bec07a1c7b107c1b61a3117084741375dd3786"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0558ec5f40dff2fc8aef1f5bff93789feefa748ea7af95c9cb114884577a522e"
-    sha256 cellar: :any_skip_relocation, ventura:        "8c3662d514240acd7ce8af1e574c9b4b50b57f65f24c3b2769b3ef837a925f70"
-    sha256 cellar: :any_skip_relocation, monterey:       "f58f6b460e6661bd853bddab786cf3eed20e1184ebc31ffa3e97118e3cc57a0d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "24f7cb53e3165446b2f9bf2b27d4c0ba52faedc59e71ea8b946d80328c95aeee"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "57c127f3236d7897a62c624c2574b1b3a86237cab99ab920e95a2fd7d17f8a6c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "08901c87b39970bd6f016caef1209dfa885c9db76dafbe5f22bb5ff3333b9fee"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "dfbf59cd09588015fc1c96cd72a042ed11284e6c8f18771e3126b0b3c0fdc106"
+    sha256 cellar: :any_skip_relocation, sonoma:         "dfc2f661dc17dbd2b8f2f6d404330e308b0b0a393d46f22a7f798a677ae137dd"
+    sha256 cellar: :any_skip_relocation, ventura:        "362fcf1cb5fbbaf15f6c996287086d0a5ae484676779137cbab6481b438fa6e8"
+    sha256 cellar: :any_skip_relocation, monterey:       "d3cfee5fe65cefbe4fc90c18c10500482689843dfb94232c1deb9fe2fdb4da9c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "68f78c703af12d2d0d1970dc5a33591e4c780bbb836f5c4a932c5f0d95ec0437"
   end
 
   depends_on "go" => :build
@@ -46,7 +46,7 @@ class Conduit < Formula
       # Kill process
       Process.kill("SIGKILL", pid)
     end
-    assert_match "grpc server started", (testpath/"output.txt").read
-    assert_match "http server started", (testpath/"output.txt").read
+    assert_match "grpc API started", (testpath/"output.txt").read
+    assert_match "http API started", (testpath/"output.txt").read
   end
 end

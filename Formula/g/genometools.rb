@@ -1,6 +1,6 @@
 class Genometools < Formula
   desc "Versatile open source genome analysis software"
-  homepage "http://genometools.org/"
+  homepage "https://genometools.org/"
   # genometools does not have source code on par with their binary dist on their website
   url "https://github.com/genometools/genometools/archive/refs/tags/v1.6.5.tar.gz"
   sha256 "f71b95c84761847223cd52a17d30ad9e6d55854448c2139fcd0aac437f73fbbe"
@@ -20,11 +20,13 @@ class Genometools < Formula
   depends_on "pkg-config" => :build
   depends_on "python-setuptools" => :build
   depends_on "cairo"
+  depends_on "glib"
   depends_on "pango"
   depends_on "python@3.12"
 
-  on_linux do
-    depends_on "libpthread-stubs" => :build
+  on_macos do
+    depends_on "gettext"
+    depends_on "harfbuzz"
   end
 
   conflicts_with "libslax", because: "both install `bin/gt`"

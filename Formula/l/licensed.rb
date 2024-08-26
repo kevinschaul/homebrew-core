@@ -2,19 +2,18 @@ class Licensed < Formula
   desc "Cache and verify the licenses of dependencies"
   homepage "https://github.com/github/licensed"
   url "https://github.com/github/licensed.git",
-      tag:      "4.4.0",
-      revision: "0f5e5a1d289665e8a3d7133cba6c6f3a15359ecb"
+      tag:      "v4.5.0",
+      revision: "b83dac625d37b9e5c5151569b011be2a57816e38"
   license "MIT"
-  revision 2
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "b06b95564adc540d4aafc43a2a46168771d2e6b3a748b2c95cc71a79b28b4047"
-    sha256 cellar: :any,                 arm64_ventura:  "133d5a34b52686ea4625c9603e3186b3d85fc899dec2a8fc3e8c081554710806"
-    sha256 cellar: :any,                 arm64_monterey: "adddccc7895034261c83e2118b66350c17f91cdcc76474149dba1f1505feb299"
-    sha256 cellar: :any,                 sonoma:         "a44f7dd570c1ecd7552ced29e76ffcf3e8158b109f767b82c9c793f0451741b9"
-    sha256 cellar: :any,                 ventura:        "6e06f31113b06e5ccaa02383fc07d4830dcb03b3d1555e0adccb1a32370948a5"
-    sha256 cellar: :any,                 monterey:       "2118b973e3ce647acfb3b1f71f7c51a01e6de9b3f6cc02591cd29183c888e50c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "159f68bb6f915b6b3c1cdafe24b8f3c304149b70dc508dc3945ece03120019a7"
+    sha256 cellar: :any,                 arm64_sonoma:   "d4b7ad01ee7de55961e95f82b808d2bba758459c8fb79d768df1d9489941223a"
+    sha256 cellar: :any,                 arm64_ventura:  "2f4b5e92a768349a8167efc94cbe602be17c7af4899cc827c534107bf336b18c"
+    sha256 cellar: :any,                 arm64_monterey: "25fac47c545d7442c1d7b4aba19cca2b6d103ec7e09c17565ac7eaf32cfd4b17"
+    sha256 cellar: :any,                 sonoma:         "ebc8d31605c467416f0a693bb3214dff84948b0788d00f9a19c7ffb18bd89366"
+    sha256 cellar: :any,                 ventura:        "23a1d65eafe0f8902da4ebe265d9d81de979f53a0818233dad818922f95fcc94"
+    sha256 cellar: :any,                 monterey:       "d1ba0b84009f3ff750e71a2acccfd54583223b53275e991f993aca29ea1abe48"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "216517ba4f2526dc918c7c5350a068b59ceb876c7c8b4fa1eea14038976e3c43"
   end
 
   depends_on "cmake" => :build

@@ -4,13 +4,15 @@ class Ghostscript < Formula
   license "AGPL-3.0-or-later"
 
   stable do
-    url "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10030/ghostpdl-10.03.0.tar.xz"
-    sha256 "854fd1958711b9b5108c052a6d552b906f1e3ebf3262763febf347d77618639d"
+    url "https://github.com/ArtifexSoftware/ghostpdl-downloads/releases/download/gs10031/ghostpdl-10.03.1.tar.xz"
+    sha256 "05eee45268f6bb2c6189f9a40685c4608ca089443a93f2af5f5194d83dc368db"
 
     on_macos do
       # 1. Prevent dependent rebuilds on minor version bumps.
+      # 2. Fix missing pointer dereference
       # Reported upstream at:
       #   https://bugs.ghostscript.com/show_bug.cgi?id=705907
+      #   https://bugs.ghostscript.com/show_bug.cgi?id=707649
       patch :DATA
     end
   end
@@ -25,13 +27,13 @@ class Ghostscript < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "5a4d2e12ec9ad26a94cb92817fe6685bc2b29d406174825cbe256e01a20f8e21"
-    sha256 arm64_ventura:  "ba6c4d70667d55f5275bd53695269ee2110fcc98316ac4c8772c65d68695bc00"
-    sha256 arm64_monterey: "66b6b08bcc0464ee44f37c3ae5004f6c7b9f218b647dced944963a0c924efb00"
-    sha256 sonoma:         "bd8ac911d2c568d9cd2e01b6dc2056d876c9a63580488f69630227bf41340a44"
-    sha256 ventura:        "ffc9f0f5ab002fcee2afaa5b7a32c08f34f3da59e26f50903b14e8b07bc5f4b6"
-    sha256 monterey:       "d8233c88f480d3a0c099dd482ecdf41b77de8610ba9c8a21324db949772ca6f5"
-    sha256 x86_64_linux:   "9f0a3bff7c308669561afe78692b58d27a3571ab4fbb94cfa175fd5cd67360c9"
+    sha256 arm64_sonoma:   "8ab8a34d5c2e94851b167c20962d0d70f95eb403bc81d71dccaecdba81e167a8"
+    sha256 arm64_ventura:  "8908f37eee3e93867a5b8ebe94e2b0c8985bb6a4dcd30b447968922269f40cd1"
+    sha256 arm64_monterey: "713177ff722b4f602a5c0812c754fde1100aef030e1682bfdf90884a39655c2f"
+    sha256 sonoma:         "cb23a60add5b459b9862a75f1536ff6633f41761a64d62955975371ef0dd5bdd"
+    sha256 ventura:        "9b76871f2967c4a2175a8033f4184993401f744e7f321dd161eac398efacddf0"
+    sha256 monterey:       "d4a48d2459c05360daaca6a8bf427fc87d6ffb32be497dedc73651f16ef6e057"
+    sha256 x86_64_linux:   "d011e49ea2b732da0e26445c335eef1dd8a71da0097a0f743d3d917703a24c0c"
   end
 
   head do
@@ -69,7 +71,7 @@ class Ghostscript < Formula
   def install
     # Delete local vendored sources so build uses system dependencies
     libs = %w[expat freetype jbig2dec jpeg lcms2mt libpng openjpeg tiff zlib]
-    libs.each { |l| (buildpath/l).rmtree }
+    libs.each { |l| rm_r(buildpath/l) }
 
     configure = build.head? ? "./autogen.sh" : "./configure"
     system configure, *std_configure_args,
@@ -128,3 +130,18 @@ index 89dfa5a..c907831 100644
  #LDFLAGS_SO=-dynamiclib -flat_namespace
  #LDFLAGS_SO_MAC=-dynamiclib -install_name $(GS_SONAME_MAJOR_MINOR)
  #LDFLAGS_SO=-dynamiclib -install_name $(FRAMEWORK_NAME)
+diff --git a/pdf/pdf_sec.c b/pdf/pdf_sec.c
+index 565ae80ca..7e8f6719d 100644
+--- a/pdf/pdf_sec.c
++++ b/pdf/pdf_sec.c
+@@ -183,8 +183,8 @@ static int apply_sasl(pdf_context *ctx, char *Password, int Len, char **NewPassw
+          * this easy: the errors we want to ignore are the ones with
+          * codes less than 100. */
+         if ((int)err < 100) {
+-            NewPassword = Password;
+-            NewLen = Len;
++            *NewPassword = Password;
++            *NewLen = Len;
+             return 0;
+         }
+ 

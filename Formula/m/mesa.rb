@@ -3,18 +3,33 @@ class Mesa < Formula
 
   desc "Graphics Library"
   homepage "https://www.mesa3d.org/"
-  url "https://mesa.freedesktop.org/archive/mesa-24.0.4.tar.xz"
-  sha256 "90febd30a098cbcd97ff62ecc3dcf5c93d76f7fa314de944cfce81951ba745f0"
-  license "MIT"
+  url "https://mesa.freedesktop.org/archive/mesa-24.1.6.tar.xz"
+  sha256 "da94c0908d5662467369b69ed8236da1e1577141a6e7d25171a9bf56383b34e8"
+  license all_of: [
+    "MIT",
+    "Apache-2.0", # include/{EGL,GLES*,vk_video,vulkan}, src/egl/generate/egl.xml, src/mapi/glapi/registry/gl.xml
+    "BSD-2-Clause", # src/asahi/lib/dyld_interpose.h, src/getopt/getopt*, src/util/xxhash.h
+    "BSD-3-Clause", # src/compiler/glsl/float64.glsl, src/util/softfloat.*
+    "BSL-1.0", # src/c11, src/gallium/auxiliary/gallivm/f.cpp
+    "HPND", # src/mesa/x86/assyntax.h
+    "HPND-sell-variant", # src/loader/loader_{dri,dri3,wayland}_helper.*, src/vulkan/wsi/wsi_common_display.*
+    "ICU", # src/glx/*
+    "MIT-Khronos-old", # src/compiler/spirv/{GLSL.*,OpenCL.std.h,spirv.core.grammar.json,spirv.h}
+    "SGI-B-2.0", # src/glx/*
+    :public_domain, # src/util/{dbghelp.h,u_atomic.h,sha1}, src/util/perf/gpuvis_trace_utils.h
+    { "GPL-1.0-or-later" => { with: "Linux-syscall-note" } }, # include/drm-uapi/sync_file.h
+    { "GPL-2.0-only" => { with: "Linux-syscall-note" } }, # include/drm-uapi/{d3dkmthk.h,dma-buf.h,etnaviv_drm.h}
+  ]
   head "https://gitlab.freedesktop.org/mesa/mesa.git", branch: "main"
+
   bottle do
-    sha256 arm64_sonoma:   "ae2d04b132bbcf41d540a855092f64327f502d09ab4cee4fbfe70fa9c2efebc4"
-    sha256 arm64_ventura:  "f1e4c3f4a7f876aeba6588018abfc80c301fd217d1ac990fe94a42d0248d5da3"
-    sha256 arm64_monterey: "633267ffbcde01c11dc478c0b20cad2bbbe1110ed97853e1041601876c501eec"
-    sha256 sonoma:         "edb87cb52fc6ff9e44c0b368c71b3c52ad228a44519ede4bb6e878e07662bc5e"
-    sha256 ventura:        "5da17175598feb34e51f62c5cc9eef08538bf53cdd02bd7e943de6e66c891791"
-    sha256 monterey:       "77f4ad2b7919f114019732fef9f0f5562ef852b2bbb94d68c28a4e3c9786385b"
-    sha256 x86_64_linux:   "1eea2d09e80c854f171bfff502c84d31d6874eaf9dbfe20a6066c8b78a8af336"
+    sha256 arm64_sonoma:   "8893490a72c982959c85a1718ca2efece57d75958fd87028e2ad68bfd6a67202"
+    sha256 arm64_ventura:  "e29e5f7a8d9b8e263a1c62ee952dd88254a4b7d9bef19967552089e166adaaf5"
+    sha256 arm64_monterey: "f65ee9d3e76f065420406288c0e92e57f7bacd30ff5ad504e594a60e1e8047f1"
+    sha256 sonoma:         "207b17ef6ce05301bfde32b4fe07c2b855ec911bc9515bb47ece1146f34f6b33"
+    sha256 ventura:        "0f696236abd96c0da6af866500a120c4b434a9e7888edad08198ba98086444f8"
+    sha256 monterey:       "02a8a41ed9793f79b14980808cb167f7d8a3bb22bc0fc06a17e2e2e229a89f90"
+    sha256 x86_64_linux:   "cb594cf3a000dfce799b9a354445100bc3ceb794e7090fcc587d43bd9fbcea91"
   end
 
   depends_on "bison" => :build # can't use from macOS, needs '> 2.3'
@@ -27,17 +42,13 @@ class Mesa < Formula
   depends_on "expat"
   depends_on "libx11"
   depends_on "libxcb"
-  depends_on "libxdamage"
   depends_on "libxext"
+  depends_on "libxfixes"
+  depends_on "libxrandr"
 
   uses_from_macos "flex" => :build
   uses_from_macos "llvm"
-  uses_from_macos "ncurses"
   uses_from_macos "zlib"
-
-  on_macos do
-    depends_on "gettext"
-  end
 
   on_linux do
     depends_on "elfutils"
@@ -47,8 +58,7 @@ class Mesa < Formula
     depends_on "libdrm"
     depends_on "libva"
     depends_on "libvdpau"
-    depends_on "libxfixes"
-    depends_on "libxrandr"
+    depends_on "libxml2" # not used on macOS
     depends_on "libxshmfence"
     depends_on "libxv"
     depends_on "libxxf86vm"
@@ -57,23 +67,14 @@ class Mesa < Formula
     depends_on "valgrind"
     depends_on "wayland"
     depends_on "wayland-protocols"
+    depends_on "zstd"
   end
 
   fails_with gcc: "5"
 
-  resource "glxgears.c" do
-    url "https://gitlab.freedesktop.org/mesa/demos/-/raw/391cafee6d43a28afaf87a269475e0ede7d97469/src/xdemos/glxgears.c"
-    sha256 "294d7b9984eb1194a110a5a5500878df8b8d7b7922ec56257e9d8d8ae5e578e6"
-  end
-
-  resource "gl_wrap.h" do
-    url "https://gitlab.freedesktop.org/mesa/demos/-/raw/ddc35ca0ea2f18c5011c5573b4b624c128ca7616/src/util/gl_wrap.h"
-    sha256 "41f5a84f8f5abe8ea2a21caebf5ff31094a46953a83a738a19e21c010c433c88"
-  end
-
   resource "mako" do
-    url "https://files.pythonhosted.org/packages/d4/1b/71434d9fa9be1ac1bc6fb5f54b9d41233be2969f16be759766208f49f072/Mako-1.3.2.tar.gz"
-    sha256 "2a0c8ad7f6274271b3bb7467dd37cf9cc6dab4bc19cb69a4ef10669402de698e"
+    url "https://files.pythonhosted.org/packages/67/03/fb5ba97ff65ce64f6d35b582aacffc26b693a98053fa831ab43a437cbddb/Mako-1.3.5.tar.gz"
+    sha256 "48dbc20568c1d276a2698b36d968fa76161bf127194907ea6fc594fa81f943bc"
   end
 
   resource "markupsafe" do
@@ -82,20 +83,13 @@ class Mesa < Formula
   end
 
   resource "packaging" do
-    url "https://files.pythonhosted.org/packages/ee/b5/b43a27ac7472e1818c4bafd44430e69605baefe1f34440593e0332ec8b4d/packaging-24.0.tar.gz"
-    sha256 "eb82c5e3e56209074766e6885bb04b8c38a0c015d0a30036ebe7ece34c9989e9"
-  end
-
-  resource "pygments" do
-    url "https://files.pythonhosted.org/packages/55/59/8bccf4157baf25e4aa5a0bb7fa3ba8600907de105ebc22b0c78cfbf6f565/pygments-2.17.2.tar.gz"
-    sha256 "da46cec9fd2de5be3a8a784f434e4c4ab670b4ff54d605c4c2717e9d49c4c367"
+    url "https://files.pythonhosted.org/packages/51/65/50db4dda066951078f0a96cf12f4b9ada6e4b811516bf0262c0f4f7064d4/packaging-24.1.tar.gz"
+    sha256 "026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002"
   end
 
   resource "ply" do
-    on_linux do
-      url "https://files.pythonhosted.org/packages/e5/69/882ee5c9d017149285cab114ebeab373308ef0f874fcdac9beb90e0ac4da/ply-3.11.tar.gz"
-      sha256 "00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3"
-    end
+    url "https://files.pythonhosted.org/packages/e5/69/882ee5c9d017149285cab114ebeab373308ef0f874fcdac9beb90e0ac4da/ply-3.11.tar.gz"
+    sha256 "00c7c1aaa88358b9c765b6d3000c6eec0ba42abca5351b095321aef446081da3"
   end
 
   def python3
@@ -103,32 +97,21 @@ class Mesa < Formula
   end
 
   def install
-    venv_root = buildpath/"venv"
-    venv = virtualenv_create(venv_root, python3)
-
-    python_resources = resources.to_set(&:name) - ["glxgears.c", "gl_wrap.h"]
-    python_resources.each do |r|
-      venv.pip_install resource(r)
-    end
-    ENV.prepend_path "PYTHONPATH", venv_root/Language::Python.site_packages(python3)
-    ENV.prepend_path "PATH", venv_root/"bin"
+    venv = virtualenv_create(buildpath/"venv", python3)
+    venv.pip_install resources.reject { |r| OS.mac? && r.name == "ply" }
+    ENV.prepend_path "PYTHONPATH", venv.site_packages
+    ENV.prepend_path "PATH", venv.root/"bin"
 
     args = %w[
       -Db_ndebug=true
       -Dosmesa=true
     ]
-
     if OS.mac?
-      args += %w[
-        -Dgallium-drivers=swrast
-      ]
-    end
-
-    if OS.linux?
+      args << "-Dgallium-drivers=swrast"
+    else
       args += %w[
         -Ddri3=enabled
         -Degl=enabled
-        -Dgallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,i915,iris,crocus,zink
         -Dgallium-extra-hud=true
         -Dgallium-nine=true
         -Dgallium-omx=disabled
@@ -153,25 +136,34 @@ class Mesa < Formula
         -Dvulkan-drivers=amd,intel,intel_hasvk,swrast,virtio
         -Dvulkan-layers=device-select,intel-nullhw,overlay
       ]
+      if Hardware::CPU.intel?
+        args << "-Dgallium-drivers=r300,r600,radeonsi,nouveau,virgl,svga,swrast,i915,iris,crocus,zink"
+      end
+      # Strip executables/libraries/object files to reduce their size
+      args << "-Dstrip=true"
     end
 
     system "meson", "setup", "build", *args, *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"
     system "meson", "install", "-C", "build"
+
+    prefix.install "docs/license.rst"
     inreplace lib/"pkgconfig/dri.pc" do |s|
       s.change_make_var! "dridriverdir", HOMEBREW_PREFIX/"lib/dri"
-    end
-
-    if OS.linux?
-      # Strip executables/libraries/object files to reduce their size
-      system("strip", "--strip-unneeded", "--preserve-dates", *(Dir[bin/"**/*", lib/"**/*"]).select do |f|
-        f = Pathname.new(f)
-        f.file? && (f.elf? || f.extname == ".a")
-      end)
     end
   end
 
   test do
+    resource "glxgears.c" do
+      url "https://gitlab.freedesktop.org/mesa/demos/-/raw/878cd7fb84b7712d29e5d1b38355ed9c5899a403/src/xdemos/glxgears.c"
+      sha256 "af7927d14bd9cc989347ad0c874b35c4bfbbe9f408956868b1c5564391e21eed"
+    end
+
+    resource "gl_wrap.h" do
+      url "https://gitlab.freedesktop.org/mesa/demos/-/raw/ddc35ca0ea2f18c5011c5573b4b624c128ca7616/src/util/gl_wrap.h"
+      sha256 "41f5a84f8f5abe8ea2a21caebf5ff31094a46953a83a738a19e21c010c433c88"
+    end
+
     %w[glxgears.c gl_wrap.h].each { |r| resource(r).stage(testpath) }
     flags = %W[
       -I#{include}

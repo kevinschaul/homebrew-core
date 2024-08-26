@@ -4,7 +4,7 @@ class Ncmpcpp < Formula
   url "https://rybczak.net/ncmpcpp/stable/ncmpcpp-0.9.2.tar.bz2"
   sha256 "faabf6157c8cb1b24a059af276e162fa9f9a3b9cd3810c43b9128860c9383a1b"
   license "GPL-2.0-or-later"
-  revision 15
+  revision 17
 
   livecheck do
     url "https://rybczak.net/ncmpcpp/installation/"
@@ -12,13 +12,13 @@ class Ncmpcpp < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "c34594758c5354c3262c9abb962b52798ddb5f29120576dba999dfd52ccd9e8f"
-    sha256 cellar: :any,                 arm64_ventura:  "24e22e342621454e72791e81cd98b37bf16a0400c57a6f8fca4d4165624762e0"
-    sha256 cellar: :any,                 arm64_monterey: "e54d5b84632d9ce12deafd47b50a5c2a1faec790082e094b26f45a9844b73d81"
-    sha256 cellar: :any,                 sonoma:         "71dbad3f7d95622b1a5125730db8976b09bedb3939b36a352437837443256df9"
-    sha256 cellar: :any,                 ventura:        "e678e10694dfafed2be4c4904925918e4b2c9f68121d8777e9b6653a01ae61d6"
-    sha256 cellar: :any,                 monterey:       "302668e97b84cb0c9181bd8bd7e1df38e8bb27d8dd675d992a09b8f8f36925b9"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "78257ff21b49cea4d90a6c3f965bc15426571430328e76415cccbc9b35f27d9f"
+    sha256 cellar: :any,                 arm64_sonoma:   "697505ba19ceb282b1f3d6a7ee9dca9850e5aacbdd555c06726360b7b3e34807"
+    sha256 cellar: :any,                 arm64_ventura:  "fddd6f8b41e1ec3c6e3b8723fb6bd02232f7999eecb104cadfd1f5342d86253e"
+    sha256 cellar: :any,                 arm64_monterey: "54065a4855826eeac1e1fb87760e72bc7a2b243c41657270a7115bad5714d175"
+    sha256 cellar: :any,                 sonoma:         "fbfb67620edcc0c907762dcd77002530c3b43130856c7a90daa0ab26f3cd0faf"
+    sha256 cellar: :any,                 ventura:        "2be85dace5f5c11ba98510972e23321d6cbd4b8dfdd960f50f95703b0e658910"
+    sha256 cellar: :any,                 monterey:       "493f9684b942ec5112ed4b4f61112265eb58a49acfd0e5761a4c465e179c07ee"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "255f731bf0430d37240b3ea8b095eb06c39e7240f797f017134217b420300db5"
   end
 
   head do

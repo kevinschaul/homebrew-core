@@ -1,20 +1,19 @@
 class ConsulTemplate < Formula
   desc "Generic template rendering and notifications with Consul"
   homepage "https://github.com/hashicorp/consul-template"
-  url "https://github.com/hashicorp/consul-template.git",
-      tag:      "v0.37.4",
-      revision: "e3ced0f46b08b2ec4c46c532469933b6a2118ef5"
+  url "https://github.com/hashicorp/consul-template/archive/refs/tags/v0.39.1.tar.gz"
+  sha256 "864a81cb114c3aa079c185226acf869cbccef03f1ae525d88a6d929d2b7a64f4"
   license "MPL-2.0"
   head "https://github.com/hashicorp/consul-template.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "7165cf0c9fceff8a4fd7595673db2d869749e6f725fa5ebbcd88c3889f6cc877"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bec204b8c9003f7fd40baa7c596c237c2312a5c8ffcc73659e4eabf262b9dbaa"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "d1218acae5eb076b830bc58be05cf4f013ecd642b17f3b97beab8820059fe4cf"
-    sha256 cellar: :any_skip_relocation, sonoma:         "92cf4d1e1f805233c6c507625bbe83027be405cb7d2c45c5025e90f341d84fbf"
-    sha256 cellar: :any_skip_relocation, ventura:        "cf6d74439ba8fe27f091718ac9c6d97b90f42e620daa516fcb7bcbcbfb94e4b8"
-    sha256 cellar: :any_skip_relocation, monterey:       "d665259e94b151ef3dade5a7ae93ac47c55600c0c0d1e3b6792628aa27194926"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f0ad6557bd46846c3d41ac083400bc40e5db79aec4d610a6e173393c666c68e9"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e94ae8bac9e71da4f91b25bfb301728c6a0255a92cd43838e4179857027d22e5"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "89ad41bf65fc9f430b17ed8a789a36a28c870977936cc0ba9d71c68069b27baa"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e167655f9b1be88a2c2a254855fe2888b538a3f048ea94280707e17709b6cb46"
+    sha256 cellar: :any_skip_relocation, sonoma:         "7ddaac2a8089187a7a3b968c4eeb6f40a2882ffdcf7a3d09d539432dfb9948cd"
+    sha256 cellar: :any_skip_relocation, ventura:        "e89f2997a3595d91896706d6e09202028f93ae8a126b6630943317dc5eabba7c"
+    sha256 cellar: :any_skip_relocation, monterey:       "a8a53aa07b37cbf6164d0e17c617b5ca0c60c3660c9c23b9eaad23a7c907c1bf"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "43250e2791cddb58e5b9f8a7d640e2de2a393046a9453fb7968bb866703ad353"
   end
 
   depends_on "go" => :build
@@ -24,10 +23,9 @@ class ConsulTemplate < Formula
     ldflags = %W[
       -s -w
       -X #{project}/version.Name=consul-template
-      -X #{project}/version.GitCommit=#{Utils.git_short_head}
+      -X #{project}/version.GitCommit=#{tap.user}
     ]
     system "go", "build", *std_go_args(ldflags:)
-    prefix.install_metafiles
   end
 
   test do

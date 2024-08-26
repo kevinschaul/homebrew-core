@@ -1,19 +1,20 @@
 class Vtk < Formula
   desc "Toolkit for 3D computer graphics, image processing, and visualization"
   homepage "https://www.vtk.org/"
-  url "https://www.vtk.org/files/release/9.3/VTK-9.3.0.tar.gz"
-  sha256 "fdc7b9295225b34e4fdddc49cd06e66e94260cb00efee456e0f66568c9681be9"
+  url "https://www.vtk.org/files/release/9.3/VTK-9.3.1.tar.gz"
+  sha256 "8354ec084ea0d2dc3d23dbe4243823c4bfc270382d0ce8d658939fd50061cab8"
   license "BSD-3-Clause"
+  revision 1
   head "https://gitlab.kitware.com/vtk/vtk.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "57dd84ad334b5f14597f2f13ffc029a47170a26683ff41c8c74e5c17aa058bbe"
-    sha256 cellar: :any,                 arm64_ventura:  "a1832130e10e675dd57674beb822437fa1d999ff617f4af671f550a377b0827b"
-    sha256 cellar: :any,                 arm64_monterey: "d8a2aa630b9ca7e0dcc620b9838387c7a8648e0d001b5b1be0fb2c85754db847"
-    sha256 cellar: :any,                 sonoma:         "2a337b8498153d3ec70bef5dab1f42bf0966de248feaacb2e2cbee93f6554ea5"
-    sha256 cellar: :any,                 ventura:        "d174163d7c6a6eb4187d93d01bf9953d0f5ba7ab3ae594951411fbe46284ef08"
-    sha256 cellar: :any,                 monterey:       "5700425cc384b511a36aa68ad4a55094a60fdc9277b7520362d3d6e029aaae3c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "72cfac817837822c9946e00bf5d3d91ef2e1061409d7c402cda2ad532412a732"
+    sha256 cellar: :any,                 arm64_sonoma:   "c709d35b13659060e2f1082b98ac1f9b8abb87b38307b8b7f1e0c76514b4605d"
+    sha256 cellar: :any,                 arm64_ventura:  "c5eb1abb48cd6309b0a17f48b975d6287d8808db2a38fc2686862c7f17d8c918"
+    sha256 cellar: :any,                 arm64_monterey: "3d4601c9974dcdf776f339df052f128e58f67d1d5729cefc28839b8b35808c6e"
+    sha256 cellar: :any,                 sonoma:         "c0904e2327b42490b8cf3464fa67c580da3867c9657801b3635c8fa369d55639"
+    sha256 cellar: :any,                 ventura:        "17d354ab4856c11db5603c6a1d0d8a1dd93d602e4968760369d8036d94fafc1f"
+    sha256 cellar: :any,                 monterey:       "9784b37121178b5fde564bb8aebe6c77fd6307087d7635614bd5eeb703b6dc64"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "13d7f008c59ba8251e1cf71caf5a35a4af3f3c0710c8e8e1730d305c75cca8af"
   end
 
   depends_on "cmake" => [:build, :test]
@@ -46,6 +47,9 @@ class Vtk < Formula
   uses_from_macos "zlib"
 
   on_macos do
+    depends_on "libaec"
+    depends_on "zstd"
+
     on_arm do
       if DevelopmentTools.clang_build_version == 1316
         depends_on "llvm" => :build
@@ -60,6 +64,9 @@ class Vtk < Formula
 
   on_linux do
     depends_on "libaec"
+    depends_on "libx11"
+    depends_on "libxcursor"
+    depends_on "mesa"
     depends_on "mesa-glu"
   end
 

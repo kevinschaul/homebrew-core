@@ -31,8 +31,8 @@ class Cspice < Formula
   end
 
   conflicts_with "openhmd", because: "both install `simple` binaries"
-  conflicts_with "libftdi0", because: "both install `simple` binaries"
   conflicts_with "enscript", because: "both install `states` binaries"
+  conflicts_with "pwntools", because: "both install `version` binaries"
 
   def install
     # Use brewed csh on Linux because it is not installed in CI.
@@ -42,8 +42,8 @@ class Cspice < Formula
       end
     end
 
-    rm_f Dir["lib/*"]
-    rm_f Dir["exe/*"]
+    rm(Dir["lib/*"])
+    rm(Dir["exe/*"])
     system "csh", "makeall.csh"
     mv "exe", "bin"
     pkgshare.install "doc", "data"
@@ -54,6 +54,6 @@ class Cspice < Formula
   end
 
   test do
-    system "#{bin}/tobin", "#{pkgshare}/data/cook_01.tsp", "DELME"
+    system bin/"tobin", "#{pkgshare}/data/cook_01.tsp", "DELME"
   end
 end

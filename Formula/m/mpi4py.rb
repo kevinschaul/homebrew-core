@@ -1,20 +1,18 @@
 class Mpi4py < Formula
   desc "Python bindings for MPI"
   homepage "https://mpi4py.github.io/"
-  url "https://github.com/mpi4py/mpi4py/releases/download/3.1.5/mpi4py-3.1.5.tar.gz"
-  sha256 "a706e76db9255135c2fb5d1ef54cb4f7b0e4ad9e33cbada7de27626205f2a153"
-  license "BSD-2-Clause"
-  revision 1
+  url "https://github.com/mpi4py/mpi4py/releases/download/4.0.0/mpi4py-4.0.0.tar.gz"
+  sha256 "820d31ae184d69c17d9b5d55b1d524d56be47d2e6cb318ea4f3e7007feff2ccc"
+  license "BSD-3-Clause"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any, arm64_sonoma:   "17f84b39f8d35ba4ed6922d604e599769a211690d6f1a25d185ed415af1ab524"
-    sha256 cellar: :any, arm64_ventura:  "131d931b6f5bb7a56fc04da4308efdca7415fc370c1f98efbb4ba0fc4742359f"
-    sha256 cellar: :any, arm64_monterey: "3705c65aa4f31e42af91c04233811e22a7823dc72f75735889f2a5a254438de3"
-    sha256 cellar: :any, sonoma:         "5419bda7e546158301027a7e95be0bffe62d1f8bd0bcdcb1c028600342e189c8"
-    sha256 cellar: :any, ventura:        "0f8b048146a510c545ec1c5b6563d348f1dfeaf4fdf7314a41efa7a171056bc7"
-    sha256 cellar: :any, monterey:       "a955b0e4e4379e2884f75954093675e17f8001ae2bcf2c0ee7fc0f6d7f1e9e09"
-    sha256               x86_64_linux:   "bf9015e5340ba63c8053f3266a9ead0f984723c9df9dc6a37dfed19b8cdd99d7"
+    sha256 cellar: :any, arm64_sonoma:   "af0b502535e60fc352f583f6dc3e6f22656d51b2b8a6879e286d5746eadbaeaf"
+    sha256 cellar: :any, arm64_ventura:  "3f8f8cd4ab3bf101d205bd7750a0ba506b44f19e4d4a0a77165e9cf3ad485cca"
+    sha256 cellar: :any, arm64_monterey: "e5db582124c03962a6b713df7f224d0c39860e61d60ee8d7bbe3b09fd7a58648"
+    sha256 cellar: :any, sonoma:         "623f199ac2973c68186eccba9126fc3c9845bd2ca5f28eeba2da167df66d745e"
+    sha256 cellar: :any, ventura:        "b4f16e256a6eae84ce6ba36302267080010e9d03ea6bc84098ac19652a0388f9"
+    sha256 cellar: :any, monterey:       "406ac34f87b65a4227b974a1b5f39d20f499a5783900618d6253c206cb051658"
+    sha256               x86_64_linux:   "75879be194af8dc54e5a70960f0fef8e289e10482f85f377e4e298eacd7f6c51"
   end
 
   depends_on "open-mpi"

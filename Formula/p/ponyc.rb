@@ -2,18 +2,18 @@ class Ponyc < Formula
   desc "Object-oriented, actor-model, capabilities-secure programming language"
   homepage "https://www.ponylang.io/"
   url "https://github.com/ponylang/ponyc.git",
-      tag:      "0.58.3",
-      revision: "59a59c213b1c40f8bd96cea5746f42197c578efc"
+      tag:      "0.58.5",
+      revision: "0d607b5f1fc7badb8c83a3ebf61b76c70b128894"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "8097e16d4e4e0a62caed8f585931625a7096984570f43b1ed84f0f1de1bc7df6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4bbd295c7bd464cdf5018f3f83f01d9049479a2391255ab6508ae11a998845e3"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "dd4789f0bc14c592c8c3344f70464a3932855c2612899f20139ab8b929a858b4"
-    sha256 cellar: :any_skip_relocation, sonoma:         "f6ea8e5cfbf9e06982a34122eecb2ffca3666baab2c8f0d2aed17d6d44bf968b"
-    sha256 cellar: :any_skip_relocation, ventura:        "fa676c3d9e92257ce8428a133d51dd8a887f8d5ceed9dc932ecb8b10a8fdf00a"
-    sha256 cellar: :any_skip_relocation, monterey:       "ece917e6543c81030797c1dfaf315337d199817c24bab0dcb26d8d4717e66785"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "001c13c340f3d96556da3b9acc5bb9ef0551bb26b58ab5b9f14b66add0359945"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "67f3dd596e2c63c86b6fd65d0c83b6e999ddaab62bb62cdc0da0527f3723d3cc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "4b877bcf39456ae61aa2c8c9f39c725ea3c0ceb15ea1545bb303f0ba17105581"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "f5a75887dac274c00d0461c8a86dce6442f49a1e3599a88ab9c895bc0830e7d4"
+    sha256 cellar: :any_skip_relocation, sonoma:         "0e78012c7147a61f1f9e8787842d22ed098332b64893aa519fe00e1812082fbb"
+    sha256 cellar: :any_skip_relocation, ventura:        "3a80604532c91626de497391ebd515b618428a3bd54e5aaf18cb307579696599"
+    sha256 cellar: :any_skip_relocation, monterey:       "d505f85d42bf600630ddcad5f435f6a5165e68b47b08b450e1f0e33229b16850"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2bd122a559c551a123c20b05d58fc219be181d07079534f2ac800913f9de7d9d"
   end
 
   depends_on "cmake" => :build
@@ -47,14 +47,14 @@ class Ponyc < Formula
     # ENV["CC"] returns llvm_clang, which does not work in a test block.
     ENV.clang
 
-    system "#{bin}/ponyc", "-rexpr", "#{prefix}/packages/stdlib"
+    system bin/"ponyc", "-rexpr", "#{prefix}/packages/stdlib"
 
     (testpath/"test/main.pony").write <<~EOS
       actor Main
         new create(env: Env) =>
           env.out.print("Hello World!")
     EOS
-    system "#{bin}/ponyc", "test"
+    system bin/"ponyc", "test"
     assert_equal "Hello World!", shell_output("./test1").strip
   end
 end

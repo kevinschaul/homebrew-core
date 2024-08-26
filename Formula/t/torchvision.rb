@@ -6,7 +6,7 @@ class Torchvision < Formula
   url "https://github.com/pytorch/vision/archive/refs/tags/v0.17.0.tar.gz"
   sha256 "55e395d5c7d9bf7658c82ac633cac2224aa168e1bfe8bb5b2b2a296c792a3500"
   license "BSD-3-Clause"
-  revision 2
+  revision 7
 
   livecheck do
     url :stable
@@ -14,23 +14,25 @@ class Torchvision < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "6b22b8bc583fe6bf8d107ed80a01a0d9eee3585999c57cd2fdc9b893aac86bbe"
-    sha256 cellar: :any,                 arm64_ventura:  "f7197c4eabaef9c13d4c6c9282df7693bc70bb9e4d0509afc1a8e91cc0c3e3d8"
-    sha256 cellar: :any,                 arm64_monterey: "7b6a69941c2be598e1af661cc0d4955932f3628bc77513d3cd11ac7f0eb476dd"
-    sha256 cellar: :any,                 sonoma:         "dacec4a595a383dc197fbae7222478bd579087b82c432cd1d8d243b7e475cc9b"
-    sha256 cellar: :any,                 ventura:        "d965b74d92c31c10c30231712cb5c7ce649b00959ae52a932787e5b86159649d"
-    sha256 cellar: :any,                 monterey:       "41ad3d58c7f6c1ca65e91e6a99889dbf20640367ac97f3067709f7d8c12edf28"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9f530f66ebd7b5e361740b2fa069ad736dc90424c3dd81fb0361ee2bd36469b2"
+    sha256 cellar: :any,                 arm64_sonoma:   "a96b64f2345250aebe98196290f5410e06386d264eb5e50442d0c46ac6445717"
+    sha256 cellar: :any,                 arm64_ventura:  "468c493d82da4c437ebc5d373b689a13fea1c4cb9ac69bd7c9dfda38e2703dd4"
+    sha256 cellar: :any,                 arm64_monterey: "68884d5ba2eaf326efe26c8779114140b2a113efacd94784c379595457a46845"
+    sha256 cellar: :any,                 sonoma:         "bbc701afa73f0ccc1773f9d215e7f8d9cd7be2b29ebec1679fef101074f5cf0a"
+    sha256 cellar: :any,                 ventura:        "3f27b42f1f502a21d5da84616523039fd384a7bc1b0041d2df77346dfe88b663"
+    sha256 cellar: :any,                 monterey:       "a9856105bc56c28745e73f4bdf27e5edb0e64402ae95270aad0ec39e083f1920"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "25894737d733fbac44d17020fc53d9b30d9090a2e8fa72d3d7ddf1d324d3ac29"
   end
 
   depends_on "cmake" => :build
   depends_on "ninja" => :build
   depends_on "python@3.12" => [:build, :test]
+  depends_on "abseil"
   depends_on "certifi"
   depends_on "jpeg-turbo"
   depends_on "libpng"
   depends_on "numpy"
   depends_on "pillow"
+  depends_on "protobuf"
   depends_on "pytorch"
 
   on_macos do
@@ -43,8 +45,8 @@ class Torchvision < Formula
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/bf/3f/ea4b9117521a1e9c50344b909be7886dd00a519552724809bb1f486986c2/idna-3.6.tar.gz"
-    sha256 "9ecdbbd083b06798ae1e86adcbfe8ab1479cf864e4ee30fe4e46a003d12491ca"
+    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
+    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
   end
 
   resource "requests" do

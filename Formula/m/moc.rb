@@ -5,7 +5,7 @@ class Moc < Formula
   revision 8
 
   stable do
-    url "http://ftp.daper.net/pub/soft/moc/stable/moc-2.5.2.tar.bz2"
+    url "https://ftp.daper.net/pub/soft/moc/stable/moc-2.5.2.tar.bz2"
     sha256 "f3a68115602a4788b7cfa9bbe9397a9d5e24c68cb61a57695d1c2c3ecf49db08"
 
     # Remove for > 2.5.2; FFmpeg 4.0 compatibility
@@ -64,16 +64,26 @@ class Moc < Formula
   depends_on "gettext" => :build
   depends_on "pkg-config" => :build
   depends_on "berkeley-db@5"
-  depends_on "ffmpeg@4" # FFmpeg 5 issue: http://moc.daper.net/node/3644
+  depends_on "ffmpeg@4" # FFmpeg 5 issue: https://moc.daper.net/node/3644
+  depends_on "flac"
   depends_on "jack"
+  depends_on "libogg"
+  depends_on "libsamplerate"
+  depends_on "libsndfile"
   depends_on "libtool"
+  depends_on "libvorbis"
   depends_on "ncurses"
+  depends_on "speex"
+
+  on_linux do
+    depends_on "alsa-lib"
+  end
 
   fails_with gcc: "5" # ffmpeg is compiled with GCC
 
   def install
     # Not needed for > 2.5.2
-    system "autoreconf", "-fvi"
+    system "autoreconf", "--force", "--install", "--verbose"
     system "./configure", "--disable-debug", "--prefix=#{prefix}"
     system "make", "install"
   end

@@ -1,20 +1,20 @@
 class Tomcat < Formula
   desc "Implementation of Java Servlet and JavaServer Pages"
   homepage "https://tomcat.apache.org/"
-  url "https://www.apache.org/dyn/closer.lua?path=tomcat/tomcat-10/v10.1.20/bin/apache-tomcat-10.1.20.tar.gz"
-  mirror "https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.20/bin/apache-tomcat-10.1.20.tar.gz"
-  sha256 "8427c5509f14e482940a015f3f60de20342d3d72c8dea9982a4d7112cb71a6ee"
+  url "https://www.apache.org/dyn/closer.lua?path=tomcat/tomcat-10/v10.1.28/bin/apache-tomcat-10.1.28.tar.gz"
+  mirror "https://archive.apache.org/dist/tomcat/tomcat-10/v10.1.28/bin/apache-tomcat-10.1.28.tar.gz"
+  sha256 "f3d37777d3eabf84f043d9634d08fa4337f0d81ef9003ce8fc7e1cf1473b85da"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "c7885ef9b54212032a00b123a3510a4b40c1a951f02af13f989b701173573516"
+    sha256 cellar: :any_skip_relocation, all: "b97671ccd1571128e483f60b4eb32f1df03248fc89e745334980b1e6512ea071"
   end
 
   depends_on "openjdk"
 
   def install
     # Remove Windows scripts
-    rm_rf Dir["bin/*.bat"]
+    rm_r(Dir["bin/*.bat"])
 
     # Install files
     prefix.install %w[NOTICE LICENSE RELEASE-NOTES RUNNING.txt]

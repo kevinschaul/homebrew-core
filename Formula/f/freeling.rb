@@ -4,16 +4,16 @@ class Freeling < Formula
   url "https://github.com/TALP-UPC/FreeLing/releases/download/4.2/FreeLing-src-4.2.1.tar.gz"
   sha256 "c672a6379142ac2e872741e7662f17eccd8230bffc680564d2843d87480f1600"
   license "AGPL-3.0-only"
-  revision 3
+  revision 5
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "c436822f827ecdb05423370a54d54bb07f45f84283bb3efba4908cd81bfc4f0f"
-    sha256 cellar: :any,                 arm64_ventura:  "cb0d50895b60adfda24f6d8a12dc85c22656b06a33bc2a20c76f8726a131599f"
-    sha256 cellar: :any,                 arm64_monterey: "280c67fe4d900d73e53e5a7e4b3c5a7101ac22c34f73dd6451f8e4fa4d45477e"
-    sha256 cellar: :any,                 sonoma:         "2b45e79ad7eda63b866b481aa3465441423b07adca55525776b9c870c14e2dcb"
-    sha256 cellar: :any,                 ventura:        "659234744bf618ccbbba0b5eda25455e1c8e774d7755e8bcd38e3ae7b14c124c"
-    sha256 cellar: :any,                 monterey:       "22ea2fb09bf2226529ae1998757ccd2ee7a871adfb67452536f35698f20a246e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6a6d604649fce1d2dfa81fc4056617cb5aab7d2bcb4bc44277709cbc8f67b38f"
+    sha256 cellar: :any,                 arm64_sonoma:   "ecfc8921a5a1ce53c49dc24850bca48bb1c8877cf1784e03b5cff1e3bf2de19c"
+    sha256 cellar: :any,                 arm64_ventura:  "801f54dc1051a01623a9503d4785d163125c46dfa1922fc08223d1aeeda4b4e7"
+    sha256 cellar: :any,                 arm64_monterey: "75f5cd437c1988cec1a7c596b372929cdefe083cfd30bfaa9a27afa8c0cd943c"
+    sha256 cellar: :any,                 sonoma:         "bc98a94ec428215d2a86dc80f8be616f6982293fab0ef530253607bbf32945fb"
+    sha256 cellar: :any,                 ventura:        "7bbf13e7ba9759332834e77f7f993788becb51b2a770969c444d6b76d235f41d"
+    sha256 cellar: :any,                 monterey:       "03fdbde545042f81bf8c7a4f18bd7d49bdf405e3625fa2a2c9598e6c72d12812"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c7d86da0c4348eaa3a2bd082920138234bbe0ef76fc238384a96144c67f3ef2d"
   end
 
   depends_on "cmake" => :build
@@ -24,6 +24,8 @@ class Freeling < Formula
   conflicts_with "eigen", because: "freeling ships its own copy of eigen"
   conflicts_with "foma", because: "freeling ships its own copy of foma"
   conflicts_with "hunspell", because: "both install 'analyze' binary"
+
+  conflicts_with "crfsuite", because: "both install `crfsuite` binaries"
 
   def install
     system "cmake", "-S", ".", "-B", "build", *std_cmake_args

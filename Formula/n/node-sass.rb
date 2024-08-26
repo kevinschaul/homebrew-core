@@ -1,20 +1,19 @@
 class NodeSass < Formula
-  require "language/node"
-
   desc "JavaScript implementation of a Sass compiler"
   homepage "https://github.com/sass/dart-sass"
-  url "https://registry.npmjs.org/sass/-/sass-1.75.0.tgz"
-  sha256 "ccc78004176c0cf431d98553920d3df4e8e97aa5e2b35c04691f9f770b44ba83"
+  url "https://registry.npmjs.org/sass/-/sass-1.77.8.tgz"
+  sha256 "27d467af0797116c5ecf21503bcfb4bed270724306846ea4fde360281f87af7b"
   license "MIT"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "704120006840ec3cb01e923935918da23b78ba3272e9c2c81efb1e78093f88bc"
+    rebuild 2
+    sha256 cellar: :any_skip_relocation, all: "4003f4e7f7153324e9297aaa334b394938092a19188a46742b7a5a8da6a45d98"
   end
 
   depends_on "node"
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
   end
 

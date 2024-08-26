@@ -4,28 +4,32 @@ class Osm2pgsql < Formula
   url "https://github.com/openstreetmap/osm2pgsql/archive/refs/tags/1.11.0.tar.gz"
   sha256 "6b46313813b816f15ce906c04cd4108bbb05362740e0a1a8889055f4e25977d2"
   license "GPL-2.0-only"
+  revision 2
   head "https://github.com/openstreetmap/osm2pgsql.git", branch: "master"
 
   bottle do
-    sha256 arm64_sonoma:   "98724fad7da02aabf3d1be53779806ccd18beb4c178afd365e9dba5745b50b50"
-    sha256 arm64_ventura:  "af879fd547cc43d4d8ecd4357be903fc96275aed727fda14a29347d25dadca60"
-    sha256 arm64_monterey: "cab73265911a6a15a1ae223a78355cd460e8d69887934a0d8d8597f83eb9e8ee"
-    sha256 sonoma:         "60cd245520c1256c0c2c3639fd2d583909a8e8614156e259f5f667d9b962970b"
-    sha256 ventura:        "f8a13291c73bafa5312936c2c9e2b788bb9f2ecbe8e71b22acf56a08476fc9c8"
-    sha256 monterey:       "c5b1a439f525c4c30b307db88c2b1b659030be40d6fdc860d622c1d1003f5dd5"
-    sha256 x86_64_linux:   "b90936c83143fea34b290dcb0c7a8f161f2e36cea7710be3761004458bbca9d7"
+    sha256 arm64_sonoma:   "a4e3b44ee3c1717a0eff88f03678d3fb88b2e7bbc1c0c1c0ac05ab8a1d605556"
+    sha256 arm64_ventura:  "999c603e48cd96f0c33b1db28ef55eef999b7c24484a09dcd5d198189eca72bd"
+    sha256 arm64_monterey: "42d4c065c00f567cc477c4b831cf5071c407297aa52076d7c0fc3b7ae32b1040"
+    sha256 sonoma:         "11e38c0e29beb114c08466e4dce0a52ab2fbcd364c7dcd175cb99d43009de7fc"
+    sha256 ventura:        "65ecc28dc6aa3d9592917be707643bdc96be5b58b877dcce2310ff828848c19e"
+    sha256 monterey:       "a8a9a207d9922f6dff4d4a422fdaca49292ae5cb5b4f8080d998cdfa9591effb"
+    sha256 x86_64_linux:   "984e9ebf513a1d2e5ce54d65ff6cbcd54902e60d897daffd07c8cdeaeef9c0aa"
   end
 
   depends_on "cmake" => :build
   depends_on "lua" => :build
   depends_on "nlohmann-json" => :build
+
   depends_on "boost"
   depends_on "geos"
   depends_on "libpq"
   depends_on "luajit"
   depends_on "proj"
 
+  uses_from_macos "bzip2"
   uses_from_macos "expat"
+  uses_from_macos "zlib"
 
   def install
     # This is essentially a CMake disrespects superenv problem

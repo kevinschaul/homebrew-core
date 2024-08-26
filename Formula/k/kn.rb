@@ -2,19 +2,19 @@ class Kn < Formula
   desc "Command-line interface for managing Knative Serving and Eventing resources"
   homepage "https://github.com/knative/client"
   url "https://github.com/knative/client.git",
-      tag:      "knative-v1.13.0",
-      revision: "543522a33edc79e056c09e4f9b78135e4fed5307"
+      tag:      "knative-v1.15.0",
+      revision: "59dd72a2407e6ce6d12e9df7a5bf4e87941a550e"
   license "Apache-2.0"
   head "https://github.com/knative/client.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "1ad9e97b0daa1c78969883c900a533baf6e599702b9bb28dfec4e8a5132be261"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1ad9e97b0daa1c78969883c900a533baf6e599702b9bb28dfec4e8a5132be261"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1ad9e97b0daa1c78969883c900a533baf6e599702b9bb28dfec4e8a5132be261"
-    sha256 cellar: :any_skip_relocation, sonoma:         "c9b4bbcfa3ac481854dfb22229667710509a0243f2a7051bb15df9dbc2832580"
-    sha256 cellar: :any_skip_relocation, ventura:        "c9b4bbcfa3ac481854dfb22229667710509a0243f2a7051bb15df9dbc2832580"
-    sha256 cellar: :any_skip_relocation, monterey:       "c9b4bbcfa3ac481854dfb22229667710509a0243f2a7051bb15df9dbc2832580"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b44b8ce2c8264a10884cac443b60bae6357ea6a069baaa870023b01c70d65d66"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "f214605c37805783058d0e347cba6118e33885c807d343af05cf4fdb09984cae"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "f214605c37805783058d0e347cba6118e33885c807d343af05cf4fdb09984cae"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "f214605c37805783058d0e347cba6118e33885c807d343af05cf4fdb09984cae"
+    sha256 cellar: :any_skip_relocation, sonoma:         "732bf96fdc66572095563d4e4b1a7d62fccb294d34c5af84fd8dc0a89363a406"
+    sha256 cellar: :any_skip_relocation, ventura:        "732bf96fdc66572095563d4e4b1a7d62fccb294d34c5af84fd8dc0a89363a406"
+    sha256 cellar: :any_skip_relocation, monterey:       "732bf96fdc66572095563d4e4b1a7d62fccb294d34c5af84fd8dc0a89363a406"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "daab235040f375a78e92474dfa2cee922e8f642afd1d5f8c8fbda5c0b8e5aeb7"
   end
 
   depends_on "go" => :build
@@ -34,7 +34,7 @@ class Kn < Formula
   end
 
   test do
-    system "#{bin}/kn", "service", "create", "foo",
+    system bin/"kn", "service", "create", "foo",
       "--namespace", "bar",
       "--image", "gcr.io/cloudrun/hello",
       "--target", "."

@@ -31,6 +31,8 @@ class Espeak < Formula
 
   depends_on "portaudio"
 
+  conflicts_with "espeak-ng", because: "both install `espeak` binaries"
+
   def install
     share.install "espeak-data"
     doc.install Dir["docs/*"]
@@ -61,6 +63,6 @@ class Espeak < Formula
   end
 
   test do
-    system "#{bin}/espeak", "This is a test for Espeak.", "-w", "out.wav"
+    system bin/"espeak", "This is a test for Espeak.", "-w", "out.wav"
   end
 end

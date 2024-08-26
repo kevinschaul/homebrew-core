@@ -7,7 +7,7 @@ class Tarlz < Formula
   license "GPL-2.0-or-later"
 
   livecheck do
-    url "http://download.savannah.gnu.org/releases/lzip/tarlz/"
+    url "https://download.savannah.gnu.org/releases/lzip/tarlz/"
     regex(/href=.*?tarlz[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
@@ -44,7 +44,7 @@ class Tarlz < Formula
     system bin/"tarlz", "-C", testpath, "-cf", lzipfilepath, "source"
     assert_predicate lzipfilepath, :exist?
 
-    system "#{bin}/tarlz", "-C", dpath, "-xf", lzipfilepath
+    system bin/"tarlz", "-C", dpath, "-xf", lzipfilepath
     assert_equal "TEST CONTENT", dtestfilepath.read
   end
 end

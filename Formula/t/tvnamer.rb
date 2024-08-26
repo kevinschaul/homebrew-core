@@ -6,36 +6,35 @@ class Tvnamer < Formula
   url "https://files.pythonhosted.org/packages/7e/07/688dc96a86cf212ffdb291d2f012bc4a41ee78324a2eda4c98f05f5e3062/tvnamer-3.0.4.tar.gz"
   sha256 "dc2ea8188df6ac56439343630466b874c57756dd0b2538dd8e7905048f425f04"
   license "Unlicense"
-  revision 5
+  revision 8
   head "https://github.com/dbr/tvnamer.git", branch: "master"
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4e672f525c0ebc2b890a6c1341a05d19b0cf17aa3698a39db3192f77bbc0a94a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0b154512029949f5e824231825c5507e99e585d8e21c5ab04cac622eed1f84f5"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "f6ebc6af65cb260e4db4e22f7ee11f9fdcc49bbc526854b36d7c1aefe7e3b47f"
-    sha256 cellar: :any_skip_relocation, sonoma:         "e15af8ab54bd5b37ee2e046b3d3922af6768ea58419e590fa45594138ab38a82"
-    sha256 cellar: :any_skip_relocation, ventura:        "fdc31d4cbb21340738dbe923238f5170d78830626409ca35540815f9369037ee"
-    sha256 cellar: :any_skip_relocation, monterey:       "8a7ffce09ece55aa0f76159f463360f8a8da903ba71f79237349e0ce0326be77"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fdb156ffafb08a5bbfeea58f69ca33f3014008e5a1add188d1177c7a829ccbb4"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "2052694f5a9c996975e767709d0e9e46217904a11729bc3f07b27f2ea6ce40de"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "c87efde56f3579b46e9134aa1bf0d0d6043e590980c8648502285287625dfdd3"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c87efde56f3579b46e9134aa1bf0d0d6043e590980c8648502285287625dfdd3"
+    sha256 cellar: :any_skip_relocation, sonoma:         "f1038d8194aa675271b4fdd35d5fadc2fd9e553e18fc7397579306aaa0b6c17f"
+    sha256 cellar: :any_skip_relocation, ventura:        "f1038d8194aa675271b4fdd35d5fadc2fd9e553e18fc7397579306aaa0b6c17f"
+    sha256 cellar: :any_skip_relocation, monterey:       "018758f7067a788b064c080b7b43b7e50459a46ab1f8680318f0dab5dde12d57"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ed381ee0b253ea88247a0ac8b7af69ae1451c5cdb1b6f67d65fe2b377a8600e1"
   end
 
   depends_on "certifi"
   depends_on "python@3.12"
 
   resource "charset-normalizer" do
-    url "https://files.pythonhosted.org/packages/cf/ac/e89b2f2f75f51e9859979b56d2ec162f7f893221975d244d8d5277aa9489/charset-normalizer-3.3.0.tar.gz"
-    sha256 "63563193aec44bce707e0c5ca64ff69fa72ed7cf34ce6e11d5127555756fd2f6"
+    url "https://files.pythonhosted.org/packages/63/09/c1bc53dab74b1816a00d8d030de5bf98f724c52c1635e07681d312f20be8/charset-normalizer-3.3.2.tar.gz"
+    sha256 "f30c3cb33b24454a82faecaf01b19c18562b1e89558fb6c56de4d9118a032fd5"
   end
 
   resource "idna" do
-    url "https://files.pythonhosted.org/packages/8b/e1/43beb3d38dba6cb420cefa297822eac205a277ab43e5ba5d5c46faf96438/idna-3.4.tar.gz"
-    sha256 "814f528e8dead7d329833b91c5faa87d60bf71824cd12a7530b5526063d02cb4"
+    url "https://files.pythonhosted.org/packages/21/ed/f86a79a07470cb07819390452f178b3bef1d375f2ec021ecfc709fc7cf07/idna-3.7.tar.gz"
+    sha256 "028ff3aadf0609c1fd278d8ea3089299412a7a8b9bd005dd08b9f8285bcb5cfc"
   end
 
   resource "requests" do
-    url "https://files.pythonhosted.org/packages/9d/be/10918a2eac4ae9f02f6cfe6414b7a155ccd8f7f9d4380d62fd5b955065c3/requests-2.31.0.tar.gz"
-    sha256 "942c5a758f98d790eaed1a29cb6eefc7ffb0d1cf7af05c3d2791656dbd6ad1e1"
+    url "https://files.pythonhosted.org/packages/63/70/2bf7780ad2d390a8d301ad0b550f1581eadbd9a20f896afe06353c2a2913/requests-2.32.3.tar.gz"
+    sha256 "55365417734eb18255590a9ff9eb97e9e1da868d4ccd6402399eaf68af20a760"
   end
 
   resource "requests-cache" do
@@ -49,8 +48,8 @@ class Tvnamer < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/af/47/b215df9f71b4fdba1025fc05a77db2ad243fa0926755a52c5e71659f4e3c/urllib3-2.0.7.tar.gz"
-    sha256 "c97dfde1f7bd43a71c8d2a58e369e9b2bf692d1334ea9f9cae55add7d0dd0f84"
+    url "https://files.pythonhosted.org/packages/43/6d/fa469ae21497ddc8bc93e5877702dca7cb8f911e337aca7452b5724f1bb6/urllib3-2.2.2.tar.gz"
+    sha256 "dd505485549a7a552833da5e6063639d0d177c04f23bc3864e41e5dc5f612168"
   end
 
   def install

@@ -2,8 +2,8 @@ class Clusterawsadm < Formula
   desc "Home for bootstrapping, AMI, EKS, and other helpers in Cluster API Provider AWS"
   homepage "https://cluster-api-aws.sigs.k8s.io/clusterawsadm/clusterawsadm.html"
   url "https://github.com/kubernetes-sigs/cluster-api-provider-aws.git",
-      tag:      "v2.4.2",
-      revision: "1c230091ea3db600e08f57bde25c862b29827777"
+      tag:      "v2.6.1",
+      revision: "6db1244a6aea9058cc0546dd7d2151fc2c624acc"
   license "Apache-2.0"
   head "https://github.com/kubernetes-sigs/cluster-api-provider-aws.git", branch: "main"
 
@@ -13,21 +13,18 @@ class Clusterawsadm < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "4002deb59b4657e80153f9141f9d72b9f8c20e26ed3671dc0beb6e25a224ae1b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bb63287815c312421872ddf9f6b4f1f1994eb831d6c78e2a2baeb28472231719"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e67070da1994ed96b7568758344012f168e2ae3d3c803ad8d886e18a20ca6053"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8559299e876b1cc4320007f452733b49835314bd2b73dd029b741290a17de529"
-    sha256 cellar: :any_skip_relocation, ventura:        "c10cef1873fe83555221339b7623b844f4f389254a944170d8c82cbb0b65d7cc"
-    sha256 cellar: :any_skip_relocation, monterey:       "5583fbc38035be7d0ba38313e49d35bc36dfbd8b46a7e8bc3110a245a813523c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4a3245675fc781467a9b9560166bca07436c2c0c48938624123f2fe56b47c93b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "0ea2f3f31b671072543b3fd72ab8d6b05e0eb833728858fbc52a069f2b73459b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "82e1e38258d578301e562d38fb62649af26b036323de82a035135725b441f169"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "5e5d63e3231b61c826917a1c5bf4ab770c25e8ed082876037a6f32119962be52"
+    sha256 cellar: :any_skip_relocation, sonoma:         "e3825c60499e13819e291ea477acba7ac26f2367b378241ade56f921913a6292"
+    sha256 cellar: :any_skip_relocation, ventura:        "cfed274b97c2296ee5ccb411ad74e4cf43be25f4d0c7bf4aea05fd07ae843327"
+    sha256 cellar: :any_skip_relocation, monterey:       "bbf0a2f3df4207629dacfb5e8fdbda54d077d2a3c6341e02489142854bc4b487"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e9f72f0c4f20e1761413f6ccd43da6d95a5a35ffa08992b530ffde7c4d4adead"
   end
 
   depends_on "go" => :build
 
   def install
-    # Don't dirty the git tree
-    rm_rf ".brew_home"
-
     system "make", "clusterawsadm"
     bin.install Dir["bin/*"]
 

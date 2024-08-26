@@ -1,23 +1,22 @@
 class Fizz < Formula
   desc "C++14 implementation of the TLS-1.3 standard"
   homepage "https://github.com/facebookincubator/fizz"
-  url "https://github.com/facebookincubator/fizz/releases/download/v2024.04.08.00/fizz-v2024.04.08.00.tar.gz"
-  sha256 "a4ae7c52dc5913257546ec8737c8ce05e72350c255ce7fedfff387186712c36b"
+  url "https://github.com/facebookincubator/fizz/releases/download/v2024.08.19.00/fizz-v2024.08.19.00.tar.gz"
+  sha256 "b4109dc353ddf99369e8866eac3c0d78e451ec3cd9ff4edf1faa8293480c9328"
   license "BSD-3-Clause"
   head "https://github.com/facebookincubator/fizz.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "68606bde2cdb6674598c36d6f1db17d7121562a011dc176258dd3387657ca28e"
-    sha256 cellar: :any,                 arm64_ventura:  "0509d296566ccd80e47c1c5137dcbe8cc861a63f83aecef2d29bf676b517ca26"
-    sha256 cellar: :any,                 arm64_monterey: "ab8fcf21654232a9d9b041bd1f074a9e7bbaeebb50c7e5f5e7ac71696d3b2caa"
-    sha256 cellar: :any,                 sonoma:         "5bf25e3d4762f392d63c8ff2b88b5a0a90857e3c4374457d479203040de6eb61"
-    sha256 cellar: :any,                 ventura:        "c88687a41d746cb00d68a7950f428f394cb16bb8c40a4da2d9c931c103c92d18"
-    sha256 cellar: :any,                 monterey:       "849d5ecf7112b63a1bda657fb1ebdba8dd83326f69be11f55963b163f675fde2"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e8e8f20800700c42b6f1f40401ebc9dd4e4ff2fc120e0478c140435cb091dc0c"
+    sha256 cellar: :any,                 arm64_sonoma:   "1347008eacccb5a27b2bea517a06c9ac792afc8faed100fbe8ff074230134b7c"
+    sha256 cellar: :any,                 arm64_ventura:  "55711df3a69c1b63b2cf677161c06382898df61e18c74a06570de4b1d5760bf8"
+    sha256 cellar: :any,                 arm64_monterey: "36cde90aef9fd037c30d22743b23a5ade2048997dbf3919c2701f9be788acaa9"
+    sha256 cellar: :any,                 sonoma:         "f7ae98b13152c8e238947d1e888c990712d92c6d32d46a436a43f0e7738fda07"
+    sha256 cellar: :any,                 ventura:        "9d9919456927d043351403e9094bde7bb3ffc8deba645ff3bf8ebb022a9f8616"
+    sha256 cellar: :any,                 monterey:       "41be660423e3e841af92783b2c40e3daf07c931c84dd8b05eca869158ce2003f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "39e2a910b9f00e10cfc560d37426482ed3e5ab4f9fea96751958b10b77cd45ad"
   end
 
   depends_on "cmake" => :build
-  depends_on "boost"
   depends_on "double-conversion"
   depends_on "fmt"
   depends_on "folly"
@@ -27,17 +26,21 @@ class Fizz < Formula
   depends_on "libsodium"
   depends_on "lz4"
   depends_on "openssl@3"
-  depends_on "snappy"
   depends_on "zstd"
+  uses_from_macos "zlib"
 
   fails_with gcc: "5"
 
   def install
-    system "cmake", "-S", "fizz", "-B", "build",
-                    "-DBUILD_TESTS=OFF",
-                    "-DBUILD_SHARED_LIBS=ON",
-                    "-DCMAKE_INSTALL_RPATH=#{rpath}",
-                    *std_cmake_args
+    args = ["-DBUILD_TESTS=OFF", "-DBUILD_SHARED_LIBS=ON", "-DCMAKE_INSTALL_RPATH=#{rpath}"]
+    if OS.mac?
+      # Prevent indirect linkage with boost and snappy.
+      args += [
+        "-DCMAKE_EXE_LINKER_FLAGS=-Wl,-dead_strip_dylibs",
+        "-DCMAKE_SHARED_LINKER_FLAGS=-Wl,-dead_strip_dylibs",
+      ]
+    end
+    system "cmake", "-S", "fizz", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
   end

@@ -1,8 +1,8 @@
 class ImagemagickAT6 < Formula
   desc "Tools and libraries to manipulate images in many formats"
   homepage "https://legacy.imagemagick.org/"
-  url "https://imagemagick.org/archive/releases/ImageMagick-6.9.13-8.tar.xz"
-  sha256 "4af82b0379c24c1efb1f0f6b41fb4646449db79a5d626f904e0a39891a3590fd"
+  url "https://imagemagick.org/archive/releases/ImageMagick-6.9.13-15.tar.xz"
+  sha256 "b1030fa56cb98ea30c2b978ec0d00a753e85edbb80fe4f5890e15efd34614c55"
   license "ImageMagick"
   head "https://github.com/imagemagick/imagemagick6.git", branch: "main"
 
@@ -12,19 +12,20 @@ class ImagemagickAT6 < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "248f7fe91776c72a4264b304924b75f49fbb6de71a2100cdfa38f91fd605f542"
-    sha256 arm64_ventura:  "60b88d74798768a5de5043ee43e9165875b2110814a73c5629ce08c22dff622f"
-    sha256 arm64_monterey: "a355b4d69a730ac1593791346f27279dcbba22d2cb6b4dcd5893935351448a76"
-    sha256 sonoma:         "44b9a513fd8490db3f4a219e372cae9e31b5dce34d36bc590ba0e21e91dbbbc3"
-    sha256 ventura:        "91e767ce6821227087d3cb4c66df1b93b1bda46493baf77109761f1bb0f1bbe8"
-    sha256 monterey:       "d2cc8d2bed89c8ff532d326dbc27fda76313ae0ca6dd142ffd537844795bfcd9"
-    sha256 x86_64_linux:   "7562dc256360d7e15136eb312e4a3127469a54086175080c6786e516bfeb6a83"
+    sha256 arm64_sonoma:   "2e7f4bc919583aa075ac58e9dc660a309a2336c9858664d02db21da2ba6e04e7"
+    sha256 arm64_ventura:  "3a967e8594016f5cad699b9ca846e0afd8c095029a646ee1ae99ab72a184f780"
+    sha256 arm64_monterey: "baca4ed7ac3971b64d84bc0af0fb340499233d2d312e0fddd3e1de48d12bf7d8"
+    sha256 sonoma:         "1b2d8995cb7538109793903f8bd51729ba1d1f49b95511486f36648da01d1cbe"
+    sha256 ventura:        "876bed9f042d3d12910af60ee50b867d96ae686cc7561753228b608f2f58dadf"
+    sha256 monterey:       "49fe1dc593b7168ddecdf0237a3f66bd84b7e23f691fc2aad803d9657859701f"
+    sha256 x86_64_linux:   "cc1d52234040ff3f21a8c11d6a4b652400d40aaafb61285a96b37a02bab8e6ef"
   end
 
   keg_only :versioned_formula
 
   depends_on "pkg-config" => :build
 
+  depends_on "fontconfig"
   depends_on "freetype"
   depends_on "ghostscript"
   depends_on "jpeg-turbo"
@@ -36,7 +37,9 @@ class ImagemagickAT6 < Formula
   depends_on "webp"
   depends_on "xz"
 
+  uses_from_macos "bzip2"
   uses_from_macos "libxml2"
+  uses_from_macos "zlib"
 
   skip_clean :la
 

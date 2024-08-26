@@ -1,19 +1,19 @@
 class Openjph < Formula
   desc "Open-source implementation of JPEG2000 Part-15 (or JPH or HTJ2K)"
   homepage "https://github.com/aous72/OpenJPH"
-  url "https://github.com/aous72/OpenJPH/archive/refs/tags/0.10.5.tar.gz"
-  sha256 "fc1e43fb1e8a097f883f5fe98794327eb96c4bdf2c53cb633537b061af4c99f3"
+  url "https://github.com/aous72/OpenJPH/archive/refs/tags/0.15.0.tar.gz"
+  sha256 "36601fbd3b4e1fe54eef5e6fa51ac0eca7be94b2a3d7c0967e3c8da66687ff2c"
   license "BSD-2-Clause"
   head "https://github.com/aous72/OpenJPH.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "fb79ae079a51db422be1a0275ecb7424b589086c5b3c7b1be634e9681d261fac"
-    sha256 cellar: :any,                 arm64_ventura:  "cff679464b6b5d5ad2bfcbef29749f27f96bd341909501739cc2a2454ce4d0c5"
-    sha256 cellar: :any,                 arm64_monterey: "05f0aad1b5080a55e9cdcf426a3a23f0cd27fac709387e69496843cbf4d59c5b"
-    sha256 cellar: :any,                 sonoma:         "6c192d50ea5ea8a2e3012522947b2e5265f6eb39bd78da1590863d55b210933b"
-    sha256 cellar: :any,                 ventura:        "7bcff268ca6a7768f6551ccf0bec0a929fc261151b45af0bfa47a07da93ac71f"
-    sha256 cellar: :any,                 monterey:       "bbbe72eb4e4b863bf4808a453500eaaa538c2b67d2d83baa5202f46bddf620d0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0554239581dd1d618a2a1b7d7d680279dccad49edd643f7e03989a886682f48f"
+    sha256 cellar: :any,                 arm64_sonoma:   "30c92c986c302abea2566fb8650332b9350ea9c1e545cdefdcc845e286950b98"
+    sha256 cellar: :any,                 arm64_ventura:  "e0e99c8a7c30d8bf35589afad352f70db9a745d676a0700f16f8a039ca1447ab"
+    sha256 cellar: :any,                 arm64_monterey: "b2622725fd82b5b74cf56c895136384c1f4e4d0a27c6914e86a819328e6ad4ab"
+    sha256 cellar: :any,                 sonoma:         "eed618cf53db8fc3f4fb6e6c2abbdaaee8998b79d51459a8f42fc7c3a7666ee9"
+    sha256 cellar: :any,                 ventura:        "cdcd26be914661a3c733a8a6dc5c288ccff3bff21bd249e5f70ccc6986fcc829"
+    sha256 cellar: :any,                 monterey:       "f51346472aa3f336c9e6c12e7b1c0164e884cd4897cd6cbffa4a3747b1569f2f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ecba32ca325dbcb3529e7576a6855ee7d1f1c10713af1853708ba785e29fc98e"
   end
 
   depends_on "cmake" => :build
@@ -25,7 +25,6 @@ class Openjph < Formula
     args = %W[
       -DCMAKE_INSTALL_RPATH=#{rpath}
     ]
-    args << "-DOJPH_DISABLE_INTEL_SIMD=ON" if Hardware::CPU.arm?
 
     system "cmake", "-S", ".", "-B", "build", *args, *std_cmake_args
     system "cmake", "--build", "build"

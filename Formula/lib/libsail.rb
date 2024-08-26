@@ -1,25 +1,25 @@
 class Libsail < Formula
   desc "Missing small and fast image decoding library for humans (not for machines)"
   homepage "https://github.com/HappySeaFox/sail"
-  url "https://github.com/HappySeaFox/sail/archive/refs/tags/v0.9.1.tar.gz"
-  sha256 "d02ce889b70d9e237b64806df26b044753e3edf3e87c8af42c32ec9968133a88"
+  url "https://github.com/HappySeaFox/sail/archive/refs/tags/v0.9.5.tar.gz"
+  sha256 "28c601c0399be1940710afc150b5836f8b3f5f6a35b98d7ac1467e62bc568e20"
   license "MIT"
-  revision 1
 
   bottle do
-    sha256 arm64_sonoma:   "e943d9c6942c0ca812182984528772888b9d23bac0a0a16ed34f05815f0d4c71"
-    sha256 arm64_ventura:  "cabc995e8be98553d783fdca095f109978de7b15134e283a47d7031087ecdeb5"
-    sha256 arm64_monterey: "d3dd160f8bfe5f7d2c2d4202982cc157b502b2cadab27b5c7d2dfeeff5c8ac4e"
-    sha256 sonoma:         "fa4ac696635cb4c44bdfa848942504f397762088dc9dcd8ef8931b43e6354775"
-    sha256 ventura:        "1d4bdd106c22543c52be7c857decbb588776c8ad60f0b83b6fffc5a64a8bbd6f"
-    sha256 monterey:       "572b22c5e1a5e77ca73f436b92a216be4a0d8ce5269a6ad816802b71697b892c"
-    sha256 x86_64_linux:   "8523f9b6d40ee4de4d61602a8a640035ce7de589f6df844905824d6fda927436"
+    sha256 arm64_sonoma:   "c86420d6da7bb3e21cdd16fbc977303fd51fce6a4c00561d0ad50384d53e0a87"
+    sha256 arm64_ventura:  "97c95b8280452783a11e74baeb98e2627ff563df6e1943fe5c91817d5a176a19"
+    sha256 arm64_monterey: "b44003a00fcfd9565e40cb60952cb4221a7a58c444a07f9d4affa3f09aac0fe1"
+    sha256 sonoma:         "5793e722d5bd98b75e39fc436cfc508bcdd13cd21095fb8aecf97a4cbcd502d7"
+    sha256 ventura:        "52208a3a89426e4400db98c74e90f9f38957cba42d4b567e35c9a208999655b7"
+    sha256 monterey:       "5b81f882c0e471da4b75870ac6f14bca6e7a61f5675d936600226f9f6f8c2c7f"
+    sha256 x86_64_linux:   "36e69476b19907cd6206224a1e508abcc5f8f1473499cc1794403c8366934c5e"
   end
 
   depends_on "cmake"      => :build
   depends_on "pkg-config" => [:build, :test]
-
+  depends_on "brotli"
   depends_on "giflib"
+  depends_on "highway"
   depends_on "jasper"
   depends_on "jpeg-turbo"
   depends_on "jpeg-xl"
@@ -43,7 +43,7 @@ class Libsail < Formula
   end
 
   test do
-    system "#{bin}/sail-imaging", "decode", test_fixtures("test.png")
+    system bin/"sail-imaging", "decode", test_fixtures("test.png")
 
     (testpath/"test.c").write <<~EOS
       #include <sail/sail.h>

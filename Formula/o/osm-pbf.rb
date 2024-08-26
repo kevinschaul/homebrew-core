@@ -4,19 +4,20 @@ class OsmPbf < Formula
   url "https://github.com/openstreetmap/OSM-binary/archive/refs/tags/v1.5.1.tar.gz"
   sha256 "183ad76c5905c7abd35d938824320ffb82d9ca8987796018f2da8380b51cdac2"
   license "LGPL-3.0-or-later"
-  revision 1
+  revision 5
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "6a7bc9685fbd4accdf521f0bbaf7e29a50fb429081c1bf7c0f073411d645e207"
-    sha256 cellar: :any,                 arm64_ventura:  "846994be8e4c0588d6b45048279bc8fdf799a96f501cdb5754583d986f6e10a0"
-    sha256 cellar: :any,                 arm64_monterey: "f11b0d8d6a3a5425a29dcd89103ade24d1fc60654de926ffe200ebc019d35801"
-    sha256 cellar: :any,                 sonoma:         "db6bf07c673a0cb80491d28dfee9c256e9ab37ca08dcfefffbeacb43e355fdae"
-    sha256 cellar: :any,                 ventura:        "07c8750b26853d5181397051861d69c65d5c44ed32cff18d0e69400cff53c5dd"
-    sha256 cellar: :any,                 monterey:       "bdfcb356ac1ddb180c48ed3c0361fcd266d7e735fb098b36bf1d69cfc0cc6c55"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "057faae51e178a236e2f2b514c8348117187932a1ad49967cfdb28ac6ecab1fd"
+    sha256 cellar: :any,                 arm64_sonoma:   "fea28450b4e589a230b2ad3bc9c09ebf82e00fbb42009eff7bd2e9107f406e28"
+    sha256 cellar: :any,                 arm64_ventura:  "5b7eb454f12ec4ca03e72a30df8c8a7c3bc97a3fc29dd0fe68a698483f1860d3"
+    sha256 cellar: :any,                 arm64_monterey: "ea59fb9471428385f823d3846680d4771575af781ecca0dca6f1be67df432367"
+    sha256 cellar: :any,                 sonoma:         "170d31effbbbcf7a8f1523d2279ab2315516e77b370d2cedceeb6b93e4f50f17"
+    sha256 cellar: :any,                 ventura:        "3291a80e6ae49dddb36c226d3bf480b6043f758e6f9eb20171c9010d9608eb7b"
+    sha256 cellar: :any,                 monterey:       "e339d429555f1df0bd8cf24caea2e42d850e91ec5f8df965e2462de3c35c173d"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "19883fe86c5fe064f3c70c8b18acd20d356465fe95548e8446664644eba9ed59"
   end
 
   depends_on "cmake" => :build
+  depends_on "abseil"
   depends_on "protobuf"
 
   uses_from_macos "zlib"

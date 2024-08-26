@@ -1,19 +1,18 @@
 class Freerdp < Formula
   desc "X11 implementation of the Remote Desktop Protocol (RDP)"
   homepage "https://www.freerdp.com/"
-  url "https://github.com/FreeRDP/FreeRDP/archive/refs/tags/3.4.0.tar.gz"
-  sha256 "0fe77b2b838f32598a11c63ff4a1c0482d5bac0da7753ce6446039349ed96b00"
+  url "https://github.com/FreeRDP/FreeRDP/archive/refs/tags/3.7.0.tar.gz"
+  sha256 "4c95055c2acd6916e4abc0b2168f201e0cec538bde4c39e25ed4b3bfdfefd047"
   license "Apache-2.0"
-  revision 1
 
   bottle do
-    sha256 arm64_sonoma:   "7f47ee773462c02b58529e04104393b9b8034fe7c4bf6c135b94821bcb4ae3a8"
-    sha256 arm64_ventura:  "f3f0940d002b34aaea55db776419691b9dffe8a457f530dab5563965706f578b"
-    sha256 arm64_monterey: "61c56c1ad9b23b6f6c8b670707705d5470aab873def7af618b24bfe6eb8fb28b"
-    sha256 sonoma:         "c0e94b8d1a1ba9522c8d4df57c4682830810f754c4cebd29b27c440d0e4ac871"
-    sha256 ventura:        "8757c9a143d563942b1671b1fe3ebd83da9a29375f3eeea6a31057b7ae1a9dfc"
-    sha256 monterey:       "8eda65163bf56433c0021c289848d0bb414bc503d5bcfd16397c3ada2c89b937"
-    sha256 x86_64_linux:   "16b3c35d2d7007a3c750631907a91647cd67444ae2bac4099ed150079fa038d6"
+    sha256 arm64_sonoma:   "d0ed18f61aa388a485d7795df52d7f5a107c64f23d4a7c1e273d1c0179452351"
+    sha256 arm64_ventura:  "145c97e9ca7ba17e9c2dd02ef3b89191f6c900e483bc40a40d250d1fe8404e18"
+    sha256 arm64_monterey: "3ace9f5aee797a526fd2da6f03335cfc5cd5c25f04cbfd224ae55f3d88f120e7"
+    sha256 sonoma:         "b6c7afc56a6a427e98a161e1a24393799050aa1a5582e8a3d1a019a2b53978a0"
+    sha256 ventura:        "f2bd25d4000ef79024d3bd1ae880963de399be1460add9d64f5a4080182d319f"
+    sha256 monterey:       "b2a6b7fa6aa524c6de7b271be2feee98aa54b6b258283672ce845fb32312c136"
+    sha256 x86_64_linux:   "34831086a2fee1933c892d3d9344967b28d6bffd439a457c3869b3f93ddac724"
   end
 
   head do
@@ -40,11 +39,14 @@ class Freerdp < Formula
   depends_on "pkcs11-helper"
 
   uses_from_macos "cups"
+  uses_from_macos "zlib"
 
   on_linux do
     depends_on "alsa-lib"
     depends_on "ffmpeg"
     depends_on "glib"
+    depends_on "icu4c"
+    depends_on "krb5"
     depends_on "libfuse"
     depends_on "systemd"
     depends_on "wayland"

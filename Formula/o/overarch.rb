@@ -1,12 +1,12 @@
 class Overarch < Formula
   desc "Data driven description of software architecture"
   homepage "https://github.com/soulspace-org/overarch"
-  url "https://github.com/soulspace-org/overarch/releases/download/v0.14.0/overarch.jar"
-  sha256 "7d573e0c044e63487cf9104142651e79beb849282916cf63dcb3a3256211bff0"
+  url "https://github.com/soulspace-org/overarch/releases/download/v0.30.0/overarch.jar"
+  sha256 "adb2328ce0e28cf36ce665cdfdb25b8be9902f475d8153d5c9c5b0a914856c5c"
   license "EPL-1.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, all: "bb81050adefd759c706a092a42444d4641b6117b9518d026dfe4b0e3545b1fb0"
+    sha256 cellar: :any_skip_relocation, all: "59eb0159f6afab4914a8dd8319e516170041b9d1ea2b444b9e95fb832f5d190c"
   end
 
   head do
@@ -56,9 +56,15 @@ class Overarch < Formula
       Model Warnings:
       {:unresolved-refs-in-views (), :unresolved-refs-in-relations ()}
       Model Information:
-      {:nodes {:person 1, :system 1},
-       :relations {:rel 1},
-       :views {:container-view 1, :context-view 1}}
+      {:nodes-by-type-count {:person 1, :system 1},
+       :nodes-count 2,
+       :views-by-type-count {:container-view 1, :context-view 1},
+       :relations-by-type-count {:rel 1},
+       :views-count 2,
+       :elements-by-namespace-count {nil 3},
+       :relations-count 1,
+       :synthetic-count {:normal 3},
+       :external-count {:internal 3}}
     EOS
     assert_equal expected, shell_output("#{bin}/overarch --model-dir=#{testpath} --model-info").chomp
   end

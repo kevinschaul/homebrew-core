@@ -1,37 +1,54 @@
 class Mlt < Formula
   desc "Author, manage, and run multitrack audio/video compositions"
   homepage "https://www.mltframework.org/"
-  url "https://github.com/mltframework/mlt/releases/download/v7.22.0/mlt-7.22.0.tar.gz"
-  sha256 "7cf4d9573a061d76902c6e12a2f09f5f461e7c697635233df82a63a3fe4d6da6"
+  url "https://github.com/mltframework/mlt/releases/download/v7.26.0/mlt-7.26.0.tar.gz"
+  sha256 "4af8d6eeaf6bdb13d813abd9e7f220f6b2f1e0fd943cc92ac0cf22775e767343"
   license "LGPL-2.1-only"
-  revision 2
   head "https://github.com/mltframework/mlt.git", branch: "master"
 
   bottle do
-    sha256 arm64_sonoma:   "1c50afea5caf1a7c36d103daa13d506c8980868df221d4d5bf31e9d9799e5935"
-    sha256 arm64_ventura:  "7cd71f648f6ac36803db3a470c73bca56c437b36bd9e5f2cbd4d611b4feaf5ed"
-    sha256 arm64_monterey: "44e866c91e3e455c3f8176a9ec2d5dc6e7dd0f11421a80fc96455d7e41e64241"
-    sha256 sonoma:         "7b37b96ea91ee8566fc3d42cff867a96d082408a53701278a418dc3df56d5770"
-    sha256 ventura:        "2ef37b0f8aca9e14bcf72d519ceb61e8c800f8d10c247855db2b572311f26b4e"
-    sha256 monterey:       "e1b6f180be87c8ebd89b4aa3f1902d1e7faf19e4aa41276f8aa2e83bb87687c1"
-    sha256 x86_64_linux:   "e51b56206214e1e4dd1375fb4d8cdd46a82ff8e8870d58f5ceb31115b99261c3"
+    sha256 arm64_sonoma:   "8e9bc3dc9a1e5e0e31cbb773903375427b6f731b0194602e33fd517e757aa7e6"
+    sha256 arm64_ventura:  "78a2ad75fd55e5f3c721318e78b7a70f7d3b2bd64b0d51f6197458d4a76e69a7"
+    sha256 arm64_monterey: "81b3945f33ae525d312b53054a3f6ebe2f240b2ed23d2e5bbd78d2a88fd8172f"
+    sha256 sonoma:         "0d081846f4dbbf9b1272a7a08044b0b46dbcd1ea17733d31d038807df4f748da"
+    sha256 ventura:        "f3253f5ed4fd4b7089309ca092eaf3f449bbcacd1d86afc7f0db27de1dde42e5"
+    sha256 monterey:       "800f11dcec34bd90c12d2fcdc69355f511f8aab46f0ba18db8d285fd7cf5c7e0"
+    sha256 x86_64_linux:   "f8696cbec063d6ba3f1db543e29e09c40566ccafd286c5d8bfee9f6decee3dcf"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "ffmpeg@6"
+
+  depends_on "ffmpeg"
   depends_on "fftw"
+  depends_on "fontconfig"
   depends_on "frei0r"
   depends_on "gdk-pixbuf"
+  depends_on "glib"
   depends_on "libdv"
   depends_on "libexif"
   depends_on "libsamplerate"
+  depends_on "libvidstab"
   depends_on "libvorbis"
   depends_on "opencv"
   depends_on "pango"
   depends_on "qt"
+  depends_on "rubberband"
   depends_on "sdl2"
   depends_on "sox"
+
+  uses_from_macos "libxml2"
+
+  on_macos do
+    depends_on "freetype"
+    depends_on "gettext"
+    depends_on "harfbuzz"
+  end
+
+  on_linux do
+    depends_on "alsa-lib"
+    depends_on "pulseaudio"
+  end
 
   fails_with gcc: "5"
 

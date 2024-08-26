@@ -1,27 +1,29 @@
 class Libmediainfo < Formula
   desc "Shared library for mediainfo"
   homepage "https://mediaarea.net/en/MediaInfo"
-  url "https://mediaarea.net/download/source/libmediainfo/24.03/libmediainfo_24.03.tar.xz"
-  sha256 "cc2bb44e407c890ab566934c56763918505ab58c14134b53f0d1da9eea242c8d"
+  url "https://mediaarea.net/download/source/libmediainfo/24.06/libmediainfo_24.06.tar.xz"
+  sha256 "0683f28a2475dc2417205ba528debccc407da4d9fa6516eb4b75b3ff7244e96e"
   license "BSD-2-Clause"
   head "https://github.com/MediaArea/MediaInfoLib.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "20cce2d764164d8dd5933d59bd7972dc391fef8ed8c59888b0b52d40eeeeb06a"
-    sha256 cellar: :any,                 arm64_ventura:  "2ddfb455dc2da4eb1c889229bd5c041dc8e8560adb83257735d07f2756d828e7"
-    sha256 cellar: :any,                 arm64_monterey: "6ffe22aae0fbf1c320d343eef6a70ce03632baf8f292e51fd9b08c2a3338e24e"
-    sha256 cellar: :any,                 sonoma:         "82b8bc5dd22067069e5e4d4d7460307c9e9e77b4fa7a7135e851bfded144e1e4"
-    sha256 cellar: :any,                 ventura:        "6414540a3435628255b7b9678696b7f9ce509244d66ff51d069b9674d57bb348"
-    sha256 cellar: :any,                 monterey:       "e594ad76d0b24a7a8a456c3e33aa0a3b0686d3eab0f819fc574a2aee8d18b113"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c2489f55bbf696389ca917282bf689b0416b24052f22996f4e647df3f718bc5c"
+    sha256 cellar: :any,                 arm64_sonoma:   "dfb00a983d0b7a1691aafef218b6417b82605ba291e0367b901b921a23e8d114"
+    sha256 cellar: :any,                 arm64_ventura:  "14266e079f02a52815d0938b9b84bbd2afda5f21a1441d0de3b85f716bed763d"
+    sha256 cellar: :any,                 arm64_monterey: "4c07f5c3894ea2f267b22ff4bc4b97faad97991a631a45a3e0f48e0c812b21f8"
+    sha256 cellar: :any,                 sonoma:         "3e7bd62f61786ac2bf331d385a151f84f72f4ba7f7946f931cc1d7a3965eaba4"
+    sha256 cellar: :any,                 ventura:        "1de25cceecfa0fa85dfe280e72b1c7701278bb3f59e510cf37c85774004b1eca"
+    sha256 cellar: :any,                 monterey:       "864a8a489f88391f991d3ddcf1d276f143545049970e32da6d1f8cc82d1e30ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c80fc58fa1bc432f8661261873bb431c25ef6c85fc6b46fe5eb665334c179879"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
+
   depends_on "libmms"
   depends_on "libzen"
 
   uses_from_macos "curl"
+  uses_from_macos "zlib"
 
   # These files used to be distributed as part of the media-info formula
   link_overwrite "include/MediaInfo/*"

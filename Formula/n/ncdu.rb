@@ -1,8 +1,8 @@
 class Ncdu < Formula
   desc "NCurses Disk Usage"
   homepage "https://dev.yorhel.nl/ncdu"
-  url "https://dev.yorhel.nl/download/ncdu-2.3.tar.gz"
-  sha256 "bbce1d1c70f1247671be4ea2135d8c52cd29a708af5ed62cecda7dc6a8000a3c"
+  url "https://dev.yorhel.nl/download/ncdu-2.5.tar.gz"
+  sha256 "7f49de25024abab1af1ff22b3b8542c0d158e018fe0e96074fd94b0e1e6d31a5"
   license "MIT"
   head "https://g.blicky.net/ncdu.git", branch: "zig"
 
@@ -12,15 +12,13 @@ class Ncdu < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "7c17a54a1c133f106b8ccc577241b977d76de394568b838107c5c397291b6759"
-    sha256 cellar: :any,                 arm64_ventura:  "be4225e9e3a60fc201015d0b347b4d6aa91716ec87b48329f5a3fb64201aaede"
-    sha256 cellar: :any,                 arm64_monterey: "b9811c7444bc9803111b4473484019a83da067071e7cfbd0e8dfb53970a57098"
-    sha256 cellar: :any,                 arm64_big_sur:  "d6e1ccd31a5f1f1f6957743f625444e3cc6328be9831eb0f618c98a6f314e2ad"
-    sha256 cellar: :any,                 sonoma:         "690b4e39230bf4639b770f7aa7156a80da6831a51d5344dc177bb23bc04002a1"
-    sha256 cellar: :any,                 ventura:        "d7904cf9cf2980d12c5db4f69c9d19b0533fab76190de548af0c69012f1eafd9"
-    sha256 cellar: :any,                 monterey:       "c0aeb8ca6c14b2475bd5a60a5b8fc08ba8def91abad411b32a06c88a85597fef"
-    sha256 cellar: :any,                 big_sur:        "739dd2be415a7edaff71ab49ac6c5afb830dba6d66ceffe6f54b7683d0e5dfaa"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a6619212d336a2472d712eebc2c44239164ca8253fef4c09ec5268493ba41568"
+    sha256 cellar: :any,                 arm64_sonoma:   "1cba8bbb35dc36a9686ff4182b395969cf1de154652b2d6134c2836e531b169a"
+    sha256 cellar: :any,                 arm64_ventura:  "8478d4058dc184f43368ca19c32aecf5a7be3a4f7175fb41a59f5202f170288f"
+    sha256 cellar: :any,                 arm64_monterey: "4abb7c99e405c3b4d7ef4179e60d7c4ab518a307df825db3dd60859ea3ae7d55"
+    sha256 cellar: :any,                 sonoma:         "520c686c473bc3b7b8dc780449d463dc31f79f981e493e06fbe862c8c9fa2c0b"
+    sha256 cellar: :any,                 ventura:        "b56d7f67705f119b611268352a7befa25bf464187644fbafe427526d31019418"
+    sha256 cellar: :any,                 monterey:       "bcd6481c81cae50583faad16cd085541abfad8b592bca93ad4a3d7b0ed99bd00"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bb76582ce7c7cd84b8b994839d50672c2c14db35ca06469a5d09215bdfb6a3dd"
   end
 
   depends_on "pkg-config" => :build
@@ -36,7 +34,7 @@ class Ncdu < Formula
     else Hardware.oldest_cpu
     end
 
-    args = %W[--prefix #{prefix} -Doptimize=ReleaseFast]
+    args = %W[--prefix #{prefix} --release=fast]
     args << "-Dpie=true" if OS.mac?
     args << "-Dcpu=#{cpu}" if build.bottle?
 

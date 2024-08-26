@@ -5,7 +5,7 @@ class Redex < Formula
   desc "Bytecode optimizer for Android apps"
   homepage "https://github.com/facebook/redex"
   license "MIT"
-  revision 14
+  revision 16
   head "https://github.com/facebook/redex.git", branch: "main"
 
   stable do
@@ -39,14 +39,13 @@ class Redex < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any,                 arm64_sonoma:   "9dd91483a25caf92fc2e36d32eca8cd1483c01aa9ff876f11917a6dfbfbec962"
-    sha256 cellar: :any,                 arm64_ventura:  "a588f1507bdb4b595d3cdb0d7509c56079b149105e7ec0c0da0e1d713c1535b9"
-    sha256 cellar: :any,                 arm64_monterey: "8cc00660697e9e8855f0ca87364cdcb00920a082c75c97c94e9f617f0bc31453"
-    sha256 cellar: :any,                 sonoma:         "ae4dae76eed4eccb10f534fe53c9822fc3ecba34aae9264e78f2b71f934002aa"
-    sha256 cellar: :any,                 ventura:        "093e12fbe2247a53c56c7b59614b189e410feffaebd3d7b45d6ae0d745588d99"
-    sha256 cellar: :any,                 monterey:       "c1bf58356b2c5bd99af681490b1256b7c37c2fd4f0fc26c1eb8a969412000934"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b49bbf4cf180a734e8c55bcf0a8d5baf990f7b760dfb27a49e34e223b223057c"
+    sha256 cellar: :any,                 arm64_sonoma:   "fe3714c36afcf0c9e58a5cd46382ae4a14e67f4f8790c268c2a1674d556b27c0"
+    sha256 cellar: :any,                 arm64_ventura:  "529fc82ebe22b2e8f676a2bf109414e97958a5ead5afd3f1613aa3a4a8d7eefc"
+    sha256 cellar: :any,                 arm64_monterey: "20e4de488f36f7ccb487af85e9758c8fce4a44b91617c3e4b2b25aca399fb037"
+    sha256 cellar: :any,                 sonoma:         "ba7736a0e49a03f754eccd702f3886d384e62b601c05ca880892536f3c55892a"
+    sha256 cellar: :any,                 ventura:        "4c9814eec58b1091b9a29cbf420ebcb5222ec144197fca86527f3b88a2609d2c"
+    sha256 cellar: :any,                 monterey:       "0eab365f8846c72ec51b5c30f04c0e46024f1e00418782cca4eb1141af710b60"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0bbf8826f630e5a912910272c8e062c3f97ac997871dc9d1260bf1902e3c07c9"
   end
 
   depends_on "autoconf" => :build
@@ -69,6 +68,9 @@ class Redex < Formula
       # Work around missing include. Fixed upstream but code has been refactored
       # Ref: https://github.com/facebook/redex/commit/3f4cde379da4657068a0dbe85c03df558854c31c
       ENV.append "CXXFLAGS", "-include set"
+      # Help detect Boost::Filesystem and Boost::System during ./configure.
+      # TODO: Remove in the next release.
+      ENV.cxx11
     end
 
     venv = virtualenv_create(libexec, "python3.12")

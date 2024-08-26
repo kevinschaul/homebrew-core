@@ -1,19 +1,24 @@
 class Greenmask < Formula
   desc "PostgreSQL dump and obfuscation tool"
   homepage "https://greenmask.io"
-  url "https://github.com/GreenmaskIO/greenmask/archive/refs/tags/v0.1.9.tar.gz"
-  sha256 "a6dc6978620b6b19796ee8ad37f7ba8123c2b9ec4450e7e1ce69dbaea6b0e926"
+  url "https://github.com/GreenmaskIO/greenmask/archive/refs/tags/v0.1.14.tar.gz"
+  sha256 "b5d7323d9dde7e4fcd288c461f6454b6e0e4e2b09eb62619cb967bf14971c990"
   license "Apache-2.0"
   head "https://github.com/GreenmaskIO/greenmask.git", branch: "main"
 
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
+  end
+
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b6f8cfb46733206a15c94dc80de40dc7a98315d01cd85c88cae046cef4d4d1d5"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "98d29170437db4f4d01e9e6435c2452fc24d0743bbb4e5fb489088fc77a59f9f"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "29fe27dd2be7d413ec984d9df1f81f2d83cc25669c9064a649f908f80c169346"
-    sha256 cellar: :any_skip_relocation, sonoma:         "68367ff529284a6a64a50d817f5c05f03cd57ddc11189f95ddab4fd265398c6e"
-    sha256 cellar: :any_skip_relocation, ventura:        "6f0c6197d59e6f120e29502baad85a465f624a3662f8440fc43ee2e66976b92e"
-    sha256 cellar: :any_skip_relocation, monterey:       "7e519a47aa91292607967f6cca7b515f01bba2abeb712f7025d09a14440cd392"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "146c5110ddf5f4075d8ebc6decc88e04b22d215cd259a2e75db1e2b2e43fb5d6"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "25bcd6ff301712eff33ede67836cca16265b96b3b3047d7b4a1580fa0b845e5c"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "da9353cc79191b3dfa604deb72b9e4a5b4544f43ceba0ba0657f290ecf31b80b"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d0b4321544ba5d050aff079a2112b758f877bc25084253fbd233fa8ef6943f4f"
+    sha256 cellar: :any_skip_relocation, sonoma:         "91c54d885a31b0bb023055a4d4b4adc2952d4f6be169a46daf43bf8b25fa859f"
+    sha256 cellar: :any_skip_relocation, ventura:        "4cc11e565ab57dbab9ccd14c182630801edaceb76ed5978f516600f9cdc67e52"
+    sha256 cellar: :any_skip_relocation, monterey:       "490accb892eaf2e620adc6a24255e6f6625d33e93485512eebb9fddd01f3b84e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "85a81586265d8353a4259e5d53a74cbd7a9b458f063fa08da3fc53cb64eb1b80"
   end
 
   depends_on "go" => :build

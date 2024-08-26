@@ -1,18 +1,18 @@
 class Kwok < Formula
   desc "Kubernetes WithOut Kubelet - Simulates thousands of Nodes and Clusters"
   homepage "https://kwok.sigs.k8s.io"
-  url "https://github.com/kubernetes-sigs/kwok/archive/refs/tags/v0.5.1.tar.gz"
-  sha256 "b35fc2d99ca4e63c024169238cfae098ef55263804133d721d30a8dbcacbe7d6"
+  url "https://github.com/kubernetes-sigs/kwok/archive/refs/tags/v0.6.0.tar.gz"
+  sha256 "4973521fc179ff2edad75c12d7862818e9cc0ae97eb85c4c160b67f9af1378ce"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "06fb9cb9aeb140d2fb65008517248e900a6f48be4a7e9f852dd9acc9c7773c3d"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "01b7adc0d1ce6569d2d23d26fa343ecbdab1b623e039b4ba6c27464134a0a8ba"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "36b2b83779e4d645142120b23cccc9222935f81f42cbab28a50563877aad272a"
-    sha256 cellar: :any_skip_relocation, sonoma:         "812cef46628bdc5b15108c44ffcbf75693ae114ac0c242ae359e2e65f24bc231"
-    sha256 cellar: :any_skip_relocation, ventura:        "eab0c7dd6750a7b986ad942353ce320f83a1b2afa6358507cdfa0c0cec88d60b"
-    sha256 cellar: :any_skip_relocation, monterey:       "aa3d89ac2bd83d454bb5db537b64931245c168f450e22582ec6264bf92194129"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "32736667ece33c43448faa196faf5711924b35899df213666250910d6c3d8ed2"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "a6139018d596f2b3a6eee4ade78527ac2beab6c76ab00a3f59a76e533db3da6f"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "fe7b96b2c2b158b0a067693230bd8860f22229db4161f732a3446fcfa9ee5e15"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "fca9403e495eacec9197b9640187d10d541f4cd8c7816e2beb62af295854f8c8"
+    sha256 cellar: :any_skip_relocation, sonoma:         "352d40f2d801b7a237cfb8825b41fdb35a1dae8e9cfe6901e86ff496d6b57d8c"
+    sha256 cellar: :any_skip_relocation, ventura:        "63fbdc0ab304f8e1530d5bb09b7b1fe62edfae52a15da2697dc7ab6fdd0f2f1a"
+    sha256 cellar: :any_skip_relocation, monterey:       "d52f43bebc002a0c091072e4c7c40a8661e99e6e2132569f6a90116260ac2418"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9f6c218e3bde8e75ce945cf7e1793e984e35a66e877b86c36e50887961f36b23"
   end
 
   depends_on "go" => :build
@@ -35,7 +35,7 @@ class Kwok < Formula
     assert_match version.to_s, shell_output("#{bin}/kwokctl --version")
 
     create_cluster_cmd = "#{bin}/kwokctl --name=brew-test create cluster 2>&1"
-    output = OS.mac? ? shell_output(create_cluster_cmd, 1) : shell_output(create_cluster_cmd)
+    output = shell_output(create_cluster_cmd)
     assert_match "Cluster is creating", output
   end
 end

@@ -3,7 +3,7 @@ class Halibut < Formula
   homepage "https://www.chiark.greenend.org.uk/~sgtatham/halibut/"
   url "https://www.chiark.greenend.org.uk/~sgtatham/halibut/halibut-1.3/halibut-1.3.tar.gz"
   sha256 "aaa0f7696f17f74f42d97d0880aa088f5d68ed3079f3ed15d13b6e74909d3132"
-  license all_of: ["MIT", :cannot_represent]
+  license all_of: ["MIT", "APAFML"]
   head "https://git.tartarus.org/simon/halibut.git", branch: "main"
 
   livecheck do
@@ -34,7 +34,7 @@ class Halibut < Formula
 
   test do
     (testpath/"sample.but").write("Hello, world!")
-    system "#{bin}/halibut", "--html=sample.html", "sample.but"
+    system bin/"halibut", "--html=sample.html", "sample.but"
 
     assert_match("<p>\nHello, world!\n</p>",
                  (testpath/"sample.html").read)

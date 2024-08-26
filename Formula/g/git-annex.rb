@@ -1,32 +1,32 @@
 class GitAnnex < Formula
   desc "Manage files with git without checking in file contents"
   homepage "https://git-annex.branchable.com/"
-  url "https://hackage.haskell.org/package/git-annex-10.20240227/git-annex-10.20240227.tar.gz"
-  sha256 "18db118fbd0da08927f810080980e9189fe6c91b40c80d7de15722ad5d37fe1e"
+  url "https://hackage.haskell.org/package/git-annex-10.20240808/git-annex-10.20240808.tar.gz"
+  sha256 "c5b5abf695d9b95762c5aa29de87ef183800678191456d27c51fed79089e2315"
   license all_of: ["AGPL-3.0-or-later", "BSD-2-Clause", "BSD-3-Clause",
                    "GPL-2.0-only", "GPL-3.0-or-later", "MIT"]
   head "git://git-annex.branchable.com/", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "8318d2548028d62b247a5900f985c243223c557a802da9712fd7f76eb5df85fd"
-    sha256 cellar: :any,                 arm64_ventura:  "f360ad3b0686e8cfc07b9cf49d15b3215018b4ea6dce9b726fbc47bbf07cf146"
-    sha256 cellar: :any,                 arm64_monterey: "8c27862f0fb81c50aceee8287c0b271a085ab67e8f0ab521caf2c9f44dd5f200"
-    sha256 cellar: :any,                 sonoma:         "a9cd96feb01545efccb2a2281b49b5931a60162e6e49f2c4a6f0129b027f0770"
-    sha256 cellar: :any,                 ventura:        "6cdb1e33c187196e8d6e9df79268430981c8e54fd356e39368c5289702b14c22"
-    sha256 cellar: :any,                 monterey:       "01cca9c6d8db018fd85abdfc446cae3325048b7b7edfc5d3154dfb98c8a7c985"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5b016fc86c4434ccb7711588e6111d550703164e5fb466a3fbf84e096ad3b86c"
+    sha256 cellar: :any,                 arm64_sonoma:   "4b73a83093b686865860bbc96aedca8e4dd8aa466524a4890ce91df1bd6e7c97"
+    sha256 cellar: :any,                 arm64_ventura:  "7d755c50e923531dd43c411703a16097211d7b3fb1c0e37cff6109dc5571c7eb"
+    sha256 cellar: :any,                 arm64_monterey: "2666b3ca9caba231ce84c9b59ce5bcaff15d383fcdd686e493903ab6a429cb95"
+    sha256 cellar: :any,                 sonoma:         "6ca922d9b3b1b7621dc57b6d2008867a5e060348d86a10046d10d45c24772813"
+    sha256 cellar: :any,                 ventura:        "ea5500fb0e9404e01c6db12efd6f98bfac60aaea1721ac3570cdf4613916ed08"
+    sha256 cellar: :any,                 monterey:       "c606b3aedd1287e6dd3a813626398daeaef41cf00f1fc27db673ae054be08990"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "8f359aac5a6e1a6d112ea4a68e4b64f91a9a168466b0b82ac33f383da71cff98"
   end
 
   depends_on "cabal-install" => :build
-  depends_on "ghc@9.6" => :build
+  depends_on "ghc@9.8" => :build
   depends_on "pkg-config" => :build
   depends_on "libmagic"
 
+  uses_from_macos "zlib"
+
   def install
-    # https://github.com/aristidb/aws/issues/288
-    cabal_args = std_cabal_v2_args + ["--constraint=attoparsec-aeson<2.2.0.0"]
     system "cabal", "v2-update"
-    system "cabal", "v2-install", *cabal_args, "--flags=+S3"
+    system "cabal", "v2-install", *std_cabal_v2_args, "--flags=+S3"
     bin.install_symlink "git-annex" => "git-annex-shell"
   end
 
@@ -49,7 +49,7 @@ class GitAnnex < Formula
     # make sure the various remotes were built
     assert_match shell_output("git annex version | grep 'remote types:'").chomp,
                  "remote types: git gcrypt p2p S3 bup directory rsync web bittorrent " \
-                 "webdav adb tahoe glacier ddar git-lfs httpalso borg hook external"
+                 "webdav adb tahoe glacier ddar git-lfs httpalso borg rclone hook external"
 
     # The steps below are necessary to ensure the directory cleanly deletes.
     # git-annex guards files in a way that isn't entirely friendly of automatically

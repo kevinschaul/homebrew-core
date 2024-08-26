@@ -1,8 +1,8 @@
 class Soplex < Formula
   desc "Optimization package for solving linear programming problems (LPs)"
   homepage "https://soplex.zib.de/"
-  url "https://soplex.zib.de/download/release/soplex-7.0.0.0.tgz"
-  sha256 "0fc007ef4f9a4686d119d0d2ea5f6df13903f65cb3afb22e5b5ec16054037df8"
+  url "https://soplex.zib.de/download/release/soplex-7.1.0.0.tgz"
+  sha256 "64916fde04e8d6bc8613e8703818fbce5103ac56610df86f569eaf9bad3f813d"
   license "Apache-2.0"
 
   livecheck do
@@ -11,13 +11,13 @@ class Soplex < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "2824d050a8a49639fe9da5e252390883b91b98399e0d4c17dd3223e97e9a36cb"
-    sha256 cellar: :any,                 arm64_ventura:  "9239b621c59f38a88df0a2147e49a0bc603ca2161ff0c7332e051f89579f69a1"
-    sha256 cellar: :any,                 arm64_monterey: "c8bf17667f01645b301a348019e5c7a0f2bc3087c48115116013f26edfdf3e67"
-    sha256 cellar: :any,                 sonoma:         "07e01170bb7e0293d71f797b038a44bd6afb76fb4aa8ca20ab3ccd4e447c0765"
-    sha256 cellar: :any,                 ventura:        "5dbf43a7aa679a983fe1244522fbbe13e15f60dc02d40b1a10a441809d330825"
-    sha256 cellar: :any,                 monterey:       "bcaf336ea2f6c1480d061509a8a19aff9cff08a61997c8ab6a73c8ff10bbc2d0"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "797695041908e965a62c6e764f1cf9be5767614fa0becb7f63ea5fb2595a9ae7"
+    sha256 cellar: :any,                 arm64_sonoma:   "e7fbfbf3e6de73e99af5542559db81b740c3bb7d29bb9134b2d46c7be6f74d9e"
+    sha256 cellar: :any,                 arm64_ventura:  "29986777cd852a19f24dbbbd31070e11a7c46b1bcbe82f1e39c1540d12a61649"
+    sha256 cellar: :any,                 arm64_monterey: "e494d975f26884d2c9e2af9f262f0db8a73cfd400c6b5c5459803ab996abf058"
+    sha256 cellar: :any,                 sonoma:         "e0b1614ca915cb18dd5787457fe9f44706b8277cc03895620047dc91d8807032"
+    sha256 cellar: :any,                 ventura:        "618a17fd1e2f73f452728d72dc1a7963993b37a3d778196c17d552ced919ce48"
+    sha256 cellar: :any,                 monterey:       "2f5ef1635df145550c9af5d1172acd529736cefbd475fe96f8fe1335c8b39251"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6c6e817fb54f69b301efa2efd8fdec9a2af15ac3ec76465cf87bea5a211c0c83"
   end
 
   depends_on "cmake" => :build

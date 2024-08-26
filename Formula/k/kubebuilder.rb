@@ -2,19 +2,19 @@ class Kubebuilder < Formula
   desc "SDK for building Kubernetes APIs using CRDs"
   homepage "https://github.com/kubernetes-sigs/kubebuilder"
   url "https://github.com/kubernetes-sigs/kubebuilder.git",
-      tag:      "v3.14.1",
-      revision: "cc338d729c2a578ae491860e3eb71e63864b1390"
+      tag:      "v4.2.0",
+      revision: "c7cde5172dc8271267dbf2899e65ef6f9d30f91e"
   license "Apache-2.0"
   head "https://github.com/kubernetes-sigs/kubebuilder.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "b72b5306d145aa698176f6e5ded3a45bb48e102e96ad2294a4882a066a19b9e6"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "102422ae2c6127dc4119d7d319cad138af65c81d032dc50926847e20b0b68212"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "1385f8169a5c6726c212c6462e7ee570c8877b6ff7711bb00920e657d27575b8"
-    sha256 cellar: :any_skip_relocation, sonoma:         "c667788b88ffd34a80d092e48490f3051d3938435dcdc5bb0d7bacf9c055d954"
-    sha256 cellar: :any_skip_relocation, ventura:        "3e300d21e54fefb78f739768da4acfb43c11b3e3e8b1eeb479bce9e0f7756aef"
-    sha256 cellar: :any_skip_relocation, monterey:       "6774c35beed9c997b39e93ff3df5039c312b593ef2cad0a2e99ae649f70a6c7b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "6277805b813539430ea0946be8c93c3da7f5cf32b031f6ce3cfc701055d83e1a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "73a57fd8b5d0deeb081bf01ef6753ba8e6231d0bb80aafb824efbbf00f0625f9"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "73a57fd8b5d0deeb081bf01ef6753ba8e6231d0bb80aafb824efbbf00f0625f9"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "73a57fd8b5d0deeb081bf01ef6753ba8e6231d0bb80aafb824efbbf00f0625f9"
+    sha256 cellar: :any_skip_relocation, sonoma:         "fa236123d554acf17ec671b3053b8eb5e753cd1b0cf94116baeb608d6d32ed90"
+    sha256 cellar: :any_skip_relocation, ventura:        "fa236123d554acf17ec671b3053b8eb5e753cd1b0cf94116baeb608d6d32ed90"
+    sha256 cellar: :any_skip_relocation, monterey:       "fa236123d554acf17ec671b3053b8eb5e753cd1b0cf94116baeb608d6d32ed90"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c0512a456e48b127621cb99afdf314f30e15034550c0a04381eaea509329f124"
   end
 
   depends_on "go"
@@ -35,12 +35,23 @@ class Kubebuilder < Formula
   end
 
   test do
-    assert_match "KubeBuilderVersion:\"#{version}\"", shell_output("#{bin}/kubebuilder version 2>&1")
     mkdir "test" do
       system "go", "mod", "init", "example.com"
-      system "#{bin}/kubebuilder", "init",
-        "--plugins", "go/v3", "--project-version", "3",
-        "--skip-go-version-check"
+      system bin/"kubebuilder", "init",
+                 "--plugins", "go.kubebuilder.io/v4",
+                 "--project-version", "3",
+                 "--skip-go-version-check"
     end
+
+    assert_match <<~EOS, (testpath/"test/PROJECT").read
+      domain: my.domain
+      layout:
+      - go.kubebuilder.io/v4
+      projectName: test
+      repo: example.com
+      version: "3"
+    EOS
+
+    assert_match version.to_s, shell_output("#{bin}/kubebuilder version")
   end
 end

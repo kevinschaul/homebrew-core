@@ -1,8 +1,8 @@
 class GnupgAT22 < Formula
   desc "GNU Pretty Good Privacy (PGP) package"
   homepage "https://gnupg.org/"
-  url "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.42.tar.bz2"
-  sha256 "9189fbd4ec83ad243a4e499d5cb7fe72e4532176817e5ea880ed36a71dd82557"
+  url "https://gnupg.org/ftp/gcrypt/gnupg/gnupg-2.2.44.tar.bz2"
+  sha256 "735b8b3e6d2330f66ab98336b060d5852a1a67cb2bc47ec7d1e5411577a8cadd"
   license "GPL-3.0-or-later"
 
   livecheck do
@@ -11,14 +11,13 @@ class GnupgAT22 < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "83c9b7ba74cb3ed47c5d7775f44e3cce574bc00ac32b2852c0e80b9be9055f4e"
-    sha256 arm64_ventura:  "e58689943ae78a9483d9ab3a0cc4f7a3a8b6111276617b5d627794c16a2f6aec"
-    sha256 arm64_monterey: "a733eb7a0f524ef05ee61ad23748afe7c327dfec660fe4be326806927b6a78c2"
-    sha256 sonoma:         "da511f4778f0ff8032c4a0bfa071a3ed0f10dceb96bae18c3998e00d2f48486c"
-    sha256 ventura:        "4cd401d4239527176412d2a10b51633e96ec73f58ce56610afc0b1d9668f3daa"
-    sha256 monterey:       "11e00240af349e7cbf4e591196bc13c3f71359373d30b65c9eabac1316f6033c"
-    sha256 x86_64_linux:   "5fe04257ce8fced178d0e8d49cb8a9acf41cb1b95aee30da357d01f6bece6cb3"
+    sha256 arm64_sonoma:   "a59f561a3a6fc4255ff5b78474a8eb8a0e2a85acd2324eea26b8d5825189f1d9"
+    sha256 arm64_ventura:  "3a627f6f953e005d0dfa7849553a0b446f174c19f2efa5a28289a2e76112cd30"
+    sha256 arm64_monterey: "a8902f2057eb44a5943166494dba399814f45fc8ff0681b1e15000a0378123aa"
+    sha256 sonoma:         "27d7cb6a0b415c83a1be4eb618f907d862ed5ff6201be03866255ff9f211c9b1"
+    sha256 ventura:        "06ab494804b1da7784aee8a385821b30e583ac257b8c4c89827db941ef285d54"
+    sha256 monterey:       "378c0adda9293a26265a25e08a176e39ff0ef1f6ca72e85650063e1c684dc8fc"
+    sha256 x86_64_linux:   "d6aa79c116ce67e2476a5fd3c95a7fa630f1ea8904ffac69d3418e6353a4ef8e"
   end
 
   keg_only :versioned_formula

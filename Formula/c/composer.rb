@@ -1,8 +1,8 @@
 class Composer < Formula
   desc "Dependency Manager for PHP"
   homepage "https://getcomposer.org/"
-  url "https://getcomposer.org/download/2.7.2/composer.phar"
-  sha256 "049b8e0ed9f264d770a0510858cffbc35401510759edc9a784b3a5c6e020bcac"
+  url "https://getcomposer.org/download/2.7.8/composer.phar"
+  sha256 "3da35dc2abb99d8ef3fdb1dec3166c39189f7cb29974a225e7bbca04c1b2c6e0"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,13 @@ class Composer < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "bf679c49688940af731c0a07fb4cbbd148fe6973762e2c1fd499820e59c6be1e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "bf679c49688940af731c0a07fb4cbbd148fe6973762e2c1fd499820e59c6be1e"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bf679c49688940af731c0a07fb4cbbd148fe6973762e2c1fd499820e59c6be1e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "234eff3b59a2705815b11bc2768ea8bb7e877d94adf9815e084a1237f70dc2bb"
-    sha256 cellar: :any_skip_relocation, ventura:        "234eff3b59a2705815b11bc2768ea8bb7e877d94adf9815e084a1237f70dc2bb"
-    sha256 cellar: :any_skip_relocation, monterey:       "234eff3b59a2705815b11bc2768ea8bb7e877d94adf9815e084a1237f70dc2bb"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b5af5f6c77a77b0fdfba04bbcb5ea2882626e2a8c3fa7a8c0b73b77ec0583863"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e5148b8a7afe35f524788b1a98db196e521faee13b398ec36d5aee15e6c9551d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e5148b8a7afe35f524788b1a98db196e521faee13b398ec36d5aee15e6c9551d"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e5148b8a7afe35f524788b1a98db196e521faee13b398ec36d5aee15e6c9551d"
+    sha256 cellar: :any_skip_relocation, sonoma:         "66e14152bdb1ed230aa4627e067cc552fe60214753163b648230534d6e5afbf1"
+    sha256 cellar: :any_skip_relocation, ventura:        "66e14152bdb1ed230aa4627e067cc552fe60214753163b648230534d6e5afbf1"
+    sha256 cellar: :any_skip_relocation, monterey:       "66e14152bdb1ed230aa4627e067cc552fe60214753163b648230534d6e5afbf1"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "cbe67557887b2e8efa0e4191f8ec8df236f68d386d257b7348d7cebce0fafcd7"
   end
 
   depends_on "php"
@@ -76,7 +76,7 @@ class Composer < Formula
       echo Greetings::sayHelloWorld();
     EOS
 
-    system "#{bin}/composer", "install"
+    system bin/"composer", "install"
     assert_match(/^HelloHomebrew$/, shell_output("php tests/test.php"))
   end
 end

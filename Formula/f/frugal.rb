@@ -1,19 +1,21 @@
 class Frugal < Formula
   desc "Cross language code generator for creating scalable microservices"
   homepage "https://github.com/Workiva/frugal"
-  url "https://github.com/Workiva/frugal/archive/refs/tags/v3.17.11.tar.gz"
-  sha256 "b1b945968d1071a7314546062feaba4c5c14e9261b805122217309155c8922d3"
+  url "https://github.com/Workiva/frugal/archive/refs/tags/v3.17.13.tar.gz"
+  sha256 "3e55ad273b96bfc802beffe51ad694ce7b305a33a50c05efb1dfcf0bb4c7715f"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e9a3d6c402a80a9624095847ec42c91a38c24f006265fa6715689e326ce0245a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e9a3d6c402a80a9624095847ec42c91a38c24f006265fa6715689e326ce0245a"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e9a3d6c402a80a9624095847ec42c91a38c24f006265fa6715689e326ce0245a"
-    sha256 cellar: :any_skip_relocation, sonoma:         "27348b5b4ef6c0de77053298e6bbc163a2371381e1e19e099fa03651a854e569"
-    sha256 cellar: :any_skip_relocation, ventura:        "27348b5b4ef6c0de77053298e6bbc163a2371381e1e19e099fa03651a854e569"
-    sha256 cellar: :any_skip_relocation, monterey:       "27348b5b4ef6c0de77053298e6bbc163a2371381e1e19e099fa03651a854e569"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "7deafe8abf3f8e2a5a3349e47f3bc7bfdb55588fc62acd99c4be41b8502e4280"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "eacd34e93b0fc193380d03bc05a347ddad3fee930429b65ec0a90f87ddb44467"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "eacd34e93b0fc193380d03bc05a347ddad3fee930429b65ec0a90f87ddb44467"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "eacd34e93b0fc193380d03bc05a347ddad3fee930429b65ec0a90f87ddb44467"
+    sha256 cellar: :any_skip_relocation, sonoma:         "8b40940a628e8ccc22ea537c97fbd9fe4fbe0d65767898429c26a50a88ad6b83"
+    sha256 cellar: :any_skip_relocation, ventura:        "8b40940a628e8ccc22ea537c97fbd9fe4fbe0d65767898429c26a50a88ad6b83"
+    sha256 cellar: :any_skip_relocation, monterey:       "8b40940a628e8ccc22ea537c97fbd9fe4fbe0d65767898429c26a50a88ad6b83"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "b3181b74500e524d491a135703928e2681c01bd2052cd116565f34e0eab102f6"
   end
+
+  deprecate! date: "2024-07-02", because: :repo_removed
 
   depends_on "go" => :build
 
@@ -23,7 +25,7 @@ class Frugal < Formula
 
   test do
     (testpath/"test.frugal").write("typedef double Test")
-    system "#{bin}/frugal", "--gen", "go", "test.frugal"
+    system bin/"frugal", "--gen", "go", "test.frugal"
     assert_match "type Test float64", (testpath/"gen-go/test/f_types.go").read
   end
 end

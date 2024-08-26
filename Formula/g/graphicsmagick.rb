@@ -1,8 +1,8 @@
 class Graphicsmagick < Formula
   desc "Image processing tools collection"
   homepage "http://www.graphicsmagick.org/"
-  url "https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.43/GraphicsMagick-1.3.43.tar.xz"
-  sha256 "2b88580732cd7e409d9e22c6116238bef4ae06fcda11451bf33d259f9cbf399f"
+  url "https://downloads.sourceforge.net/project/graphicsmagick/graphicsmagick/1.3.44/GraphicsMagick-1.3.44.tar.xz"
+  sha256 "6ac28470d2fbd3d5f60859dd43f3cee2585e955e32896f892b4dc61dda101ea0"
   license "MIT"
   head "http://hg.code.sf.net/p/graphicsmagick/code", using: :hg
 
@@ -11,25 +11,28 @@ class Graphicsmagick < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "143e614c74346301ca2ea5184eb12bc341ede5a857ee7d8376db6ba2c351775d"
-    sha256 arm64_ventura:  "2d0c6fbcaf499d7e3f88f7ad1faed386505d2b1c2ed834325cda01dfa65a3658"
-    sha256 arm64_monterey: "6414650deb92aad45128e73dd3915f49e5060f9efe92fad6ef0efaec85612f62"
-    sha256 sonoma:         "47bdb7effd130ce0335a4456ac59891ba24efef266a07484889764660d8d4588"
-    sha256 ventura:        "bfa12ae1ec6863ecf89525980eeb678429c3c107ee14893c52ef6d69b0bfaebd"
-    sha256 monterey:       "3060c0efd9b1fe8a838b7c64f105fa7ad42af3148e13765a66d766a05b5e4a21"
-    sha256 x86_64_linux:   "602d33b627591740d12f6da5a1fb5c864d177c613d514127f92cdd601de6637d"
+    sha256 arm64_sonoma:   "0db18d3ae35193225727676d138e5d852d28a026f92144bb536642650bc43040"
+    sha256 arm64_ventura:  "a942f2c4c3e10168cc908f19d39b6b1b3be18fac7d5ee88c6438b9b89467df44"
+    sha256 arm64_monterey: "4b13a24a1a3705684566b2d72c5c33a7fceca5ec7a8de9e917f0b0b404e7ddd5"
+    sha256 sonoma:         "fc66e5be23539aaf9df067ccc20fb46059ad71f429305fbd0d70ce84fc4a2010"
+    sha256 ventura:        "fc8afab6aa173309a3691e3e87e4e26a7ef354a6236e121580d68b89ea5189fa"
+    sha256 monterey:       "1fa1afa1668533d75458fa12760103270781df4650c6efd64cb3d374960fcb73"
+    sha256 x86_64_linux:   "2e95a143dd858c7e5059c243517384f76b856550998a55f35c4f7e5f0d09d1b0"
   end
 
   depends_on "pkg-config" => :build
+
   depends_on "freetype"
   depends_on "jasper"
   depends_on "jpeg-turbo"
   depends_on "jpeg-xl"
+  depends_on "libheif"
   depends_on "libpng"
   depends_on "libtiff"
   depends_on "libtool"
   depends_on "little-cms2"
   depends_on "webp"
+  depends_on "zstd"
 
   uses_from_macos "bzip2"
   uses_from_macos "libxml2"

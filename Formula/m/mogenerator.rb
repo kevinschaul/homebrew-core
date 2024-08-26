@@ -32,12 +32,13 @@ class Mogenerator < Formula
     xcodebuild "-arch", Hardware::CPU.arch,
                "-target", "mogenerator",
                "-configuration", "Release",
+               "MACOSX_DEPLOYMENT_TARGET=#{MacOS.version}",
                "SYMROOT=symroot",
                "OBJROOT=objroot"
     bin.install "symroot/Release/mogenerator"
   end
 
   test do
-    system "#{bin}/mogenerator", "--version"
+    system bin/"mogenerator", "--version"
   end
 end

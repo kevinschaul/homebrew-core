@@ -1,24 +1,24 @@
 class Highlight < Formula
   desc "Convert source code to formatted text with syntax highlighting"
-  homepage "http://www.andre-simon.de/doku/highlight/en/highlight.php"
-  url "http://www.andre-simon.de/zip/highlight-4.10.tar.bz2"
-  sha256 "4389a022367ceafb55a6cf7774c5d82d320ec2df4339bae4aab058c511338ad0"
+  homepage "http://andre-simon.de/doku/highlight/en/highlight.php"
+  url "http://andre-simon.de/zip/highlight-4.13.tar.bz2"
+  sha256 "5ea95f9ab03dd857de4ce0cde68ffacc041d0223bbce0893e2ada9c85503488c"
   license "GPL-3.0-or-later"
   head "https://gitlab.com/saalen/highlight.git", branch: "master"
 
   livecheck do
-    url "http://www.andre-simon.de/zip/download.php"
+    url "http://andre-simon.de/zip/download.php"
     regex(/href=.*?highlight[._-]v?(\d+(?:\.\d+)+)\.t/i)
   end
 
   bottle do
-    sha256 arm64_sonoma:   "cab1c7668e6151a38324da36e21fc70aebf8d26934aad5c5cb34fbbab409b384"
-    sha256 arm64_ventura:  "5cd260cbeb287692c75f6170354ec0ff04aba002fcdcba268eb168d81ababb64"
-    sha256 arm64_monterey: "019ec639daf5165a880bbd1d030011efc85dcb0e277834feea42df04691cb457"
-    sha256 sonoma:         "afcd9312ae20fc32c373957760205b9ddbce9038568ae619ab99c36ce3051e59"
-    sha256 ventura:        "fdefd122edf98e38fc648b57f07b5de2f467d7d84818676e8e214bc931957448"
-    sha256 monterey:       "cc69419b1088c7f4974f166b0166e918bb8bc10c0623b35eeb0bc8051c193192"
-    sha256 x86_64_linux:   "2d0dd14de1f3a2b056313a6fd054b19be2fb8c04632de7e499519a9ccd53dacb"
+    sha256 arm64_sonoma:   "cc1d54b5cd422334bbdf435ccceeaaea75e004a19be6c6a840b2386e34638b8e"
+    sha256 arm64_ventura:  "3d2d044c0e4fbc706aaac772cc878e6c2d469bdc2ce89aeaade88c22e2a88b1c"
+    sha256 arm64_monterey: "e99255ad10e933ab272f42c3ac6d7a9624b44796d566df08cf467fad19253994"
+    sha256 sonoma:         "93ac7a69fb657dbd7ed355c0575b26c3aee45390838e973b83f9746f8e70b6a7"
+    sha256 ventura:        "096ed0232fc4957849c3b2d00a23cdc1865a2d772475792545e4ffa565c9a517"
+    sha256 monterey:       "19f5281027935530f6f10ba2107bf7ea1f92d80ae877ba7108bdc649e05cf15d"
+    sha256 x86_64_linux:   "f26879fc304ea0a25621ee1682c1d5e879da486afcc0b53c46f03409b55afedd"
   end
 
   depends_on "boost" => :build

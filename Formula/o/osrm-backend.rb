@@ -1,16 +1,21 @@
 class OsrmBackend < Formula
   desc "High performance routing engine"
-  homepage "http://project-osrm.org/"
+  homepage "https://project-osrm.org/"
   license "BSD-2-Clause"
-  revision 4
+  revision 6
   head "https://github.com/Project-OSRM/osrm-backend.git", branch: "master"
 
+  # TODO: Remove `conflicts_with "mapnik"` in release that has following commit:
+  # https://github.com/Project-OSRM/osrm-backend/commit/c1ed73126dd467171dc7adb4ad07864909bcb90f
   stable do
     url "https://github.com/Project-OSRM/osrm-backend/archive/refs/tags/v5.27.1.tar.gz"
     sha256 "52391580e0f92663dd7b21cbcc7b9064d6704470e2601bf3ec5c5170b471629a"
 
     # Backport fix for missing include. Remove in the next release.
     # Ref: https://github.com/Project-OSRM/osrm-backend/commit/565959b3896945a0eb437cc799b697be023121ef
+    #
+    # Also add temporary build fix to 'include/util/lua_util.hpp' for Boost 1.85.0.
+    # Issue ref: https://github.com/Project-OSRM/osrm-backend/issues/6850
     patch :DATA
   end
 
@@ -20,16 +25,17 @@ class OsrmBackend < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "caf7f16eca550f4d6ee0489da25bf1424d1b502d1d6b857fec32a949b5eccd4c"
-    sha256 cellar: :any,                 arm64_ventura:  "1e2a9f3bdbe82b4829e1ede3055e01723c41a173cddb5d844b786f6e067997d6"
-    sha256 cellar: :any,                 arm64_monterey: "2ec4be7416632841b0ab975bf3ee19955a0553dc29f3688a7490e074500c1b7e"
-    sha256 cellar: :any,                 sonoma:         "5ff2a490bd7c37b84a0950d6723fe8f26dc32c4c3dfcdaacd86f2408021a18c5"
-    sha256 cellar: :any,                 ventura:        "c09c5ac0b43ce8522733109e5058f0bdc6a1263ebb63f12f31707d16125fb342"
-    sha256 cellar: :any,                 monterey:       "7cc4db1f0e503ec4c4c638f8d1af5f59b3b5cd446ef823eadfda27d5323bb1b7"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9d5c85b00c8c3508407531ad72704f8c4b4211ce7c401d103ac37dbcc9c9e249"
+    sha256 cellar: :any,                 arm64_sonoma:   "650d17a3915469c4bbd23eec83f8ceb27570b0d3207c1a3598f3d6747296c21e"
+    sha256 cellar: :any,                 arm64_ventura:  "ccd438e39cdec24fdff74bb2ed43cee49d00af2b3144ad90802fa3e3bb53eb79"
+    sha256 cellar: :any,                 arm64_monterey: "072bd2264dec2d9db23593505666eb8b67b5f993d5753a67decae862be2b5330"
+    sha256 cellar: :any,                 sonoma:         "2fd84b9de2a0e5f091371d7480b8cc2fa0296d71e5f910291e8e293b00e26523"
+    sha256 cellar: :any,                 ventura:        "c34da972144b065eb8bcd678359b298c63631052fce4dfd2565042d77a9e7fd7"
+    sha256 cellar: :any,                 monterey:       "0883df366fab00865ab4f9b83a0879d73006abbcd0856c0f27165d631f79269e"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c8d9c984c196e0eba61bb632babccb693d2a5e1bb49864d6656a3bf64c6eef51"
   end
 
   depends_on "cmake" => :build
+
   depends_on "boost"
   depends_on "libstxxl"
   depends_on "libxml2"
@@ -37,9 +43,12 @@ class OsrmBackend < Formula
   depends_on "lua"
   depends_on "tbb"
 
+  uses_from_macos "bzip2"
   uses_from_macos "expat"
+  uses_from_macos "zlib"
 
   conflicts_with "flatbuffers", because: "both install flatbuffers headers"
+  conflicts_with "mapnik", because: "both install Mapbox Variant headers"
 
   def install
     # Work around build failure: duplicate symbol 'boost::phoenix::placeholders::uarg9'
@@ -53,6 +62,7 @@ class OsrmBackend < Formula
 
     lua = Formula["lua"]
     luaversion = lua.version.major_minor
+
     system "cmake", "-S", ".", "-B", "build",
                     "-DENABLE_CCACHE:BOOL=OFF",
                     "-DLUA_INCLUDE_DIR=#{lua.opt_include}/lua#{luaversion}",
@@ -61,6 +71,7 @@ class OsrmBackend < Formula
                     *std_cmake_args
     system "cmake", "--build", "build"
     system "cmake", "--install", "build"
+
     pkgshare.install "profiles"
   end
 
@@ -90,8 +101,9 @@ class OsrmBackend < Formula
         result.forward_speed = 1
       end
     EOS
-    safe_system "#{bin}/osrm-extract", "test.osm", "--profile", "tiny-profile.lua"
-    safe_system "#{bin}/osrm-contract", "test.osrm"
+
+    safe_system bin/"osrm-extract", "test.osm", "--profile", "tiny-profile.lua"
+    safe_system bin/"osrm-contract", "test.osrm"
     assert_predicate testpath/"test.osrm.names", :exist?, "osrm-extract generated no output!"
   end
 end
@@ -109,3 +121,16 @@ index 5d16fe6..2c378bf 100644
 
  #include "util/string_view.hpp"
 
+diff --git a/include/util/lua_util.hpp b/include/util/lua_util.hpp
+index 36af5a1f3..cd2d1311c 100644
+--- a/include/util/lua_util.hpp
++++ b/include/util/lua_util.hpp
+@@ -8,7 +8,7 @@ extern "C"
+ #include <lualib.h>
+ }
+
+-#include <boost/filesystem/convenience.hpp>
++#include <boost/filesystem/operations.hpp>
+
+ #include <iostream>
+ #include <string>

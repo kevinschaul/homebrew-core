@@ -1,36 +1,34 @@
 class Step < Formula
   desc "Crypto and x509 Swiss-Army-Knife"
   homepage "https://smallstep.com"
-  url "https://github.com/smallstep/cli/releases/download/v0.26.0/step_0.26.0.tar.gz"
-  sha256 "128cebf24a3043ef1616be47d07c95f8a0d3432b626ff060c69eb1c806e98614"
+  url "https://github.com/smallstep/cli/releases/download/v0.27.2/step_0.27.2.tar.gz"
+  sha256 "d772ddf067b8e703daec9e1b298b3bf6dc2866eea397c3c56fe39a0320d31488"
   license "Apache-2.0"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "9ff61d321557000003f4afc6ed4296ee3d90cfd57817c5d2da6d5ffd3e742c15"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "9480994b2cca4c85ada87db10bc1bac173675a09a67dc28414f43b3d293bf885"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "75baf0dc1138e43dae7adb32c630f1757149fb88a925e814be90243fc04bd1f4"
-    sha256 cellar: :any_skip_relocation, sonoma:         "2c9402289c2be7d22816b486c36bafcb331ed14a4930dc783a1fde98d1f78243"
-    sha256 cellar: :any_skip_relocation, ventura:        "3014fe7f179163474bc4a2bfec445dfbaa784330fdec4a94dc9e3645f3298950"
-    sha256 cellar: :any_skip_relocation, monterey:       "84fe05ba915be878926507f0cda022f124aeea440bf071690c12521390024c2e"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "2c8e14d8f13cb8a224101e748081d685b80419c9b3335ec8356931ccec65bd80"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e7b602e364c03fa167e933c20aeaa53c443e1bc783bc398c70d60d34d80f0f82"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5f09666ff8ed5cbdd06b0b66569b941eeef99f9589e5b1f3c92685f0fac5f958"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "a1486cd6f205f007d3fc5f86256944855775d5cf73efa6219ee65391b8e6c555"
+    sha256 cellar: :any_skip_relocation, sonoma:         "d72f2d8256e49dc89507ab611c990710980b4d5635da4d625617de9a3a5489f6"
+    sha256 cellar: :any_skip_relocation, ventura:        "7a5dd7358c4bc7b8e25abb788178e987bd4f028eaeef30d261cc2822b5248466"
+    sha256 cellar: :any_skip_relocation, monterey:       "397c77d88c9bb2f77f84537509aa830dfeb0c96bd7994906e3a6e9beb8c69432"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d23b87f65f660338b4e5f0f413172a3ed816df3c9ce8d83e78b0550e2bfa36da"
   end
 
   depends_on "go" => :build
 
+  # certificates is not always in sync with step, see discussions in https://github.com/smallstep/certificates/issues/1925
   resource "certificates" do
-    url "https://github.com/smallstep/certificates/releases/download/v0.26.0/step-ca_0.26.0.tar.gz"
-    sha256 "c49148c66b757a25002dfbf9bfa8b2346ded7973ec443dcdc31feb8d3bce582b"
+    url "https://github.com/smallstep/certificates/releases/download/v0.27.2/step-ca_0.27.2.tar.gz"
+    sha256 "627ca0133076d7a786d092c9c669629e1497d3e7c36af514d448ff4d2f026d17"
   end
 
   def install
-    odie "certificates resource needs to be updated" if version != resource("certificates").version
-
     ENV["VERSION"] = version.to_s
     ENV["CGO_OVERRIDE"] = "CGO_ENABLED=1"
     system "make", "build"
     bin.install "bin/step" => "step"
-    bash_completion.install "autocomplete/bash_autocomplete" => "step"
-    zsh_completion.install "autocomplete/zsh_autocomplete" => "_step"
+    generate_completions_from_executable(bin/"step", "completion")
 
     resource("certificates").stage do |r|
       ENV["VERSION"] = r.version.to_s
@@ -42,12 +40,12 @@ class Step < Formula
 
   test do
     # Generate a public / private key pair. Creates foo.pub and foo.priv.
-    system "#{bin}/step", "crypto", "keypair", "foo.pub", "foo.priv", "--no-password", "--insecure"
+    system bin/"step", "crypto", "keypair", "foo.pub", "foo.priv", "--no-password", "--insecure"
     assert_predicate testpath/"foo.pub", :exist?
     assert_predicate testpath/"foo.priv", :exist?
 
     # Generate a root certificate and private key with subject baz written to baz.crt and baz.key.
-    system "#{bin}/step", "certificate", "create", "--profile", "root-ca",
+    system bin/"step", "certificate", "create", "--profile", "root-ca",
         "--no-password", "--insecure", "baz", "baz.crt", "baz.key"
     assert_predicate testpath/"baz.crt", :exist?
     assert_predicate testpath/"baz.key", :exist?
@@ -63,7 +61,7 @@ class Step < Formula
     assert_equal "CN=baz", baz_crt_json["issuer_dn"]
 
     # Generate a leaf certificate signed by the previously created root.
-    system "#{bin}/step", "certificate", "create", "--profile", "intermediate-ca",
+    system bin/"step", "certificate", "create", "--profile", "intermediate-ca",
         "--no-password", "--insecure", "--ca", "baz.crt", "--ca-key", "baz.key",
         "zap", "zap.crt", "zap.key"
     assert_predicate testpath/"zap.crt", :exist?
@@ -85,14 +83,14 @@ class Step < Formula
     steppath = "#{testpath}/.step"
     mkdir_p(steppath)
     ENV["STEPPATH"] = steppath
-    system "#{bin}/step", "ca", "init", "--address", "127.0.0.1:8081",
+    system bin/"step", "ca", "init", "--address", "127.0.0.1:8081",
         "--dns", "127.0.0.1", "--password-file", "#{testpath}/password.txt",
         "--provisioner-password-file", "#{testpath}/password.txt", "--name",
         "homebrew-smallstep-test", "--provisioner", "brew"
 
     begin
       pid = fork do
-        exec "#{bin}/step-ca", "--password-file", "#{testpath}/password.txt",
+        exec bin/"step-ca", "--password-file", "#{testpath}/password.txt",
           "#{steppath}/config/ca.json"
       end
 
@@ -103,7 +101,7 @@ class Step < Formula
       shell_output("#{bin}/step ca token --password-file #{testpath}/password.txt " \
                    "homebrew-smallstep-leaf > token.txt")
       token = File.read(testpath/"token.txt")
-      system "#{bin}/step", "ca", "certificate", "--token", token,
+      system bin/"step", "ca", "certificate", "--token", token,
           "homebrew-smallstep-leaf", "brew.crt", "brew.key"
 
       assert_predicate testpath/"brew.crt", :exist?

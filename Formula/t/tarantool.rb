@@ -1,10 +1,9 @@
 class Tarantool < Formula
   desc "In-memory database and Lua application server"
   homepage "https://tarantool.org/"
-  url "https://download.tarantool.org/tarantool/src/tarantool-3.0.1.tar.gz"
-  sha256 "3d7dafee29353887afeecaf49927c540ec70a1eb6299d1bc02b5ac616b3e2c06"
+  url "https://download.tarantool.org/tarantool/src/tarantool-3.1.1.tar.gz"
+  sha256 "705aeeac16b26ab7b06c6acb418ae22c5367665dcdccc28d577271fddd78a1e6"
   license "BSD-2-Clause"
-  revision 1
   version_scheme 1
   head "https://github.com/tarantool/tarantool.git", branch: "master"
 
@@ -14,13 +13,13 @@ class Tarantool < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "b6c5fc0de6ee435b6e669c2aa8f3f253597aa34cc037fec0fe79e4c30f47fe9b"
-    sha256 cellar: :any,                 arm64_ventura:  "753efa5efe29b66a2a63a53a67e36372035722b36ab0f84d5f3ec444bbd7695e"
-    sha256 cellar: :any,                 arm64_monterey: "1040ec75da515efe6578f9fd8316b86f72c9f2e7fc18f3e7f98081d6b9c14002"
-    sha256 cellar: :any,                 sonoma:         "d42ca3a5342696584ba00511b6ac8e55fa93e34c211466243b88c9efc2d71dfd"
-    sha256 cellar: :any,                 ventura:        "890e8d5986b0a7cdd13f758d0ace20dbc000454d0fc7ca64e6007c4431e1923f"
-    sha256 cellar: :any,                 monterey:       "bbc68f4f7a88de13c6d452b1738b853106c216d3274afbf5572c15be095c88cf"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "ae8946ed653dd598dc71df0d9d62c21933fc05bdb08a022918e0fad384582b41"
+    sha256 cellar: :any,                 arm64_sonoma:   "00eec48fa3453dddb4f0d04942159d79b3e8d09ebdfd7aed59aa94cc3b292dfb"
+    sha256 cellar: :any,                 arm64_ventura:  "161b28c6bd698ad25ef263432ef952236518fa83c169c704db6f36a09089d919"
+    sha256 cellar: :any,                 arm64_monterey: "76e784d0b260461c09ffa60254a5710854cfca949a6e58f033c8ebe9f56ee3a8"
+    sha256 cellar: :any,                 sonoma:         "fc6c89a9a7008a5afcf2cb454adaa151333dc9360d33ec5e48b5f99d3a8b08a3"
+    sha256 cellar: :any,                 ventura:        "0ee24029edbc046f6ddc03a096c5f04d1a7d171fbd0876d4dc217dcc2bc69ba9"
+    sha256 cellar: :any,                 monterey:       "d6d50ad1f20bb62c9f2e079e0fb3db925c3583dce89ef2ca607ad3c2a731ece4"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "573e31c572d7d11969ecffc374e166bd902494ba963b2c03335f59a3fddcf57c"
   end
 
   depends_on "cmake" => :build
@@ -79,9 +78,6 @@ class Tarantool < Formula
   end
 
   def post_install
-    local_user = ENV["USER"]
-    inreplace etc/"default/tarantool", /(username\s*=).*/, "\\1 '#{local_user}'"
-
     (var/"lib/tarantool").mkpath
     (var/"log/tarantool").mkpath
     (var/"run/tarantool").mkpath

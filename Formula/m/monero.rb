@@ -2,8 +2,8 @@ class Monero < Formula
   desc "Official Monero wallet and CPU miner"
   homepage "https://www.getmonero.org/"
   url "https://github.com/monero-project/monero.git",
-      tag:      "v0.18.3.3",
-      revision: "81d4db08eb75ce5392c65ca6571e7b08e41b7c95"
+      tag:      "v0.18.3.4",
+      revision: "b089f9ee69924882c5d14dd1a6991deb05d9d1cd"
   license "BSD-3-Clause"
 
   livecheck do
@@ -12,18 +12,18 @@ class Monero < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "706b507865029e3b6ec2a1a2e3d3507ad21e814cb473ac2ad87a64a58c94c4c1"
-    sha256 cellar: :any,                 arm64_ventura:  "cf313467e731f2e71268a1123465071ddd889b90bb4a7461fe8f74dc82016f17"
-    sha256 cellar: :any,                 arm64_monterey: "b6ecfa6607a5489696af1d8c934eeb986e1f10be4200acaf0808e6750b691f68"
-    sha256 cellar: :any,                 sonoma:         "a614430ff6314b63cd1856b44ef27c4d1539dd17d9927e49ae7b0f2ebf681954"
-    sha256 cellar: :any,                 ventura:        "1a28d6dc91dabc6f573cf743e193601b6621fb303e62e04822762e81c744c575"
-    sha256 cellar: :any,                 monterey:       "358be0c497d426647eee31788db9da773c4f5d4e92955c2ec901b75739e08e82"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "04339d3ef5a6425da8b45eafd52e2485e68534f52cab9518dab2b5625b8cfa2e"
+    sha256 cellar: :any,                 arm64_sonoma:   "eeca3a8cd0a413a37165bf9b1534043bc3a7de27ceb3a2da218a5e4c8cd69c8c"
+    sha256 cellar: :any,                 arm64_ventura:  "793f709451ab5f541d19ace5709d24eba53da6776ad99634d16b84b0e3af22b1"
+    sha256 cellar: :any,                 arm64_monterey: "4f8f11e019d08e94dfb67b09f71b7bbf544fd5d6291e18d1f9b3b01d3a74dd4c"
+    sha256 cellar: :any,                 sonoma:         "41430b038afff312bf9940478ed205d256229584f94a50e0061f512164f1710a"
+    sha256 cellar: :any,                 ventura:        "5164d5a74ddb315555225b3c794a003f11c78c990d4b29e2d77c819bdf087e2d"
+    sha256 cellar: :any,                 monterey:       "8515f6ecfc5c68d760edfdb87093a9f15191162f5872e65e1993e56d8393a46b"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "9066d4d2012600da453f2238eb0f1de978cfc8d8cefa6548f0ef27fa6162347d"
   end
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
-  depends_on "boost"
+  depends_on "boost@1.85"
   depends_on "hidapi"
   depends_on "libsodium"
   depends_on "libusb"

@@ -1,8 +1,8 @@
 class CargoC < Formula
   desc "Helper program to build and install c-like libraries"
   homepage "https://github.com/lu-zero/cargo-c"
-  url "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.9.31.tar.gz"
-  sha256 "4a04db8fb17a55db403bc59572f05475a477fece7ab08cfb2de970e188b80b83"
+  url "https://github.com/lu-zero/cargo-c/archive/refs/tags/v0.10.3.tar.gz"
+  sha256 "922171afb3ceaf6553ff3916ae4663d3743ba22f80725f2300a26b76eb6eb94f"
   license "MIT"
 
   livecheck do
@@ -11,13 +11,13 @@ class CargoC < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "e5e5909e287015119435bffcb6feb304be6363ac14b0e49df4f8ae2aeb51cf24"
-    sha256 cellar: :any,                 arm64_ventura:  "006dc5b7386ab642a9a138d57a7408f5b4d546d23b11f9635a0db1761b1dd43c"
-    sha256 cellar: :any,                 arm64_monterey: "edb295ec26dcf230f048a063d473861aeaedd3412ab557679ca64610b34fe36d"
-    sha256 cellar: :any,                 sonoma:         "63e105d89f49d294e58fb3ef245ee125c1335b680c01b4553c4382b149c67032"
-    sha256 cellar: :any,                 ventura:        "4a7a6631fb0fc4cabf5ca3757b45bdf4a283e404b6a0e51b735c0efb4d2e3ffe"
-    sha256 cellar: :any,                 monterey:       "7fbd4040b98f8ae9abd54c8577fa0c4fa351ee91c10560711dd58dee8956c937"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "960f06354ea0d82e8b9a7c82269f7120c5a272c3b6e03f7bd3f60b9bc1606eeb"
+    sha256 cellar: :any,                 arm64_sonoma:   "b7185684a104169982511f59d5551f5647736f0543e5b6d9386b22da08643b90"
+    sha256 cellar: :any,                 arm64_ventura:  "0cf7db1a3320601f1a140953069c4b79714b80095d78b3465b0005e627da0d79"
+    sha256 cellar: :any,                 arm64_monterey: "04e5e4b5ba0f4951c233b5730f33c0849585f05b0e3c38142e59e77bea4907a8"
+    sha256 cellar: :any,                 sonoma:         "faa2930ea57e6c3ac22746a4271a463e1180a001af0e4a8a8224c7efab0e2f9b"
+    sha256 cellar: :any,                 ventura:        "3842f77fe03491c52c029539282d1deae58fe07c4e710b644e8beec0c1f7350d"
+    sha256 cellar: :any,                 monterey:       "ba1f217eae0e553e42805fce58b91e340f456beaf5892bc4c5fd7d6bb853c944"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a1a338df719a904741bae73400bdf2d05ff43e88e2e1ef4148328f85abc0883b"
   end
 
   depends_on "rust" => :build
@@ -25,7 +25,7 @@ class CargoC < Formula
   # be missing despite its presence.
   # Try switching to `uses_from_macos` when that's resolved.
   depends_on "curl"
-  depends_on "libgit2"
+  depends_on "libgit2@1.7"
   depends_on "libssh2"
   depends_on "openssl@3"
 
@@ -60,7 +60,7 @@ class CargoC < Formula
 
     [
       Formula["curl"].opt_lib/shared_library("libcurl"),
-      Formula["libgit2"].opt_lib/shared_library("libgit2"),
+      Formula["libgit2@1.7"].opt_lib/shared_library("libgit2"),
       Formula["libssh2"].opt_lib/shared_library("libssh2"),
       Formula["openssl@3"].opt_lib/shared_library("libssl"),
       Formula["openssl@3"].opt_lib/shared_library("libcrypto"),

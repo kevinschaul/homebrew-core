@@ -1,8 +1,8 @@
 class HppFcl < Formula
   desc "Extension of the Flexible Collision Library"
   homepage "https://github.com/humanoid-path-planner/hpp-fcl"
-  url "https://github.com/humanoid-path-planner/hpp-fcl/releases/download/v2.4.4/hpp-fcl-2.4.4.tar.gz"
-  sha256 "cae32b6beb6a93896bf566453e6897606763219cebb3dbfaa229a1e4214b542a"
+  url "https://github.com/humanoid-path-planner/hpp-fcl/releases/download/v2.4.5/hpp-fcl-2.4.5.tar.gz"
+  sha256 "14ddfdecdbde323dedf988083e4929d05b5b125ec04effac3c2eec4daa099b43"
   license "BSD-2-Clause"
   revision 1
   head "https://github.com/humanoid-path-planner/hpp-fcl.git", branch: "devel"
@@ -13,13 +13,13 @@ class HppFcl < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "0ffe130c8c80891fa02077b5aa863b6dac5958299d8e75f0eee65b777e677970"
-    sha256 cellar: :any,                 arm64_ventura:  "bc06b0a9244177ac2a4a6c21c0ed8b0369a8aa9c2850fa5c814325e362788026"
-    sha256 cellar: :any,                 arm64_monterey: "75c8628ee6958a2f6274be635fdbb7d139a8e02b7efd55d3cfd7cf3ae0cf817b"
-    sha256 cellar: :any,                 sonoma:         "a8848b73ae4336ba42226bd5b10bf44e6247dba354bb6f1888c82ac5877b1023"
-    sha256 cellar: :any,                 ventura:        "728f4df16fafccc36af5c6cf988ca01947a8906dea6fabf1e6c03743938495d5"
-    sha256 cellar: :any,                 monterey:       "0b8befae70922c35fa0155cde51919cc012a0d32ba9bc885400a81872ba8f403"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "97617426f9b53d0823bb274ffab4e0c125b6fbe26d8bb29deefba416351ffb23"
+    sha256 cellar: :any,                 arm64_sonoma:   "4f1ec99f9d8979f3faafd5456572a215ac0a5a9a3c366a298dd5a2684ba7a06d"
+    sha256 cellar: :any,                 arm64_ventura:  "44e0f677fc4e9b826344f1e0aae4b83e90ce8b4b97220fef024bfa6449c0ffa2"
+    sha256 cellar: :any,                 arm64_monterey: "e7b5252296d17b6307f0166ac3354dcf3e6e12a23631463cd8866197503150ea"
+    sha256 cellar: :any,                 sonoma:         "7f1c45f3a186b5135e1e930172f5f72eeaab785c1868f38ce1f11be192edd150"
+    sha256 cellar: :any,                 ventura:        "5dae706cc6e2bbab5a8a3160f60c84fa9c73806889ad537ca868f2796e044631"
+    sha256 cellar: :any,                 monterey:       "ecc514bc091a2de6673823758fd2ffb5717b9c9f03c2c5356a234691c8fe6f73"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5366ba3235067a32046ac9dc20356124ffd6402877fe4d35040172bf27268e3a"
   end
 
   depends_on "cmake" => :build
@@ -27,6 +27,7 @@ class HppFcl < Formula
   depends_on "pkg-config" => :build
   depends_on "assimp"
   depends_on "boost"
+  depends_on "boost-python3"
   depends_on "eigen"
   depends_on "eigenpy"
   depends_on "octomap"

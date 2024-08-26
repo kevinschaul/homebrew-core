@@ -1,8 +1,8 @@
 class Metals < Formula
   desc "Scala language server"
   homepage "https://github.com/scalameta/metals"
-  url "https://github.com/scalameta/metals/archive/refs/tags/v1.2.2.tar.gz"
-  sha256 "5b9998b9d3d6e224d911f83584859f626bd74180f8bf2b0d464982a8ccf470f8"
+  url "https://github.com/scalameta/metals/archive/refs/tags/v1.3.5.tar.gz"
+  sha256 "9715cc653a22b7ce27d2abbfc2d62043092047e9554e981828a6a64c1bec4bf1"
   license "Apache-2.0"
 
   # Some version tags don't become a release, so it's necessary to check the
@@ -13,14 +13,13 @@ class Metals < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "dc41df6e0b16e5b516837513b6d015f5e42b3187d9b04f2d97625bb95d74b677"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "0448937666126f5ad9368239be7ae792927fae4d4e87f34ac885395b032d79b5"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "26d1fdde461b54191dc14d6fdc7053372226ec19914093085e0474e4a5e767d3"
-    sha256 cellar: :any_skip_relocation, sonoma:         "0bbbdbfbf18624741c24eee538df7b8d3cca502ebe2db20c53cfb2df9b132e07"
-    sha256 cellar: :any_skip_relocation, ventura:        "b5b5e6e355bbe82009ac43b38b03afe00a277a8ec0c8e9828582b35d4ae34073"
-    sha256 cellar: :any_skip_relocation, monterey:       "ec66c45767587c0ae7f0b8c2faec6ba38319a6e9b92dcf2062cd29f3d105ea6d"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "48d0c06ef11ba787c204ec78283ee1d770593eb2a65d7e2459464b53c1b2a1de"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5e339283d6dbcf4d6c2183468dac067b51976bf463e9f3758abbb6817d669445"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "8ad0aa2ffd7d6e70c4aff59f26b45883c520fabf9949edacb3748bcec1d30e38"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "e0a976e4cdf64bba7eb2d39056545aec241f25f107fb21e43a79b70905ec3ce6"
+    sha256 cellar: :any_skip_relocation, sonoma:         "a840558cb33e025524d1da58aa96120bd6746c78289f7a4afebe885b83a7569d"
+    sha256 cellar: :any_skip_relocation, ventura:        "93d30b9aa4ad8a3e6a4387686f141dd2226ca0adab0fab00626d3d55b88fa2e3"
+    sha256 cellar: :any_skip_relocation, monterey:       "fb711f2dc6831321eb258090f424a76e321e46b6d1dd9ebfc26a981ef7eb0b89"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5233e4401b0d1fe5d1984ab0472b83af60f0d8c539a0f74b25de15f37443be94"
   end
 
   depends_on "sbt" => :build
@@ -64,7 +63,7 @@ class Metals < Formula
         }
       }
     JSON
-    Open3.popen3("#{bin}/metals") do |stdin, stdout, _e, w|
+    Open3.popen3(bin/"metals") do |stdin, stdout, _e, w|
       stdin.write "Content-Length: #{json.size}\r\n\r\n#{json}"
       sleep 3
       assert_match(/^Content-Length: \d+/i, stdout.readline)

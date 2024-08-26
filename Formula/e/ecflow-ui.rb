@@ -1,8 +1,8 @@
 class EcflowUi < Formula
   desc "User interface for client/server workflow package"
   homepage "https://confluence.ecmwf.int/display/ECFLOW"
-  url "https://confluence.ecmwf.int/download/attachments/8650755/ecFlow-5.12.3-Source.tar.gz"
-  sha256 "2caaf64bf1e0ced87fd0bf42c2ee3385093420e5c4609ad4117b8251420d1cf0"
+  url "https://confluence.ecmwf.int/download/attachments/8650755/ecFlow-5.13.3-Source.tar.gz"
+  sha256 "a9ca7f032b8bd67e97d571d72ae1e24c8535bc6722af5f3357890e191a2c395b"
   license "Apache-2.0"
 
   livecheck do
@@ -11,19 +11,21 @@ class EcflowUi < Formula
   end
 
   bottle do
-    sha256                               arm64_sonoma:   "2074c4c7fb2d368a77aa9b8d4c3cf21b395dfda837e607d6f4d98c12cb81f6eb"
-    sha256                               arm64_ventura:  "7b863447c992c4871f0eadec65c41181d43ad849f6cb091842e99cc429fc6e2a"
-    sha256                               arm64_monterey: "7fde65f33fceff248db752c81764c7529304ea19440e0265e09a259b5bf41df8"
-    sha256                               sonoma:         "3f4ad5405ee09dd1f0ba153736856a8ca796868f1e34e7bc2e15acdb78be5292"
-    sha256                               ventura:        "340786860a9ef0e1c890cc9c5955c5ebc3f638d7b46bca46a33a0c98557a0ae4"
-    sha256                               monterey:       "5a07cb2ca3db765374513ab5ed27f12ca0fd94bc5b729ef03f43e5acbc24e070"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c61e596c74db0afee3a9ac3ad2a742570086533fb3970787db1f2f7e3a8ceb4f"
+    sha256                               arm64_sonoma:   "994fb3de9f302eea9ba4faba568dbed59a92fc7055e7f295a86512a2a569988e"
+    sha256                               arm64_ventura:  "472d25c86e97cfeff8a87bfdb1112c7940b0c99b2d666a805ed450a75db11772"
+    sha256                               arm64_monterey: "fb31e7ff923466415a4ec65d696788ed1c8e8d294450b4c38e9e0e5e57f9790c"
+    sha256                               sonoma:         "1675d8485b8876c252f11186a118cfe145ee361531d1342cf2f2b41a402de9a5"
+    sha256                               ventura:        "5449f3817a26bd050d8aeceea94852a8daa17aee2f2e7330791638430be4d7b8"
+    sha256                               monterey:       "120cf10d415f5f7c6b1a71a081d09714f04c36d14b2f80b579a65cdc51925991"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "077d0d4a27d44957b5210e83f4f90a4477d1639dbe41530c00283a468861fd57"
   end
 
   depends_on "boost" => :build
   depends_on "cmake" => :build
   depends_on "openssl@3"
   depends_on "qt"
+
+  uses_from_macos "libxcrypt"
 
   # requires C++17 compiler to build with Qt
   fails_with gcc: "5"
@@ -51,8 +53,6 @@ class EcflowUi < Formula
     binary_version_out = shell_output("#{bin}/ecflow_ui.x --version")
     assert_match @version.to_s, binary_version_out
 
-    #  check that the startup script runs
-    system "#{bin}/ecflow_ui", "-h"
     help_out = shell_output("#{bin}/ecflow_ui -h")
     assert_match "ecFlowUI", help_out
     assert_match "fontsize", help_out

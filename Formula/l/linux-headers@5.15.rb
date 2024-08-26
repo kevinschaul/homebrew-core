@@ -1,8 +1,8 @@
 class LinuxHeadersAT515 < Formula
   desc "Header files of the Linux kernel"
   homepage "https://kernel.org/"
-  url "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.154.tar.gz"
-  sha256 "53fae84cc6b7b2c2fc9326bbdfd484ad8fe83de1dec0abba8ba80d251e6bd6cb"
+  url "https://cdn.kernel.org/pub/linux/kernel/v5.x/linux-5.15.165.tar.gz"
+  sha256 "675af820ca05feda215777c7ce16f64279c4673dfc6723980cdfa7b2d680cb5c"
   license "GPL-2.0-only"
 
   livecheck do
@@ -11,7 +11,7 @@ class LinuxHeadersAT515 < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "a6cd47c0a6700c8bd8667df4fc9749da21bb4121ca8e48ad291c4816e9ac58ed"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "8711ffc0c6fb0a230a79ec05a82e21273238470f859ecee8fd64577bfc79fa9d"
   end
 
   depends_on :linux

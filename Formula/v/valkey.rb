@@ -1,51 +1,57 @@
 class Valkey < Formula
   desc "High-performance data structure server that primarily serves key/value workloads"
   homepage "https://valkey.io"
-  url "https://github.com/valkey-io/valkey/archive/refs/tags/redis-7.2.4.tar.gz"
-  sha256 "275bd332d1013c288915469466aae165d349a599494d91a46cf22798910be327"
-  license "BSD-3-Clause"
+  url "https://github.com/valkey-io/valkey/archive/refs/tags/7.2.6.tar.gz"
+  sha256 "5272f244deecd5655d805aabc71c84a7c7699bc4fa009dd7fc550806a042d512"
+  license all_of: [
+    "BSD-3-Clause",
+    "BSD-2-Clause", # deps/jemalloc, deps/linenoise, src/lzf*
+    "BSL-1.0", # deps/fpconv
+    "MIT", # deps/lua
+    any_of: ["CC0-1.0", "BSD-2-Clause"], # deps/hdr_histogram
+  ]
   head "https://github.com/valkey-io/valkey.git", branch: "unstable"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "379bf80808797ec3c9885baf86e5426360171c7c9663db664fe4f73575bd7dce"
-    sha256 cellar: :any,                 arm64_ventura:  "cff11b3943ce50a90fa31f75fe062191c95acd1b0fcd4361fa4b2857b2333105"
-    sha256 cellar: :any,                 arm64_monterey: "f6ccd387476c12611ea90f45e55e0cb31cf21db04489b37be1a06f71814fec55"
-    sha256 cellar: :any,                 sonoma:         "fbfd66eafd961bb2c5af5de4dac9fa92cd75ad9f55e0410c49b1c6b95606b121"
-    sha256 cellar: :any,                 ventura:        "4e11ec6456fcfeaeb69ce7b2c6b5e74d25c412ca8612cb61b83605f0ca8e48a7"
-    sha256 cellar: :any,                 monterey:       "75b05936f7419e56de73eb410e9a112bd65a30a308bbe6e60a1c61cf718666a1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "be464c47d5f879ea10eda3ffac294134394c10c6f44a33c8295a4da7668c9e73"
+    sha256 cellar: :any,                 arm64_sonoma:   "d3cd139668e121b5caa306ce301fda2614ca1b46941fe25db5a0a9b80a6ad8dd"
+    sha256 cellar: :any,                 arm64_ventura:  "de9f479d5978b0bbf635299d225c3068a5e7f5aac8a410fbdf173a9cd78b3185"
+    sha256 cellar: :any,                 arm64_monterey: "85a845363f2832856e4cbf131844254283b4c2c56f1a383a19bebf68be60a5d0"
+    sha256 cellar: :any,                 sonoma:         "b9b53942e9c10157cd99511dde13f531dced1ab8a0f9cb6951af0b6f30f03f68"
+    sha256 cellar: :any,                 ventura:        "20de31a33ccff361c090da4991463f7f7566014d00ce1a80773a6c1d9f026e23"
+    sha256 cellar: :any,                 monterey:       "6c1438f58b815998b049b1fbd21d15d22dc4691b5844954a44b453d1ef38466c"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d87aa424286c347de00f181b805ad13714b9747987f649f2864239d29da53904"
   end
 
   depends_on "openssl@3"
 
-  conflicts_with "redis", because: "both install `redis` binaries"
+  conflicts_with "redis", because: "both install `redis-*` binaries"
 
   def install
     system "make", "install", "PREFIX=#{prefix}", "CC=#{ENV.cc}", "BUILD_TLS=yes"
 
-    %w[run db/redis log].each { |p| (var/p).mkpath }
+    %w[run db/valkey log].each { |p| (var/p).mkpath }
 
     # Fix up default conf file to match our paths
-    inreplace "redis.conf" do |s|
-      s.gsub! "/var/run/redis_6379.pid", var/"run/redis.pid"
-      s.gsub! "dir ./", "dir #{var}/db/redis/"
+    inreplace "valkey.conf" do |s|
+      s.gsub! "/var/run/valkey_6379.pid", var/"run/valkey.pid"
+      s.gsub! "dir ./", "dir #{var}/db/valkey/"
       s.sub!(/^bind .*$/, "bind 127.0.0.1 ::1")
     end
 
-    etc.install "redis.conf"
-    etc.install "sentinel.conf" => "redis-sentinel.conf"
+    etc.install "valkey.conf"
+    etc.install "sentinel.conf" => "valkey-sentinel.conf"
   end
 
   service do
-    run [opt_bin/"redis-server", etc/"redis.conf"]
+    run [opt_bin/"valkey-server", etc/"valkey.conf"]
     keep_alive true
-    error_log_path var/"log/redis.log"
-    log_path var/"log/redis.log"
+    error_log_path var/"log/valkey.log"
+    log_path var/"log/valkey.log"
     working_dir var
   end
 
   test do
-    system bin/"redis-server", "--test-memory", "2"
-    %w[run db/redis log].each { |p| assert_predicate var/p, :exist?, "#{var/p} doesn't exist!" }
+    system bin/"valkey-server", "--test-memory", "2"
+    %w[run db/valkey log].each { |p| assert_predicate var/p, :exist?, "#{var/p} doesn't exist!" }
   end
 end

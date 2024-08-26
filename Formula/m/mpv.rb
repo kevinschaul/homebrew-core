@@ -1,36 +1,21 @@
 class Mpv < Formula
   desc "Media player based on MPlayer and mplayer2"
   homepage "https://mpv.io"
+  url "https://github.com/mpv-player/mpv/archive/refs/tags/v0.38.0.tar.gz"
+  sha256 "86d9ef40b6058732f67b46d0bbda24a074fae860b3eaae05bab3145041303066"
   license :cannot_represent
   revision 2
   head "https://github.com/mpv-player/mpv.git", branch: "master"
 
-  stable do
-    url "https://github.com/mpv-player/mpv/archive/refs/tags/v0.37.0.tar.gz"
-    sha256 "1d2d4adbaf048a2fa6ee134575032c4b2dad9a7efafd5b3e69b88db935afaddf"
-
-    # Fix build with FFmpeg 7.0.
-    # Remove when included in a release.
-    # https://github.com/mpv-player/mpv/pull/13659
-    patch do
-      url "https://github.com/mpv-player/mpv/commit/62b1bad755bb6141c5a704741bda8a4da6dfcde5.patch?full_index=1"
-      sha256 "7d6119161f8d2adcc62c8841cee7ea858bf46e51e8d828248ca2133281e2df0a"
-    end
-    patch do
-      url "https://github.com/mpv-player/mpv/commit/78447c4b91634aa91dcace1cc6a9805fb93b9252.patch?full_index=1"
-      sha256 "69e4ead829e36b3a175e40ed3c58cc4291a5b6634da70d02b0a5191b9e6d03f6"
-    end
-  end
-
   bottle do
     rebuild 1
-    sha256 arm64_sonoma:   "503033133d2409d22408524c92939ff27a0119a0a8fbed7fc07526edacefb19c"
-    sha256 arm64_ventura:  "e8603f24501346996474c0a3e098a46abbdc06a0b3a0ae9e63fcdadc4a9ecb22"
-    sha256 arm64_monterey: "75b3a089692824260780773758e597003f6c803e632c2f1f9bf5f9588e081007"
-    sha256 sonoma:         "80a7d43dade2df41a4ff05fe3e9846eadb77066fe30de4003d3ec4845e4047cc"
-    sha256 ventura:        "e04e62d0a360f559eb5904f4e1ab161dcb9e6dd8609b8464240db5f7fe4b88e2"
-    sha256 monterey:       "98584844157bb365f6b902d61e3bca9513ab326fb2a3fbbe8f85aab23b02ca4f"
-    sha256 x86_64_linux:   "67dfb85317fa2ccd0a99ef9e064868c4392977a5759d840c078fce9298d53929"
+    sha256 arm64_sonoma:   "4dbf5f21d142921fd15db9e065d9a8676c4a20c4970b38decc75a698aeb55013"
+    sha256 arm64_ventura:  "d28db8e432434297ae11de44b9e1cd1f12dee57a2dee230b37ef04a82ffc532d"
+    sha256 arm64_monterey: "58a95b46e9b55f0739dc424a286a835f94ae02e1f29dccf97c03e6779870d2b1"
+    sha256 sonoma:         "dee2503d155630932ab26f9296c9f2fbe02135df9e6eaa7e85b329edb03427ef"
+    sha256 ventura:        "bcd8baa2f0376fb6979d5b5f690d04a250c3e4be6ed086c79d763f754e34f4de"
+    sha256 monterey:       "bbedc9e4e1b95a0db432bb6ab040af1b10de8c48a9619803c95b311bc286fb55"
+    sha256 x86_64_linux:   "3a1e0b8cc2f36392714bd044fae7066f54b353421c32c782a6f67a9736e4ffdc"
   end
 
   depends_on "docutils" => :build
@@ -41,16 +26,39 @@ class Mpv < Formula
   depends_on "jpeg-turbo"
   depends_on "libarchive"
   depends_on "libass"
+  depends_on "libbluray"
   depends_on "libplacebo"
   depends_on "little-cms2"
   depends_on "luajit"
   depends_on "mujs"
+  depends_on "rubberband"
   depends_on "uchardet"
   depends_on "vapoursynth"
+  depends_on "vulkan-loader"
   depends_on "yt-dlp"
+  depends_on "zimg"
+
+  uses_from_macos "zlib"
+
+  on_macos do
+    depends_on "molten-vk"
+  end
 
   on_linux do
     depends_on "alsa-lib"
+    depends_on "libdrm"
+    depends_on "libva"
+    depends_on "libvdpau"
+    depends_on "libx11"
+    depends_on "libxext"
+    depends_on "libxkbcommon"
+    depends_on "libxpresent"
+    depends_on "libxrandr"
+    depends_on "libxscrnsaver"
+    depends_on "libxv"
+    depends_on "mesa"
+    depends_on "pulseaudio"
+    depends_on "wayland"
   end
 
   def install
@@ -63,19 +71,28 @@ class Mpv < Formula
     ENV["NINJA"] = Formula["ninja"].opt_bin/"ninja"
 
     # libarchive is keg-only
-    ENV.prepend_path "PKG_CONFIG_PATH", Formula["libarchive"].opt_lib/"pkgconfig"
+    ENV.prepend_path "PKG_CONFIG_PATH", Formula["libarchive"].opt_lib/"pkgconfig" if OS.mac?
 
     args = %W[
+      -Dbuild-date=false
       -Dhtml-build=enabled
       -Djavascript=enabled
       -Dlibmpv=true
       -Dlua=luajit
       -Dlibarchive=enabled
       -Duchardet=enabled
+      -Dvulkan=enabled
       --sysconfdir=#{pkgetc}
       --datadir=#{pkgshare}
       --mandir=#{man}
     ]
+    if OS.linux?
+      args += %w[
+        -Degl=enabled
+        -Dwayland=enabled
+        -Dx11=enabled
+      ]
+    end
 
     system "meson", "setup", "build", *args, *std_meson_args
     system "meson", "compile", "-C", "build", "--verbose"

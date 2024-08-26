@@ -1,8 +1,8 @@
 class Apt < Formula
   desc "Advanced Package Tool"
   homepage "https://wiki.debian.org/Apt"
-  url "https://deb.debian.org/debian/pool/main/a/apt/apt_2.7.14.tar.xz"
-  sha256 "7a01783f05b7d90f36aea7871cc06757499ae8ade933497aaeb6c508274e7358"
+  url "https://deb.debian.org/debian/pool/main/a/apt/apt_2.9.8.tar.xz"
+  sha256 "54fb7b34bdb93ea2081123ab35f893c26fe0f3e800a54e8e9eccb5f3e2ec9710"
   license "GPL-2.0-or-later"
 
   livecheck do
@@ -11,7 +11,7 @@ class Apt < Formula
   end
 
   bottle do
-    sha256 x86_64_linux: "a763ab96ea981b63b61377354f8b48023b25fd270ae635777ac4e28db18703ae"
+    sha256 x86_64_linux: "849a80b983668551d0007ecd09a2a8c95b28d2f461f2b9a31fbe2b52c23a2e04"
   end
 
   keg_only "not linked to prevent conflicts with system apt"
@@ -31,11 +31,15 @@ class Apt < Formula
   depends_on "gettext"
   depends_on "gnupg"
   depends_on "gnutls"
+  depends_on "libgcrypt"
   depends_on :linux
   depends_on "lz4"
   depends_on "perl"
+  depends_on "systemd"
   depends_on "xxhash"
+  depends_on "xz"
   depends_on "zlib"
+  depends_on "zstd"
 
   fails_with gcc: "5"
 
@@ -86,24 +90,18 @@ class Apt < Formula
   end
 
   resource "ExtUtils::CChecker" do
-    url "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/ExtUtils-CChecker-0.11.tar.gz"
-    sha256 "117736677e37fc611f5b76374d7f952e1970eb80e1f6ad5150d516e7ae531bf5"
+    url "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/ExtUtils-CChecker-0.12.tar.gz"
+    sha256 "8b87d145337dec1ee754d30871d0b105c180ad4c92c7dc0c7fadd76cec8c57d3"
   end
 
   resource "XS::Parse::Keyword::Builder" do
-    url "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/XS-Parse-Keyword-0.39.tar.gz"
-    sha256 "b4e775becc8a5d9b52cb5d569b9d3230eea451c134735845e77f89fa6a6c23d8"
+    url "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/XS-Parse-Keyword-0.42.tar.gz"
+    sha256 "7e498879e7813c9a7ecf4296c74774a32e40131e3a64efcc63c8010c0eb11382"
   end
 
   resource "Syntax::Keyword::Try" do
     url "https://cpan.metacpan.org/authors/id/P/PE/PEVANS/Syntax-Keyword-Try-0.29.tar.gz"
     sha256 "cc320719d3608daa9514743a43dac2be99cb8ccd989b1fefa285290cb1d59d8f"
-  end
-
-  # upstream bug report, https://github.com/mquinson/po4a/issues/475
-  patch do
-    url "https://raw.githubusercontent.com/Homebrew/formula-patches/07275a9af84b536ac737c364d66fc2eb4daf729a/apt/po4a-0.70.patch"
-    sha256 "35f0ac1416af3116e17275a4b233a7abc34767655734bf07dda83ff307266e15"
   end
 
   def install

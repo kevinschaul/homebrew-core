@@ -1,33 +1,33 @@
 class Grafana < Formula
   desc "Gorgeous metric visualizations and dashboards for timeseries databases"
   homepage "https://grafana.com"
-  url "https://github.com/grafana/grafana/archive/refs/tags/v10.4.2.tar.gz"
-  sha256 "7f50ff23608bc0d9713ac8aeadfb6fbf0e1a945292c7e792873b04078b11579d"
+  url "https://github.com/grafana/grafana/archive/refs/tags/v11.1.4.tar.gz"
+  sha256 "6573e70deeeb1de8b90c855c0368cc56118d0350706c67313c54372238b56ea0"
   license "AGPL-3.0-only"
   head "https://github.com/grafana/grafana.git", branch: "main"
 
-  bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "790f0b281439f47da2bd28b3e798955a29c52ed3d7c3093e98cce82d7ef20d7a"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "efbb674af694c5c810183e896e8caab0d51a476452f16e6d0ca10037f8d9dfe8"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "028c2faed32d3b1349a420173ed045db2e4cc5da5158724389c7784adadd3ba0"
-    sha256 cellar: :any_skip_relocation, sonoma:         "cb493a7fcf8bad4dc1f2971b109f24f2fe270e1b954fde7758c2300e9fec63aa"
-    sha256 cellar: :any_skip_relocation, ventura:        "4469d5bf221408269e727eac4bdd1b660bf6a7f76191f8c68eb520c92e022cac"
-    sha256 cellar: :any_skip_relocation, monterey:       "82a049b31768a45a6d7594c8ef0af90650e090b9e0b1305d2827ca661d4abb8c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "127313fbb2064a054f23c9789c80541d1957ba7c9dd32514ec6374ccaa7d9179"
+  livecheck do
+    url :stable
+    regex(/^v?(\d+(?:\.\d+)+)$/i)
   end
 
-  depends_on "go" => :build
+  bottle do
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "332873b18184ced342369c31dd07727f3ec6fc1299642061e77713dbb7ebfe1d"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5a18a3eba302cc95f5afe3e9bb0492c81f4194b4c8a7ffabbed81d59dce2bd3c"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "297b2318b5177781fdfc73a5edd58ecaaa7ff9b05634bf0d90aae2a9709454bf"
+    sha256 cellar: :any_skip_relocation, sonoma:         "a1ac0c97808edc4a12d92e0192bf4f6fb4de649d9ffd6ac96b111a11fc01b677"
+    sha256 cellar: :any_skip_relocation, ventura:        "0d5255b9f03ee2341c266552ccb287ee6a02253ab9934036e5345b79d50e2218"
+    sha256 cellar: :any_skip_relocation, monterey:       "2977e546fdf06ab1ebef9b1bc94d4d643459f38b550ff5dd17d166c125166720"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a79b2bef6c8dd7362524b6a6a699053b7d4a9b49c9f26aae3a564c2ddaaf85aa"
+  end
+
+  # use "go" again when https://github.com/grafana/grafana/issues/89796 is resolved and released
+  depends_on "go@1.22" => :build
   depends_on "node" => :build
   depends_on "yarn" => :build
 
   uses_from_macos "python" => :build, since: :catalina
   uses_from_macos "zlib"
-
-  on_system :linux, macos: :mojave_or_older do
-    # Workaround for old `node-gyp` that needs distutils.
-    # TODO: Remove when `node-gyp` is v10+
-    depends_on "python-setuptools" => :build
-  end
 
   on_linux do
     depends_on "fontconfig"

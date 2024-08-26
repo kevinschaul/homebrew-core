@@ -1,21 +1,23 @@
 class Moar < Formula
   desc "Nice to use pager for humans"
   homepage "https://github.com/walles/moar"
-  url "https://github.com/walles/moar/archive/refs/tags/v1.23.10.tar.gz"
-  sha256 "51a26349f637452fef8d808fa5ad611befd49df0bd32779ef57ffe14b37d9e2b"
+  url "https://github.com/walles/moar/archive/refs/tags/v1.26.0.tar.gz"
+  sha256 "d08bbc7340abb149d9651062ed8c3710bd18c16457fd7597f4cbaedefa2be1b5"
   license "BSD-2-Clause"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "525b13c310c7dd5ea1f19ca776e7b1d008e2ca9ec35aba79390d1b041cc7a05e"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "525b13c310c7dd5ea1f19ca776e7b1d008e2ca9ec35aba79390d1b041cc7a05e"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "525b13c310c7dd5ea1f19ca776e7b1d008e2ca9ec35aba79390d1b041cc7a05e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "5ee823d9a6ab958d0003bf4c3a83064dbd2e354e0214eccd3d2405fc20f8668b"
-    sha256 cellar: :any_skip_relocation, ventura:        "5ee823d9a6ab958d0003bf4c3a83064dbd2e354e0214eccd3d2405fc20f8668b"
-    sha256 cellar: :any_skip_relocation, monterey:       "5ee823d9a6ab958d0003bf4c3a83064dbd2e354e0214eccd3d2405fc20f8668b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "be3f2de4d0e17f5e16dbdff10a66be08071f6483bd96e7173322b32c76386a2b"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "58bea1a01bd8d1fbbf9d7a8f0f7abe88bd88c8dee9cada7037d66353871ff8ad"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "58bea1a01bd8d1fbbf9d7a8f0f7abe88bd88c8dee9cada7037d66353871ff8ad"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "58bea1a01bd8d1fbbf9d7a8f0f7abe88bd88c8dee9cada7037d66353871ff8ad"
+    sha256 cellar: :any_skip_relocation, sonoma:         "c7bc0c1241d9ae166b8ae9f15ee557b049cacf6fc67c8efc1a4ffe379777cec8"
+    sha256 cellar: :any_skip_relocation, ventura:        "c7bc0c1241d9ae166b8ae9f15ee557b049cacf6fc67c8efc1a4ffe379777cec8"
+    sha256 cellar: :any_skip_relocation, monterey:       "c7bc0c1241d9ae166b8ae9f15ee557b049cacf6fc67c8efc1a4ffe379777cec8"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e403dbe969177e9dfe971cad95dbb1c6e7cd327d479948fdd0dff2b2f33e43ef"
   end
 
   depends_on "go" => :build
+
+  conflicts_with "moarvm", "rakudo-star", because: "both install `moar` binaries"
 
   def install
     ldflags = "-s -w -X main.versionString=v#{version}"

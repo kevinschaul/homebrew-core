@@ -1,30 +1,28 @@
 class SignalCli < Formula
   desc "CLI and dbus interface for WhisperSystems/libsignal-service-java"
   homepage "https://github.com/AsamK/signal-cli"
-  url "https://github.com/AsamK/signal-cli/archive/refs/tags/v0.13.2.tar.gz"
-  sha256 "8e77fe9af2482b38c7aababc40a59b295476f774ad8223aa52b6be1e414dc702"
+  url "https://github.com/AsamK/signal-cli/archive/refs/tags/v0.13.5.tar.gz"
+  sha256 "c1fdc8ccff324278a9357aed04fa7de88ecba1fc270f5555b5cea77d415d1342"
   license "GPL-3.0-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "383ed9ca39f3c5682d622eb66536653129e0d694a6a53818effa75f4c5a589c3"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "5d349f32ba1f57b6a99b516cf7374700126bcf0ade3779de8a379c67b2e6ac78"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "bf9966d25eff29d589efcc405d94c08395cab79019a4dfa51cefd4d997450b14"
-    sha256 cellar: :any_skip_relocation, sonoma:         "e2c9de893a6eb48811561ad1c035dd9990103ecafa8820ae17cb108898fe4938"
-    sha256 cellar: :any_skip_relocation, ventura:        "e588be4882c8b19e6342d533c0319d6b7cdb295c872f242e199d1788f0b6affa"
-    sha256 cellar: :any_skip_relocation, monterey:       "448a803aa0a84ea2b5ccd2c8e7233c7862fbe8a4fd9dda441ccf2695f22745b1"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4ee2bb4d420d1155f9718e6d8ed9593718be06b41f71a5a7d2cb3057442f2e09"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "5df7b4a1b402f0bad8a39e3bbcf3c6bbe2d065f846827919ed580db76b7179e7"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "cd97c3784b9732002ac2459f02bc98ce271176c5fe69fbf38b3e7d46d400bd4f"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "71d800c2749004ca1ed6214b87b6acbb4a5f8e6cf775a0aede637a82b6e83ffa"
+    sha256 cellar: :any_skip_relocation, sonoma:         "42724c8265d152666e72151c1ffa3d753c597ac05b93481fc33fadf822cd7bb2"
+    sha256 cellar: :any_skip_relocation, ventura:        "7392fcf9650f2efa1c80113272339dbeb82f8a369f232d345f97a18326036d42"
+    sha256 cellar: :any_skip_relocation, monterey:       "58b01a46c5702ebdea14296964595b0a7c0f43656bce265ec3a7c7ca9449870a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "d98bafe277e4c3dc429fd4907b809e598445cb1fbfb08088e4f705f1e0cdc7a5"
   end
 
   depends_on "cmake" => :build # For `boring-sys` crate in `libsignal-client`
   depends_on "gradle" => :build
   depends_on "protobuf" => :build
-  # the libsignal-client build targets a specific rustc listed in the file
+  # libsignal-client requires a specific version of rustc
   # https://github.com/signalapp/libsignal/blob/#{libsignal-client.version}/rust-toolchain
-  # which doesn't automatically happen if we use brew-installed rust. rustup-init
-  # allows us to use a toolchain that lives in HOMEBREW_CACHE
-  depends_on "rustup-init" => :build
+  depends_on "rustup" => :build
 
-  depends_on "openjdk"
+  depends_on "openjdk@21"
 
   uses_from_macos "llvm" => :build # For `libclang`, used by `boring-sys` crate
   uses_from_macos "zip" => :build
@@ -34,20 +32,17 @@ class SignalCli < Formula
   # url=https://github.com/AsamK/signal-cli/releases/download/v$version/signal-cli-$version.tar.gz
   # curl -fsSL $url | tar -tz | grep libsignal-client
   resource "libsignal-client" do
-    url "https://github.com/signalapp/libsignal/archive/refs/tags/v0.40.1.tar.gz"
-    sha256 "78bec66c1721b768204bf8cd6deb4a380b3c2c82197d298381c55f306f965f35"
+    url "https://github.com/signalapp/libsignal/archive/refs/tags/v0.52.2.tar.gz"
+    sha256 "40ddc51bc5bf1013c583c07717ed00cedfafda55f9f9a43aad72f9a55986b199"
   end
 
   def install
+    ENV["JAVA_HOME"] = Language::Java.java_home("21")
     system "gradle", "build"
     system "gradle", "installDist"
     libexec.install (buildpath/"build/install/signal-cli").children
     (libexec/"bin/signal-cli.bat").unlink
-    (bin/"signal-cli").write_env_script libexec/"bin/signal-cli", Language::Java.overridable_java_home_env
-
-    # this will install the necessary cargo/rustup toolchain bits in HOMEBREW_CACHE
-    system Formula["rustup-init"].bin/"rustup-init", "-qy", "--no-modify-path"
-    ENV.prepend_path "PATH", HOMEBREW_CACHE/"cargo_cache/bin"
+    (bin/"signal-cli").write_env_script libexec/"bin/signal-cli", Language::Java.overridable_java_home_env("21")
 
     resource("libsignal-client").stage do |r|
       # https://github.com/AsamK/signal-cli/wiki/Provide-native-lib-for-libsignal#manual-build

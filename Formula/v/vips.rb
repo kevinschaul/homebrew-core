@@ -1,8 +1,8 @@
 class Vips < Formula
   desc "Image processing library"
   homepage "https://github.com/libvips/libvips"
-  url "https://github.com/libvips/libvips/releases/download/v8.15.2/vips-8.15.2.tar.xz"
-  sha256 "a2ab15946776ca7721d11cae3215f20f1f097b370ff580cd44fc0f19387aee84"
+  url "https://github.com/libvips/libvips/releases/download/v8.15.3/vips-8.15.3.tar.xz"
+  sha256 "3e27d9f536eafad64013958fe9e8a1964c90b564c731d49db7c1a1c11b1052a0"
   license "LGPL-2.1-or-later"
 
   livecheck do
@@ -11,14 +11,13 @@ class Vips < Formula
   end
 
   bottle do
-    rebuild 1
-    sha256 arm64_sonoma:   "107818125f290b973e4153f4ceba38e3681446e01021e417f532d286d96bcaad"
-    sha256 arm64_ventura:  "aabbb32d5abf9f0ca8dfc503f4f51448fe6939cc48c3d2f08e8fec0170eea8f2"
-    sha256 arm64_monterey: "67a92f062a0de63219a3165c6cabc4497ef1037d9b56c9c4b7a08f91414f708c"
-    sha256 sonoma:         "9259852d45f4d6e76db87f3a597cfd023ca9b43ebac4b8fa435bb98f05d026d6"
-    sha256 ventura:        "cc1227a6f5f465fa3035f3fd460923844080cb698ba145082f8702cf1d800cde"
-    sha256 monterey:       "500c05dd04debeb1d0f66c48ccb408ec73d12c5924c93b3ff9698e879adbdd67"
-    sha256 x86_64_linux:   "6c2230970574bc18d499228cfb979e3044710025e4dc397045a5078d87aa2ff5"
+    sha256 arm64_sonoma:   "26c573f93334362a2014fdae473da7af8b867f31b8d8f2b0763873a87e5b7ac1"
+    sha256 arm64_ventura:  "fb4dce4c8b0fb76319214da43e82367ed2b75e748908cb14da5288f0bd3b0206"
+    sha256 arm64_monterey: "08bfcda00a28eac3df579be941dcc04330ddaff08230ada26d5fa53489f56dd3"
+    sha256 sonoma:         "94a511a6a00259a376eb76fd288683a26fdf757729143070d46a3a2620d28c5a"
+    sha256 ventura:        "601d0295a11f9d40001832bf786a8eb2e58ad5202773e0d9675c42e3f28cacb0"
+    sha256 monterey:       "96432c88dcdb4cc6fc37b1f854f22814f37f0f8ce6eeca02ad7a996eb6618449"
+    sha256 x86_64_linux:   "07568eb2e6fffd0059fbc34f678825feb5815a2b2a29fed738865e91ba36e6cb"
   end
 
   depends_on "gobject-introspection" => :build
@@ -79,7 +78,7 @@ class Vips < Formula
   end
 
   test do
-    system "#{bin}/vips", "-l"
+    system bin/"vips", "-l"
     cmd = "#{bin}/vipsheader -f width #{test_fixtures("test.png")}"
     assert_equal "8", shell_output(cmd).chomp
 

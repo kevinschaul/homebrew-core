@@ -1,25 +1,25 @@
 class Talhelper < Formula
   desc "Configuration helper for talos clusters"
   homepage "https://budimanjojo.github.io/talhelper/latest/"
-  url "https://github.com/budimanjojo/talhelper/archive/refs/tags/v2.3.10.tar.gz"
-  sha256 "fa251cf863376b3800bcd83b6ad63409fbac77bd93594f023df41523bf345dbb"
+  url "https://github.com/budimanjojo/talhelper/archive/refs/tags/v3.0.5.tar.gz"
+  sha256 "33b438017e17a9f68a1da09a40a022f88e8bca5315c0f80df82ba0aff4140c07"
   license "BSD-3-Clause"
   head "https://github.com/budimanjojo/talhelper.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e4ac752d8e2d2c0ae2fcc2377d3763818c6b8c67a8b1f7a98f12cc14a216ac75"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "967f68ad7590b381a17685b243842d6d343916e6c64a312170913c88a93a33eb"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "c496002b72fbe55e4e817eb05518a6f6f6c3a985dacfda5e787a1b3dc057263e"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8f329d586749db9ed1461e33a17e1f28a2694b2d1c93557ac0a1356dfd19bb66"
-    sha256 cellar: :any_skip_relocation, ventura:        "2fe55dfbeea71d48d32b4daa78bf73024b091e5f52ce49ffc95eba17ba4d173b"
-    sha256 cellar: :any_skip_relocation, monterey:       "8376a9e4d2ec664c39a68c54fbd9782e403f2090a38aee3ad238114eb8cd6295"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "053408d004486422f85c138caac4f3c0f3aa10f12ac560753f4d12bfbcbf81cb"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "92c24e3c204e998a6b38bda110eb1b7c10e63ee0aa027f6e98d4003a607b6f7b"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "13c92bf518a767c950fc24de86df25b069c5ea9bccb973b27f33ae72dd7dff87"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "b4873c4c2f83a44df745a9efddabf3e3a0c124b771b324f984c62a61490aefdb"
+    sha256 cellar: :any_skip_relocation, sonoma:         "9b1770bdeadc93c2db006bbdf20d1aabd5c411d25c8291c21267d2d2deaf7e2e"
+    sha256 cellar: :any_skip_relocation, ventura:        "e9356ce4236472bafaadcc11d0ef60804989c3762e16afe4190fcbe2f6250ac4"
+    sha256 cellar: :any_skip_relocation, monterey:       "aa12ba4bdb408aa61d0f3b84a7f54b134eacc9b2baa673e824a1c4759d699052"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "85129a135b67ab96fae45ef3c37a18256f7710cc37f1af6e045cbe0ae2685786"
   end
 
   depends_on "go" => :build
 
   def install
-    ldflags = "-s -w -X github.com/budimanjojo/talhelper/cmd.version=#{version}"
+    ldflags = "-s -w -X github.com/budimanjojo/talhelper/v#{version.major}/cmd.version=#{version}"
     system "go", "build", *std_go_args(ldflags:)
 
     generate_completions_from_executable(bin/"talhelper", "completion")

@@ -6,16 +6,17 @@ class Buku < Formula
   url "https://github.com/jarun/buku/archive/refs/tags/v4.9.tar.gz"
   sha256 "1e432270ae78c7852110dcf2c2e215893bcc338299a4998f14a1f6b26e37bfac"
   license "GPL-3.0-or-later"
+  revision 2
   head "https://github.com/jarun/buku.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "33f34938fa8539e5d40e7a1c0299f774a712267fbe3644eb8e03fe1cd39f9d30"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "d8a7270416c10c6dcb4e409edc6e47e5e0be420adb7f88d01aab2e94e297097a"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "11a80147416a1caea1b2dfd490390a66df5d21bf20e9a9dfce6ebbe9efa2d672"
-    sha256 cellar: :any_skip_relocation, sonoma:         "8c38d92eb11fe0f52348b8393207898972ba54a614438dc220cff6068379723f"
-    sha256 cellar: :any_skip_relocation, ventura:        "5b938911d7d5e52a2f3d44f6c7bf45f849383a3bc1af609e071467f9563576a8"
-    sha256 cellar: :any_skip_relocation, monterey:       "c4838bc05a1e1046c721b348a167d3738cce702f885f6b3b08a7ea5bdcc1ba3b"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "00daf832e10fa9de23d258c41cb6ab4234cb2d6ecf4006acd5d55a2ea64b6257"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "42789fd14267d57b9b0c72105cf9f9eea6a569252f7b5cefbed919c9de76c2dc"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "220c3bc922a5a4ecd65e4744d3f338a6260209343aae13d8c5fd62c6220afcfa"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "da1690b766a2a5d1b0b60f75d656f2e04ff569d3a13dd15ec1a2c7f9d54182ca"
+    sha256 cellar: :any_skip_relocation, sonoma:         "b1a8151f967b9ce29331ca1deb8a9961e29d93c53a56106b8f94124c9a999126"
+    sha256 cellar: :any_skip_relocation, ventura:        "78ffcaff8c41bcab589d21f9c335cb4d7b8ab9dfc04c9aa70849b7de744e3e0a"
+    sha256 cellar: :any_skip_relocation, monterey:       "a182efa77e04bf172c94b56cd9e0ab2d5c034a793f3cb24e248bbb0318a03801"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "0dc87c08b6b4504d81dad0696f6ae0e514a2f435210b044b03ad6e3da898e99a"
   end
 
   depends_on "certifi"
@@ -66,8 +67,8 @@ class Buku < Formula
   end
 
   resource "flask-paginate" do
-    url "https://files.pythonhosted.org/packages/31/e2/cc5ba32420eeb994ae0f9fc31c066b7e96279036b54a39bd7a53978c7730/flask-paginate-2024.3.28.tar.gz"
-    sha256 "3d600e3ff035cc5f0322812049772e96fa9c48b397cc58b1ba13c78ee10db7c8"
+    url "https://files.pythonhosted.org/packages/5c/d0/aca9153b109f0062eaadb497448f5e596f87cc89474d77347a1d931c8842/flask-paginate-2024.4.12.tar.gz"
+    sha256 "2de04606b061736f0fc8fbe73d9d4d6fc03664638eca70a57728b03b3e2c9577"
   end
 
   resource "flask-wtf" do
@@ -81,13 +82,13 @@ class Buku < Formula
   end
 
   resource "itsdangerous" do
-    url "https://files.pythonhosted.org/packages/7f/a1/d3fb83e7a61fa0c0d3d08ad0a94ddbeff3731c05212617dff3a94e097f08/itsdangerous-2.1.2.tar.gz"
-    sha256 "5dbbc68b317e5e42f327f9021763545dc3fc3bfe22e6deb96aaf1fc38874156a"
+    url "https://files.pythonhosted.org/packages/9c/cb/8ac0172223afbccb63986cc25049b154ecfb5e85932587206f42317be31d/itsdangerous-2.2.0.tar.gz"
+    sha256 "e0050c0b7da1eea53ffaf149c0cfbb5c6e2e2b69c4bef22c81fa6eb73e5f6173"
   end
 
   resource "jinja2" do
-    url "https://files.pythonhosted.org/packages/b2/5e/3a21abf3cd467d7876045335e681d276ac32492febe6d98ad89562d1a7e1/Jinja2-3.1.3.tar.gz"
-    sha256 "ac8bd6544d4bb2c9792bf3a159e80bba8fda7f07e81bc3aed565432d5925ba90"
+    url "https://files.pythonhosted.org/packages/ed/55/39036716d19cab0747a5020fc7e907f362fbf48c984b14e62127f7e68e5d/jinja2-3.1.4.tar.gz"
+    sha256 "4a3aee7acbbe7303aede8e9648d13b8bf88a429282aa6122a993f0ac800cb369"
   end
 
   resource "markupsafe" do
@@ -116,8 +117,8 @@ class Buku < Formula
   end
 
   resource "urllib3" do
-    url "https://files.pythonhosted.org/packages/0c/39/64487bf07df2ed854cc06078c27c0d0abc59bd27b32232876e403c333a08/urllib3-1.26.18.tar.gz"
-    sha256 "f8ecc1bba5667413457c529ab955bf8c67b45db799d159066261719e328580a0"
+    url "https://files.pythonhosted.org/packages/c8/93/65e479b023bbc46dab3e092bda6b0005424ea3217d711964ccdede3f9b1b/urllib3-1.26.19.tar.gz"
+    sha256 "3e3d753a8618b86d7de333b4223005f68720bcd6a7d2bcb9fbd2229ec7c1e429"
   end
 
   resource "visitor" do

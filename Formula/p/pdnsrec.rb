@@ -1,9 +1,10 @@
 class Pdnsrec < Formula
   desc "Non-authoritative/recursing DNS server"
   homepage "https://www.powerdns.com/powerdns-recursor"
-  url "https://downloads.powerdns.com/releases/pdns-recursor-5.0.3.tar.bz2"
-  sha256 "01d170a2850eb2aca501d6838a3444136589980d5cb2c2b53392b76459e38c07"
+  url "https://downloads.powerdns.com/releases/pdns-recursor-5.1.1.tar.bz2"
+  sha256 "5b7ab793ace822294a3f38092fe72ee64748ff0cbb8a5283dc77f40780605ae9"
   license "GPL-2.0-only" => { with: "openvpn-openssl-exception" }
+  revision 1
 
   livecheck do
     url "https://downloads.powerdns.com/releases/"
@@ -11,13 +12,13 @@ class Pdnsrec < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "36834fe910fd8c845e4819cd35fd3b04f6359b5165264afc20abedf8387d4081"
-    sha256 arm64_ventura:  "48f83494d7eebc73af931c095dab17227610d3c5e6e23f079860429648302346"
-    sha256 arm64_monterey: "103c2f1a7afe19ad90f41e72a6b0e8550754c66a72fa3404f5bd33df4e77c6a2"
-    sha256 sonoma:         "475624d8e181eb910db8387923d82724acde79704a51906520c673f065ead0e6"
-    sha256 ventura:        "b38fb2035f8a7d872ce6d0f3337941841f72c6c760c76c1081fa3f6ab671c984"
-    sha256 monterey:       "2eb50158597c8108bb84355b31f6e11dd590685f07507d8eca1edc140d10896b"
-    sha256 x86_64_linux:   "d5bbfc45dea4c07a62517043a6386f129f72a1906b3e67e16913e0772c343079"
+    sha256 arm64_sonoma:   "34a52ef9b2313c4335c8878e5274e780fdd9722884dddde312d062c16fa83119"
+    sha256 arm64_ventura:  "0979ed70f516bb36747d5e78cceabe236c529eb0bab2c9a87bd667eb929d1215"
+    sha256 arm64_monterey: "dc517d5ad5484054a43c9f152f110c014ee0f81ba0e741321d3cf52805399cf8"
+    sha256 sonoma:         "48fd3d137fc887a88eba5231de21a5465dbc878bf464c7ba3bcc6fecf5f0a508"
+    sha256 ventura:        "fce8f838c4977d754d642556f77795c9960602205a1fc546aa6ea1dcb17f3e3c"
+    sha256 monterey:       "3b681726241d5b3ac544abc4765fef828123f99a04db459518fc33b6f1847d1b"
+    sha256 x86_64_linux:   "d5c09f9fb970fb35d2bed933accdd077f0dc9f3a0d9e4dd30a559888cb540f78"
   end
 
   depends_on "pkg-config" => :build
@@ -41,6 +42,13 @@ class Pdnsrec < Formula
   end
 
   fails_with gcc: "5"
+
+  # Fix build with boost 1.86.0. Remove if PR is merged and in a release.
+  # PR ref: https://github.com/PowerDNS/pdns/pull/14562
+  patch :p2 do
+    url "https://github.com/PowerDNS/pdns/commit/eed56000b1d68ac083b8e8bea4ff0ea30a1579c4.patch?full_index=1"
+    sha256 "c21a8677c048f3ce023f2e09c5204602031a78c441904567a4da2b7870dc29ad"
+  end
 
   def install
     ENV.cxx11

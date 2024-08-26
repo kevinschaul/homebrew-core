@@ -1,12 +1,12 @@
 class Strace < Formula
   desc "Diagnostic, instructional, and debugging tool for the Linux kernel"
   homepage "https://strace.io/"
-  url "https://github.com/strace/strace/releases/download/v6.8/strace-6.8.tar.xz"
-  sha256 "ba6950a96824cdf93a584fa04f0a733896d2a6bc5f0ad9ffe505d9b41e970149"
+  url "https://github.com/strace/strace/releases/download/v6.10/strace-6.10.tar.xz"
+  sha256 "765ec71aa1de2fe37363c1e40c7b7669fc1d40c44bb5d38ba8e8cd82c4edcf07"
   license "LGPL-2.1-or-later"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, x86_64_linux: "6c550666b1971d64c951b17b50c55a882c21ddf1c02ac36c76b21e28933f7d46"
+    sha256 cellar: :any_skip_relocation, x86_64_linux: "0c5266d9539a9afcf361fa248ad7b7bf20b4c4a66b77a2223be99e47c7b108c8"
   end
 
   head do
@@ -15,16 +15,15 @@ class Strace < Formula
     depends_on "automake" => :build
   end
 
+  depends_on "glibc"
   depends_on :linux
   depends_on "linux-headers@5.15"
 
   def install
     system "./bootstrap" if build.head?
-    system "./configure",
-      "--disable-dependency-tracking",
-      "--disable-silent-rules",
-      "--prefix=#{prefix}",
-      "--enable-mpers=no" # FIX: configure: error: Cannot enable m32 personality support
+    system "./configure", "--disable-silent-rules",
+                          "--enable-mpers=no", # FIX: configure: error: Cannot enable m32 personality support
+                          *std_configure_args.reject { |s| s["--disable-debug"] }
     system "make", "install"
   end
 

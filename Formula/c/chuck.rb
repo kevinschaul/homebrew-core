@@ -1,9 +1,9 @@
 class Chuck < Formula
   desc "Concurrent, on-the-fly audio programming language"
   homepage "https://chuck.cs.princeton.edu/"
-  url "https://chuck.cs.princeton.edu/release/files/chuck-1.5.2.3.tgz"
-  mirror "http://chuck.stanford.edu/release/files/chuck-1.5.2.3.tgz"
-  sha256 "5cf366d564a15264c8c7ca02da17b3b2740e24832f2d64bc82e1dbdde25b3f62"
+  url "https://chuck.cs.princeton.edu/release/files/chuck-1.5.2.5.tgz"
+  mirror "https://chuck.stanford.edu/release/files/chuck-1.5.2.5.tgz"
+  sha256 "e5b604dfb303639392e15245f27dcba6514292b58d0c00b64b00dfa6a116ec75"
   license "GPL-2.0-or-later"
   head "https://github.com/ccrma/chuck.git", branch: "main"
 
@@ -13,13 +13,13 @@ class Chuck < Formula
   end
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "f55279f082ed6688dee289226bf8ceba1f98470958e828c485c9d58cecc76d0b"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "734927579127d74345e9fbd39894924357bf09047e53d3ee977b53711d144fc1"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "497b9ee87d0f0f88882d3a392a05c634b981a14e48bf5aa6323746ba3a1865c3"
-    sha256 cellar: :any_skip_relocation, sonoma:         "89cded60c6f36d5e647915a0d1fd51383f04b3a6d153912a6474306d22935970"
-    sha256 cellar: :any_skip_relocation, ventura:        "e1c0013d681ddef9ee38fba8b7bda9ee39851a1b16d539e3105db8642f8acad8"
-    sha256 cellar: :any_skip_relocation, monterey:       "2e607d3e8819abcb6b72ecbe4f21614092ec989ddebb02191848c72d7c17a71c"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "bc9c4fdd105d11e16cf6f0ff2256c1534b716013d0bb04a538eac466d817d22e"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "c17e1e6bfde23f5dab757502e8f1b1c3212e8fcecaa0ce82694491cf05c80e45"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "308cf5ce16e9c3a16eedfa835d990dcef16bf93412c7f94efb97ea3c8cfce9c0"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "c55d357a5d147cd7b907096f69be83337d87a15a1342ac71fd8317c3d8e5b25a"
+    sha256 cellar: :any_skip_relocation, sonoma:         "6873d3ab3337ec5f0a657723b0fbf6d0117d41a37f60c7478b9eee57be6783f1"
+    sha256 cellar: :any_skip_relocation, ventura:        "2390007e18a5f73fd88c183544ddbb223143df44c1a7e373f7c2b89937b1a447"
+    sha256 cellar: :any_skip_relocation, monterey:       "ae5532853bd70bb832b9707499bc12b189bbc327745771bbf910be814cff5a4a"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "39c0fac876395360fcc3de2cb8cb18d75d6ccdbc969f7ade067ff2a08268cb17"
   end
 
   depends_on xcode: :build

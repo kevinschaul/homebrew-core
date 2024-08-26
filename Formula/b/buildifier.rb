@@ -1,19 +1,19 @@
 class Buildifier < Formula
   desc "Format bazel BUILD files with a standard convention"
   homepage "https://github.com/bazelbuild/buildtools"
-  url "https://github.com/bazelbuild/buildtools/archive/refs/tags/v7.1.0.tar.gz"
-  sha256 "061472b3e8b589fb42233f0b48798d00cf9dee203bd39502bd294e6b050bc6c2"
+  url "https://github.com/bazelbuild/buildtools/archive/refs/tags/v7.1.2.tar.gz"
+  sha256 "39c59cb5352892292cbe3174055aac187edcb5324c9b4e2d96cb6e40bd753877"
   license "Apache-2.0"
   head "https://github.com/bazelbuild/buildtools.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "e9c6a22a4969f64b659735ebe853a838283c48315badb0fb0257a37e05163620"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "e9c6a22a4969f64b659735ebe853a838283c48315badb0fb0257a37e05163620"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "e9c6a22a4969f64b659735ebe853a838283c48315badb0fb0257a37e05163620"
-    sha256 cellar: :any_skip_relocation, sonoma:         "52ec35aa9125f17fcd2b266fdd9a8bf73de77ab266bff10c517451256a3f9507"
-    sha256 cellar: :any_skip_relocation, ventura:        "52ec35aa9125f17fcd2b266fdd9a8bf73de77ab266bff10c517451256a3f9507"
-    sha256 cellar: :any_skip_relocation, monterey:       "52ec35aa9125f17fcd2b266fdd9a8bf73de77ab266bff10c517451256a3f9507"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "fa22386774d9b6290553c6e788dcfc5a1421f345b017dbb9b2294276f5570d36"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "d96b28c947998fe37b5fb0a0e00cee1b4ab6b7fc0622ac367e1c6497e9470371"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "a533dac86fc075d6f47731cce181be7ab0d8d4c7b8fb1279baffecbcc6179087"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "d96b28c947998fe37b5fb0a0e00cee1b4ab6b7fc0622ac367e1c6497e9470371"
+    sha256 cellar: :any_skip_relocation, sonoma:         "a86261373370b14ff82f7e61067b7305b2f8e49e2643be44f5b48e5897996070"
+    sha256 cellar: :any_skip_relocation, ventura:        "23e84c8b339e25f9fe86020216859d6fd48dad62265f7254ba5dacd58bde718f"
+    sha256 cellar: :any_skip_relocation, monterey:       "23e84c8b339e25f9fe86020216859d6fd48dad62265f7254ba5dacd58bde718f"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "715921a64379cb72bcc00d5f2f1787099529f65569a23ebb9868f6496f7ca2b8"
   end
 
   depends_on "go" => :build
@@ -24,6 +24,6 @@ class Buildifier < Formula
 
   test do
     touch testpath/"BUILD"
-    system "#{bin}/buildifier", "-mode=check", "BUILD"
+    system bin/"buildifier", "-mode=check", "BUILD"
   end
 end

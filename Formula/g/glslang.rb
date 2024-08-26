@@ -1,8 +1,8 @@
 class Glslang < Formula
   desc "OpenGL and OpenGL ES reference compiler for shading languages"
   homepage "https://www.khronos.org/opengles/sdk/tools/Reference-Compiler/"
-  url "https://github.com/KhronosGroup/glslang/archive/refs/tags/14.1.0.tar.gz"
-  sha256 "b5e4c36d60eda7613f36cfee3489c6f507156829c707e1ecd7f48ca45b435322"
+  url "https://github.com/KhronosGroup/glslang/archive/refs/tags/14.3.0.tar.gz"
+  sha256 "be6339048e20280938d9cb399fcdd06e04f8654d43e170e8cce5a56c9a754284"
   license all_of: ["BSD-3-Clause", "GPL-3.0-or-later", "MIT", "Apache-2.0"]
   head "https://github.com/KhronosGroup/glslang.git", branch: "main"
 
@@ -12,13 +12,13 @@ class Glslang < Formula
   end
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "81fbdb7f4e7edcca47adc9337c31ebc7f1d6d7f3c9b67867b872312929212ae8"
-    sha256 cellar: :any,                 arm64_ventura:  "349076703938e47853112c7aaf29dccac29afe2ce6e5a6134887a2e7a46f9d8b"
-    sha256 cellar: :any,                 arm64_monterey: "33ea41abdedb8461aaf9cf4f29be8db9095b33cbbd8cc23b62aed9f337bacfaa"
-    sha256 cellar: :any,                 sonoma:         "dafc35c34e646d0174c8520d5e536508a106e7c898188187b281c2bee5df2d79"
-    sha256 cellar: :any,                 ventura:        "fb7d821023a42b9650d4a0a84f59943d7cb15f9436bd08b232b6d181de8b084b"
-    sha256 cellar: :any,                 monterey:       "b80d3475b5ca869c8868bfbbbe55d9471d403ff896bb0be13a3e34b60bfa6c46"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "5675952d5fb1d20301e68599ade2515e625aadb545e280fc6c5d04a8a7f04116"
+    sha256 cellar: :any,                 arm64_sonoma:   "47ec2bd28333f865554eb3345c2725537d0643049628626ecf13f9ca317dbc5b"
+    sha256 cellar: :any,                 arm64_ventura:  "390d16183d4dee8ae1e1f8b974189d26cf1bce4db7c4a8dbfe09cb439c927af6"
+    sha256 cellar: :any,                 arm64_monterey: "32d3f139cb61c855a13561eb946035355cfc28b48d44a180a8136b93e1c9292b"
+    sha256 cellar: :any,                 sonoma:         "3bd7bc3c27df33d84c8063eeb0a88b1927f04b38b7b46993164d22783578844a"
+    sha256 cellar: :any,                 ventura:        "87101567327645d36baf33384fdb407e9a9c53ddf95462137bef4b94bdc60b87"
+    sha256 cellar: :any,                 monterey:       "af5b88f33e41ac73a0aaeaea12aab26c6590764e7b3213e7551f411fdca916a6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "4614dd621b0f2792235693a83e5fbb51045d73301df7e6cc67f9b0c384a90457"
   end
 
   depends_on "cmake" => :build
@@ -45,12 +45,14 @@ class Glslang < Formula
         gl_FragColor = vec4(1.0, 1.0, 1.0, 1.0);
       }
     EOS
+
     (testpath/"test.vert").write <<~EOS
       #version 110
       void main() {
           gl_Position = gl_ModelViewProjectionMatrix * gl_Vertex;
       }
     EOS
-    system "#{bin}/glslangValidator", "-i", testpath/"test.vert", testpath/"test.frag"
+
+    system bin/"glslangValidator", "-i", testpath/"test.vert", testpath/"test.frag"
   end
 end

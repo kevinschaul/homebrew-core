@@ -19,7 +19,9 @@ class Timg < Formula
 
   depends_on "cmake" => :build
   depends_on "pkg-config" => :build
+  depends_on "cairo"
   depends_on "ffmpeg"
+  depends_on "glib"
   depends_on "graphicsmagick"
   depends_on "jpeg-turbo"
   depends_on "libdeflate"
@@ -31,6 +33,11 @@ class Timg < Formula
   depends_on "poppler"
   depends_on "webp"
 
+  on_macos do
+    depends_on "gdk-pixbuf"
+    depends_on "gettext"
+  end
+
   fails_with gcc: "5" # rubberband is built with GCC
 
   def install
@@ -40,10 +47,10 @@ class Timg < Formula
   end
 
   test do
-    system "#{bin}/timg", "--version"
-    system "#{bin}/timg", "-g10x10", test_fixtures("test.gif")
-    system "#{bin}/timg", "-g10x10", test_fixtures("test.png")
-    system "#{bin}/timg", "-pq", "-g10x10", "-o", testpath/"test-output.txt", test_fixtures("test.jpg")
+    system bin/"timg", "--version"
+    system bin/"timg", "-g10x10", test_fixtures("test.gif")
+    system bin/"timg", "-g10x10", test_fixtures("test.png")
+    system bin/"timg", "-pq", "-g10x10", "-o", testpath/"test-output.txt", test_fixtures("test.jpg")
     assert_match "38;2;255;38;0;49m", (testpath/"test-output.txt").read
   end
 end

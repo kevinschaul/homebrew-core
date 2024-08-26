@@ -2,20 +2,20 @@ class Odin < Formula
   desc "Programming language with focus on simplicity, performance and modern systems"
   homepage "https://odin-lang.org/"
   url "https://github.com/odin-lang/Odin.git",
-      tag:      "dev-2024-04a",
-      revision: "aab122ede8b04a9877e22c9013c0b020186bc9b4"
-  version "2024-04a"
+      tag:      "dev-2024-08",
+      revision: "1a16585b10044255097e0abaa73aa4f0a422cbd1"
+  version "2024-08"
   license "BSD-3-Clause"
   head "https://github.com/odin-lang/Odin.git", branch: "master"
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "4c72adb334df03cfc13dbc44e856f275e3f2c79b52fded838d7183ebfc0bc641"
-    sha256 cellar: :any,                 arm64_ventura:  "b030289987283ccadd6a22971533ffe6df589a5ffd9b367c11b74ea54ef5f2f4"
-    sha256 cellar: :any,                 arm64_monterey: "90381dcddb9f980548919b52185e7c91633dc8e0a5ec14334f5876cc236417c3"
-    sha256 cellar: :any,                 sonoma:         "905c623014c85d2a1fb64c076cd50a00bff170129e8bb471addf8618e593270f"
-    sha256 cellar: :any,                 ventura:        "d2bb15733c16e3c717cafa1421a70e15c563f13483141a5da76d108c67f5c3be"
-    sha256 cellar: :any,                 monterey:       "09eb8b912ea05660dfcf7a378e0259572f6a8ea869e525b3d07a37e804546131"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "c4e039b6b6832473aaba910d497f7bb6c7429df6f857fa7d48ae5baf876c69b6"
+    sha256 cellar: :any,                 arm64_sonoma:   "9c4bdd572668c9f55a76f9956d6643695862347e29bebca9e73a96ca8c7f0864"
+    sha256 cellar: :any,                 arm64_ventura:  "97e4e94646429fdb73c2cbcde033b3f7a9ff36812b49d1ca16d5bb1e9519de19"
+    sha256 cellar: :any,                 arm64_monterey: "295781e8c2a00667d90d398f9557cb34b8cdbf6c76c503885ee44a29c4ca949d"
+    sha256 cellar: :any,                 sonoma:         "71a0e2e49fd9f0d25c8cbf6d34c7d3aa360c75cc86bf56c80b2687303a2bf83e"
+    sha256 cellar: :any,                 ventura:        "5799cab2b340caddc720ca99c99d3f5798a736dc1cd757e84bf5ca347b17af1e"
+    sha256 cellar: :any,                 monterey:       "3cbeff8fc1a0b581dec9f26bf5152d34baedfe58d3c8a90968a7e04e3c7e62e7"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "e67e3d2c82e9f76636f43567a989411dc8a0b7301ee46c72dbe1fa51d9e75657"
   end
 
   depends_on "glfw"
@@ -83,6 +83,11 @@ class Odin < Formula
       end
     end
 
+    # By default the build runs an example program, we don't want to run it during install.
+    # This would fail when gcc is used because Odin can be build with gcc,
+    # but programs linked by Odin need clang specifically.
+    inreplace "build_odin.sh", /^\s*run_demo\s*$/, ""
+
     # Keep version number consistent and reproducible for tagged releases.
     args = []
     args << "ODIN_VERSION=dev-#{version}" unless build.head?
@@ -106,7 +111,7 @@ class Odin < Formula
         fmt.println("Hellope!");
       }
     EOS
-    system "#{bin}/odin", "build", "hellope.odin", "-file"
+    system bin/"odin", "build", "hellope.odin", "-file"
     assert_equal "Hellope!\n", shell_output("./hellope")
 
     (testpath/"miniaudio.odin").write <<~EOS
@@ -121,7 +126,7 @@ class Odin < Formula
         fmt.println(ver)
       }
     EOS
-    system "#{bin}/odin", "run", "miniaudio.odin", "-file"
+    system bin/"odin", "run", "miniaudio.odin", "-file"
 
     if OS.mac?
       (testpath/"raylib.odin").write <<~EOS
@@ -138,8 +143,8 @@ class Odin < Formula
           assert(42 <= num && num <= 1337)
         }
       EOS
-      system "#{bin}/odin", "run", "raylib.odin", "-file"
-      system "#{bin}/odin", "run", "raylib.odin", "-file",
+      system bin/"odin", "run", "raylib.odin", "-file"
+      system bin/"odin", "run", "raylib.odin", "-file",
         "-define:RAYLIB_SHARED=true", "-define:RAYGUI_SHARED=true"
 
       (testpath/"glfw.odin").write <<~EOS
@@ -152,7 +157,7 @@ class Odin < Formula
           fmt.println(glfw.GetVersion())
         }
       EOS
-      system "#{bin}/odin", "run", "glfw.odin", "-file"
+      system bin/"odin", "run", "glfw.odin", "-file"
     end
   end
 end

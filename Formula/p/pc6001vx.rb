@@ -2,33 +2,29 @@ class Pc6001vx < Formula
   desc "PC-6001 emulator"
   # http://eighttails.seesaa.net/ gives 405 error
   homepage "https://github.com/eighttails/PC6001VX"
+  url "https://eighttails.up.seesaa.net/bin/PC6001VX_4.2.9_src.tar.gz"
+  sha256 "6819cbf3a883a5b613c3b7f29255aa935afdb0c2dcb14c04e644d5b24be117c1"
   license "LGPL-2.1-or-later"
-  revision 2
+  revision 1
   head "https://github.com/eighttails/PC6001VX.git", branch: "master"
 
-  stable do
-    url "https://eighttails.up.seesaa.net/bin/PC6001VX_4.2.5_src.tar.gz"
-    sha256 "4f44df8940db6d412bf4d316c950c540f03c5ab543b028b793998bfeeaac64ac"
-
-    # backport a fix for incorrectly handling SIGTERM
-    patch do
-      url "https://github.com/eighttails/PC6001VX/commit/93f2a366d1944237d4712a6de4290ac1bda15771.patch?full_index=1"
-      sha256 "f4e9d7f23ec7d0f87d869cfcef84de80f1371cc703600313a00970f84d77c632"
-    end
-  end
-
   bottle do
-    sha256 cellar: :any, arm64_sonoma:   "d9f0c85994080637e87e46e657c1fa0a585d69d74548a2305654dd9a1f545e08"
-    sha256 cellar: :any, arm64_ventura:  "1e8a92b9a880400821197103bb6571997b468e1bc2777c80d6b7a4c0d8233370"
-    sha256 cellar: :any, arm64_monterey: "6931561bcb1b2bf2b3f56cc24867458dc96bb79e7dd1305fa3f4becf77088b9d"
-    sha256 cellar: :any, sonoma:         "c86a325c279e134b003bfac3483aac49d8d7202ec90e774bcacc4cede9fc8d93"
-    sha256 cellar: :any, ventura:        "5f87fb22702196d38f976a764a970ae4bfee3b394a3b5090e0aaacf2500985ba"
-    sha256 cellar: :any, monterey:       "dc8fdc3a168a600b1f98a40c03d8b2032a3f3cee6eb18974cd9c738ce55838ce"
+    sha256 cellar: :any, arm64_sonoma:   "0734e27c0498560e32afeaf382ac7a228d691741440a0bbfd633624513ccf229"
+    sha256 cellar: :any, arm64_ventura:  "b40cf6a5735daacca9e76539caffbb1cb864f14f74625edbe9f5004361fc9712"
+    sha256 cellar: :any, arm64_monterey: "9e71228dceca49f46785e01fce810a5e7302a2d8c54e1c83f0045166d0920cc9"
+    sha256 cellar: :any, sonoma:         "57526a351e01058156e0047f2f5189ecec4e388f7276ec6961e0b4bbf40fd525"
+    sha256 cellar: :any, ventura:        "70f38d4be3d39e24d7182504c4b4ba6534fd4fd3aba2365f83e9e392e728a789"
+    sha256 cellar: :any, monterey:       "de195792448a2ffc5ae12853607eddc8583e2a3cca12d9b19815e71f83bccb3e"
   end
 
   depends_on "pkg-config" => :build
-  depends_on "ffmpeg@6"
+  depends_on "ffmpeg"
   depends_on "qt"
+  depends_on "sdl2"
+
+  on_macos do
+    depends_on "gettext"
+  end
 
   fails_with gcc: "5" # ffmpeg is compiled with GCC
 
@@ -54,6 +50,7 @@ class Pc6001vx < Formula
       exec bin/"PC6001VX"
     end
     sleep 30
+    sleep 30 if Hardware::CPU.intel?
     assert_predicate user_config_dir/"rom",
                      :exist?, "User config directory should exist"
   ensure

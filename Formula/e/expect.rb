@@ -32,6 +32,7 @@ class Expect < Formula
   depends_on "tcl-tk"
 
   conflicts_with "ircd-hybrid", because: "both install an `mkpasswd` binary"
+  conflicts_with "bash-snippets", because: "both install `weather` binaries"
 
   # Patch for configure scripts and various headers:
   # https://core.tcl-lang.org/expect/tktview/0d5b33c00e5b4bbedb835498b0360d7115e832a0
@@ -87,6 +88,6 @@ class Expect < Formula
   test do
     assert_match "works", shell_output("echo works | #{bin}/timed-read 1")
     assert_equal "", shell_output("{ sleep 3; echo fails; } | #{bin}/timed-read 1 2>&1")
-    assert_match "Done", pipe_output("#{bin}/expect", "exec true; puts Done")
+    assert_match "Done", pipe_output(bin/"expect", "exec true; puts Done")
   end
 end

@@ -1,8 +1,8 @@
 class Inspircd < Formula
   desc "Modular C++ Internet Relay Chat daemon"
   homepage "https://www.inspircd.org/"
-  url "https://github.com/inspircd/inspircd/archive/refs/tags/v3.17.0.tar.gz"
-  sha256 "181de90130e11a26ec107fcb6b74005cbce3051b89b500347e416054e29c3166"
+  url "https://github.com/inspircd/inspircd/archive/refs/tags/v4.2.0.tar.gz"
+  sha256 "4b07359c5528489cd312a6e1bd27a6e5161f839c62699f4d3113cb3cb50250bb"
   license "GPL-2.0-only"
   revision 1
 
@@ -12,13 +12,13 @@ class Inspircd < Formula
   end
 
   bottle do
-    sha256 arm64_sonoma:   "f909dabd1cda182a8bffac9702d1ba9e6811cc184680c1723405c8e9c8d758ba"
-    sha256 arm64_ventura:  "1300bfd953404cc3728e3fa6e6411350bdb395ff7361dbc50e1dc3ec1fa59371"
-    sha256 arm64_monterey: "8f86230f1506baf2082fc140675d23f337303d71ce64c025ba8c6e304ce5b6d7"
-    sha256 sonoma:         "ae5c22ec9be553b0a59ad856be6a56c6091673318eef9f4bb07cfba10a4ae4bb"
-    sha256 ventura:        "ce39749fdb7a7e2a00c50009b35fdb83500676ff28634edc49d8192f11d86ce4"
-    sha256 monterey:       "b97474dd548b126d240fd87708cf749cd06e1d9ee6e155ce79b722c8a77b14fa"
-    sha256 x86_64_linux:   "335aeeb4df8b203befe37e35b80776f9679bcc36f263975a952fc2a24502ac8d"
+    sha256 arm64_sonoma:   "c5c8f38c981536f79d27db389742ae2e9b2148899779ee5415bcd77db75f393f"
+    sha256 arm64_ventura:  "d13bf8a49b469297c9e106984c1d17a87b452144f4b84af1385f19c9032aff18"
+    sha256 arm64_monterey: "13cd90bd8c8e1e0788df123afca665ccf8a63ff89a3b6993cbe5753999b385ca"
+    sha256 sonoma:         "e43e20260b535df236d185d9185d45fb98bfd3e2e7517278de3d95fc7ed66313"
+    sha256 ventura:        "00efba30a1da75f9782132f8c93db0ce1ccfce1f2c5ea50c06aede04ed739a98"
+    sha256 monterey:       "4aef9bc42dbcaed6e8ca1ecb7bc8da05ce0556c5fbc4f9e04df48659f8d40b10"
+    sha256 x86_64_linux:   "f8a6aba2f020a8e1f6d65fb5e40b365b1e15a3d8ea5524b38385cb78d959d0d5"
   end
 
   depends_on "pkg-config" => :build
@@ -29,13 +29,19 @@ class Inspircd < Formula
 
   uses_from_macos "openldap"
 
+  on_macos do
+    depends_on "openssl@3"
+    depends_on "zlib"
+    depends_on "zstd"
+  end
+
   skip_clean "data"
   skip_clean "logs"
 
   def install
     ENV.cxx11
     system "./configure", "--enable-extras",
-                          "argon2 ldap mysql pgsql regex_posix regex_stdlib ssl_gnutls sslrehashsignal"
+                          "argon2 ldap mysql pgsql regex_posix ssl_gnutls sslrehashsignal"
     system "./configure", "--disable-auto-extras",
                           "--distribution-label", "homebrew-#{revision}",
                           "--prefix", prefix
@@ -43,6 +49,6 @@ class Inspircd < Formula
   end
 
   test do
-    assert_match("ERROR: Cannot open config file", shell_output("#{bin}/inspircd", 2))
+    assert_match("ERROR: Cannot open config file", shell_output(bin/"inspircd", 1))
   end
 end

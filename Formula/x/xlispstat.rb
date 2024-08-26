@@ -4,7 +4,16 @@ class Xlispstat < Formula
   url "https://homepage.cs.uiowa.edu/~luke/xls/xlispstat/current/xlispstat-3-52-23.tar.gz"
   version "3.52.23"
   sha256 "9bf165eb3f92384373dab34f9a56ec8455ff9e2bf7dff6485e807767e6ce6cf4"
+  license "HPND-sell-variant"
   revision 1
+
+  livecheck do
+    url "https://homepage.cs.uiowa.edu/~luke/xls/xlispstat/current/"
+    regex(/href=.*?xlispstat[._-]v?(\d+(?:[.-]\d+)+)\.t/i)
+    strategy :page_match do |page, regex|
+      page.scan(regex).map { |match| match[0].tr("-", ".") }
+    end
+  end
 
   bottle do
     sha256 cellar: :any,                 arm64_sonoma:   "10e7f44257e5722b9d044d17e1797df027796f291010ea9ccb5a4c3999424208"

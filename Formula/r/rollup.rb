@@ -1,26 +1,24 @@
-require "language/node"
-
 class Rollup < Formula
   desc "Next-generation ES module bundler"
   homepage "https://rollupjs.org/"
-  url "https://registry.npmjs.org/rollup/-/rollup-4.14.2.tgz"
-  sha256 "ff05c489f486559719e432b6d9aec25333f15a34ea54a14f8f38818303c7e090"
+  url "https://registry.npmjs.org/rollup/-/rollup-4.21.0.tgz"
+  sha256 "9db5866cdce51d334efb9655c7aa6d8ab6be2463860063f629e0a207e04c3387"
   license all_of: ["ISC", "MIT"]
 
   bottle do
-    sha256 cellar: :any,                 arm64_sonoma:   "00b888c13d397e28adbff4e1eeb5839bbd8c39f0f42f17caaab215c926c13918"
-    sha256 cellar: :any,                 arm64_ventura:  "00b888c13d397e28adbff4e1eeb5839bbd8c39f0f42f17caaab215c926c13918"
-    sha256 cellar: :any,                 arm64_monterey: "00b888c13d397e28adbff4e1eeb5839bbd8c39f0f42f17caaab215c926c13918"
-    sha256 cellar: :any,                 sonoma:         "5d74dc6c90afecf7921bd8a96586ac99b0083f8228431f4fa6dca7461622d408"
-    sha256 cellar: :any,                 ventura:        "5d74dc6c90afecf7921bd8a96586ac99b0083f8228431f4fa6dca7461622d408"
-    sha256 cellar: :any,                 monterey:       "5d74dc6c90afecf7921bd8a96586ac99b0083f8228431f4fa6dca7461622d408"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "571125159d7e35ad70c538a476c8df95768d14a1e642163459db1335c569a6b1"
+    sha256 cellar: :any,                 arm64_sonoma:   "4c6350b9867cd7e809f9f2d8164f575a07284095f780596230ffae1a3006e1d1"
+    sha256 cellar: :any,                 arm64_ventura:  "4c6350b9867cd7e809f9f2d8164f575a07284095f780596230ffae1a3006e1d1"
+    sha256 cellar: :any,                 arm64_monterey: "4c6350b9867cd7e809f9f2d8164f575a07284095f780596230ffae1a3006e1d1"
+    sha256 cellar: :any,                 sonoma:         "dea29744373e6c9f9d754d3590bbf109f444f686f9200b4ebbd6ed986e557de3"
+    sha256 cellar: :any,                 ventura:        "dea29744373e6c9f9d754d3590bbf109f444f686f9200b4ebbd6ed986e557de3"
+    sha256 cellar: :any,                 monterey:       "dea29744373e6c9f9d754d3590bbf109f444f686f9200b4ebbd6ed986e557de3"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "779ff341fa13dd0d61acdd107fb0bf51291ce6223a7c31617bf7e2aeef7f246d"
   end
 
   depends_on "node"
 
   def install
-    system "npm", "install", *Language::Node.std_npm_install_args(libexec)
+    system "npm", "install", *std_npm_args
     bin.install_symlink Dir["#{libexec}/bin/*"]
 
     deuniversalize_machos

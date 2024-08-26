@@ -1,25 +1,23 @@
 class GitDelta < Formula
   desc "Syntax-highlighting pager for git and diff output"
   homepage "https://github.com/dandavison/delta"
-  url "https://github.com/dandavison/delta/archive/refs/tags/0.17.0.tar.gz"
-  sha256 "1abd21587bcc1f2ef0cd342784ce990da9978bc345578e45506419e0952de714"
+  url "https://github.com/dandavison/delta/archive/refs/tags/0.18.1.tar.gz"
+  sha256 "ef558e0ee4c9a10046f2f8e2e59cf1bedbb18c2871306b772d3d9b8e3b242b9c"
   license "MIT"
   head "https://github.com/dandavison/delta.git", branch: "main"
 
   bottle do
-    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "0857ee2533e5731a3ff70fbba14bedf6ee066de4b3954fcac2a5291e781a5776"
-    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1fd816757a69671cda27b70e981d137465988d6abf672fad9d643ff175448589"
-    sha256 cellar: :any_skip_relocation, arm64_monterey: "ddd619480dbd050fee0293cdfa73d8bace0d1b7d851c34ed7d390c57bf8110d3"
-    sha256 cellar: :any_skip_relocation, sonoma:         "d4562d1713f211739bad31fa4f8560d5b3c3d7bd8f7a61a4743552b0c6e3f81b"
-    sha256 cellar: :any_skip_relocation, ventura:        "3ae765b906ec45cef98611ebfb0421d0d64206d6dd7065c86bb14d16eb529b6a"
-    sha256 cellar: :any_skip_relocation, monterey:       "3d9797138ddc479b9ed8a180c30bf350b88c08a551ea6a43d34870fe448c8978"
-    sha256 cellar: :any_skip_relocation, x86_64_linux:   "f55330791412a4933e7efa64dcfaaac315830d7e90f27c79e92f3c266c77688a"
+    sha256 cellar: :any_skip_relocation, arm64_sonoma:   "419f5a44407ea3cc9d236282deff3b8c6ba6f60c7689f894cba2c1faefb2fc8a"
+    sha256 cellar: :any_skip_relocation, arm64_ventura:  "1518063982216ae94f97d54bd35655eabed9b620d4dee5919590fedac74d644e"
+    sha256 cellar: :any_skip_relocation, arm64_monterey: "90dce0b48166745f63dd6834a4b6d8a22097e9d3873ae140481c529a31df9acd"
+    sha256 cellar: :any_skip_relocation, sonoma:         "da5130975e5ba42a3fad8fd118ae8dc638d1472e1d4a360f7559c742f13429c6"
+    sha256 cellar: :any_skip_relocation, ventura:        "fb88e41696bfa3a4cc0ed0279e82a880a017d9485efa4566443570b2d30ba0fc"
+    sha256 cellar: :any_skip_relocation, monterey:       "cfbca03dd73aeff305cc200c0aaa363e438466dd1c62a7a351265c8a62f3c4a6"
+    sha256 cellar: :any_skip_relocation, x86_64_linux:   "a81ec2fc6d30cde5b848927701f3308ebe2ec2bbeb233b6ac644122ad88df888"
   end
 
   depends_on "rust" => :build
   uses_from_macos "zlib"
-
-  conflicts_with "delta", because: "both install a `delta` binary"
 
   def install
     system "cargo", "install", *std_cargo_args
